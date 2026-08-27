@@ -3,6 +3,12 @@
 This document will guide you through installing the required software and setting up the course's development
 environment.
 
+**Course demonstrations are based on Conda and PyCharm running on Windows 11.**
+
+If you are using a different package manager, IDE, or OS, you may occasionally notice minor differences between your
+development environment and the one demonstrated in class. These differences are normal and typically do not affect the
+underlying concepts or functionality of the code.
+
 ## Step 1: Install Git
 
 Git is used for version control, to connect to GitHub, and submit your work.
