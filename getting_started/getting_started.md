@@ -120,8 +120,6 @@ intended.
 Git is a version control system that tracks changes to files and code. GitHub is an online platform that uses Git to
 store, share, and collaborate on projects online.
 
-### In your web browser:
-
 1. Create a free GitHub account at: https://github.com/
 2. Create a new repository at: https://github.com/new
     1. Give your repository a name.
@@ -131,9 +129,8 @@ store, share, and collaborate on projects online.
     5. Add license: *No license*
     6. Click *Create repository*
 
-### In your PyCharm project
 
-3. Create a file in your project root called `.gitignore`.
+3. Create a file in your PyCharm project root called `.gitignore`.
 4. Open `.gitignore` in PyCharm and copy the following text in it:
 
 ```
