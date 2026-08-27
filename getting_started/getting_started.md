@@ -7,7 +7,7 @@ environment.
 
 ## Step 1: Install Git
 
-Git is used for version control, to download course materials from GitHub, and submit your work.
+Git is used for version control, to connect to GitHub, and submit your work.
 
 1. Download Git from: https://git-scm.com/install/
 2. Run the installer.
@@ -121,9 +121,83 @@ intended.
     Process finished with exit code 0
     ```
 
-    2. A new file called [`test_figure.png`](getting_started/test_figure.png) should be generated in the project folder:
+    2. A new file called [`test_figure.png`](./getting_started/test_figure.png) should be generated in the project
+       folder:
 
-   ![test_figure.png](getting_started/test_figure.png)
+   ![test_figure.png](./getting_started/test_figure.png)
+
+---
+
+## Step 6: Connect to GitHub
+
+Git is a version control system that tracks changes to files and code. GitHub is an online platform that uses Git to
+store, share, and collaborate on projects online.
+
+### In your web browser:
+
+1. Create a free GitHub account at: https://github.com/
+2. Create a new repository at: https://github.com/new
+    1. Give your repository a name.
+    2. Choose visibility: *Public*
+    3. Add README: *Off*
+    4. Add .gitignore: *No .gitignore*
+    5. Add license: *No license*
+    6. Click *Create repository*
+
+### In your PyCharm project
+
+3. Create a file in your project root called `.gitignore`.
+4. Open `.gitignore` in PyCharm and copy the following text in it:
+
+```
+.idea/
+__pycache__/
+```
+
+5. Create a file in your project root called `README.md`.
+6. Open `README.md` in PyCharm and copy the following text in it:
+
+```
+# CHG 4360-C (Fall 2026)
+## Machine Learning Applied to Biochemical Engineering
+
+This is my first commit.
+```
+
+7. For your first commit, enter these lines one-by-one in the PyCharm terminal. Replace `<username>` with your GitHub
+   username and `<repository>` with the name of your GitHub repository.
+
+```
+git init
+git add .
+git commit -m "First commit"
+git branch -M main
+git remote add origin https://github.com/<username>/<repository>.git
+git push -u origin main
+```
+
+8. Refresh the web page for your repository on GitHub. It should be updated to show your project files.
+
+9. Open `README.md` in PyCharm and copy the following text in it:
+
+```
+# CHG 4360-C (Fall 2026)
+## Machine Learning Applied to Biochemical Engineering
+
+This is my second commit.
+```
+
+10. Now that your local project is connected to your GitHub repository, for all future commits, enter these lines
+    one-by-one in the PyCharm terminal. Replace `<message>` with your own message that describes the changes you made
+    since the last commit.
+
+```
+git add .
+git commit -m "<message>"
+git push
+```
+
+11. Refresh the web page for your repository on GitHub. It should be updated to show your project files.
 
 ---
 
