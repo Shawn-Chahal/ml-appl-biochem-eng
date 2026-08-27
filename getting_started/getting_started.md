@@ -3,8 +3,6 @@
 This document will guide you through installing the required software and setting up the course's development
 environment.
 
----
-
 ## Step 1: Install Git
 
 Git is used for version control, to connect to GitHub, and submit your work.
@@ -18,8 +16,6 @@ Git is used for version control, to connect to GitHub, and submit your work.
     3. Adjusting the name of the initial branch in new repositories: Select: *Override the default branch name for new
        repositories* and type *main* in the text box.
 
----
-
 ## Step 2: Install Miniconda
 
 Miniconda provides a lightweight Python distribution and package manager.
@@ -31,8 +27,6 @@ Miniconda provides a lightweight Python distribution and package manager.
     1. Advanced Installation Options: Check *Register Miniconda3 as my default Python*.
     2. Advanced Installation Options: Check *Clear the package cache upon completion*.
 
----
-
 ## Step 3: Install PyCharm
 
 PyCharm will be our integrated development environment (IDE).
@@ -42,8 +36,6 @@ PyCharm will be our integrated development environment (IDE).
 3. I recommend changing the following settings during installation. You may use the default settings for everything
    else.
     1. Installation Options: Check *.py*.
-
----
 
 ## Step 4: Create the conda environment
 
@@ -98,14 +90,12 @@ conda export > environment.yaml
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
 
----
-
 ## Step 5: Test the conda environment
 
 Now that you have created and activated the `chg4360c-fall2026` environment, you can test to see that it is working as
 intended.
 
-1. Download [`test_environment.py`](getting_started/test_environment.py) to the root of your project folder.
+1. Download [`test_environment.py`](test_environment.py) to the root of your project folder.
 2. Run `test_environment.py`, by right-clicking its tab when open in PyCharm and clicking *Run 'test_environment'*.
 3. If the code ran successfully then:
     1. The Terminal should show:
@@ -121,12 +111,9 @@ intended.
     Process finished with exit code 0
     ```
 
-    2. A new file called [`test_figure.png`](./getting_started/test_figure.png) should be generated in the project
-       folder:
+    2. A new file called [`test_figure.png`](test_figure.png) should be generated in the project folder:
 
-   ![test_figure.png](./getting_started/test_figure.png)
-
----
+   ![test_figure.png](test_figure.png)
 
 ## Step 6: Connect to GitHub
 
@@ -198,8 +185,6 @@ git push
 ```
 
 11. Refresh the web page for your repository on GitHub. It should be updated to show your project files.
-
----
 
 ## Troubleshooting guide
 
