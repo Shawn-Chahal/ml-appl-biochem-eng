@@ -138,7 +138,7 @@ store, share, and collaborate on projects online.
 
 1. Create a free GitHub account at: https://github.com/
 2. Create a new repository at: https://github.com/new
-    1. Give your repository a name.
+    1. Repository name: *chg4360c-demo*
     2. Choose visibility: *Public*
     3. Add README: *Off*
     4. Add .gitignore: *No .gitignore*
