@@ -74,16 +74,16 @@ conda create --name chg4360c-fall2026 python=3.14.7 matplotlib=3.11.0 numpy=2.5.
 ```
 
 14. Follow any instructions in the terminal, then wait for the installation to finish.
-15. Click **miniconda3** in the bottom-right corner.
-16. Click **Add New Interpreter > Add Local Interpreter**.
-17. Use the following settings:
+15. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
+16. Click **miniconda3** in the bottom-right corner.
+17. Click **Add New Interpreter > Add Local Interpreter**.
+18. Use the following settings:
     1. Environment: Select existing
     2. Type: Conda
     3. Environment: chg4360c-fall2026
-18. Click *OK*.
-19. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
+19. Click *OK*.
+20. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
     is completely finished before moving on to the next step.
-20. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
 21. Open the Terminal.
 22. Wait for the terminal to fully load. It should say **(chg4360c-fall2026)** followed by the location of your project.
 23. Copy the following command into the terminal and press ENTER:
