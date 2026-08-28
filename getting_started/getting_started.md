@@ -159,7 +159,10 @@ __pycache__/
 
 ```
 # CHG 4360-C (Fall 2026)
+
 ## Machine Learning Applied to Biochemical Engineering
+
+### Environment setup
 
 This is my first commit.
 ```
@@ -182,7 +185,10 @@ git push -u origin main
 
 ```
 # CHG 4360-C (Fall 2026)
+
 ## Machine Learning Applied to Biochemical Engineering
+
+### Environment setup
 
 This is my second commit.
 ```
