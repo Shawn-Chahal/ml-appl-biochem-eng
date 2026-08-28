@@ -146,7 +146,7 @@ store, share, and collaborate on projects online.
     6. Click *Create repository*
 
 
-3. Create a file in your PyCharm project root called `.gitignore`.
+3. Create a file in your PyCharm project called `.gitignore`.
 4. Open `.gitignore` in PyCharm and copy the following text in it:
 
 ```
@@ -154,7 +154,7 @@ store, share, and collaborate on projects online.
 __pycache__/
 ```
 
-5. Create a file in your project root called `README.md`.
+5. Create a file in your PyCharm project called `README.md`.
 6. Open `README.md` in PyCharm and copy the following text in it:
 
 ```
