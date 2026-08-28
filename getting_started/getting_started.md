@@ -66,40 +66,40 @@ throughout the course to minimize differences in code execution.
 conda update --name base conda
 ```
 
-12. Wait for the installation to finish.
-12. Copy the following command into the terminal and press ENTER.
+12. Follow any instructions in the terminal, then wait for the installation to finish.
+13. Copy the following command into the terminal and press ENTER.
 
 ```
 conda create --name chg4360c-fall2026 python=3.14.7 matplotlib=3.11.0 numpy=2.5.2 pandas=3.0.5 scikit-learn=1.9.0 scipy=1.18.0
 ```
 
-12. Wait for the installation to finish.
-13. Click **miniconda3** in the bottom-right corner.
-14. Click **Add New Interpreter > Add Local Interpreter**.
-15. Use the following settings:
+14. Follow any instructions in the terminal, then wait for the installation to finish.
+15. Click **miniconda3** in the bottom-right corner.
+16. Click **Add New Interpreter > Add Local Interpreter**.
+17. Use the following settings:
     1. Environment: Select existing
     2. Type: Conda
     3. Environment: chg4360c-fall2026
-16. Click *OK*.
-17. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
+18. Click *OK*.
+19. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
     is completely finished before moving on to the next step.
-18. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
-19. Open the Terminal.
-20. Wait for the terminal to fully load. It should say **(chg4360c-fall2026)** followed by the location of your project.
-21. Copy the following command into the terminal and press ENTER:
+20. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
+21. Open the Terminal.
+22. Wait for the terminal to fully load. It should say **(chg4360c-fall2026)** followed by the location of your project.
+23. Copy the following command into the terminal and press ENTER:
 
 ```
 pip install torch==2.13.0 torchvision==0.28.0
 ```
 
-22. Wait for the installation to finish.
-23. Copy the following command into the terminal and press ENTER to verify that all the libraries have installed:
+24. Follow any instructions in the terminal, then wait for the installation to finish.
+25. Copy the following command into the terminal and press ENTER to verify that all the libraries have installed:
 
 ```
 conda export > environment.yaml
 ```
 
-24. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
+26. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
 
