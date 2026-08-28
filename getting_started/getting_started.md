@@ -168,14 +168,14 @@ This is my first commit.
 ```
 
 7. For your first commit, enter these lines one-by-one in the PyCharm terminal. Replace `<username>` with your GitHub
-   username and `<repository>` with the name of your GitHub repository.
+   username.
 
 ```
 git init
 git add .
 git commit -m "First commit"
 git branch -M main
-git remote add origin https://github.com/<username>/<repository>.git
+git remote add origin https://github.com/<username>/chg4360c-demo.git
 git push -u origin main
 ```
 
@@ -193,13 +193,12 @@ git push -u origin main
 This is my second commit.
 ```
 
-10. Now that your local project is connected to your GitHub repository, for all future commits, enter these lines
-    one-by-one in the PyCharm terminal. Replace `<message>` with your own message that describes the changes you made
-    since the last commit.
+10. Now that your local project is connected to your GitHub repository, you only need to enter these lines
+    one-by-one in the PyCharm terminal.
 
 ```
 git add .
-git commit -m "<message>"
+git commit -m "Updated README"
 git push
 ```
 
