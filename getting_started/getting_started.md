@@ -93,13 +93,16 @@ pip install torch==2.13.0 torchvision==0.28.0
 ```
 
 24. Follow any instructions in the terminal, then wait for the installation to finish.
-25. Copy the following command into the terminal and press ENTER to verify that all the libraries have installed:
+25. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
+    is completely finished before moving on to the next step.
+26. Copy the following command into the terminal and press ENTER:
 
 ```
 conda export > environment.yaml
 ```
 
-26. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
+27. Open the newly generated `environment.yaml` file and verify that all the libraries have installed.
+27. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
 
