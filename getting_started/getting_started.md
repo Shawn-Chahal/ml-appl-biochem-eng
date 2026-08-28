@@ -51,7 +51,7 @@ throughout the course to minimize differences in code execution.
 1. Open PyCharm.
 2. File > New Project
 3. Choose your preferred **Location** to save this project.
-4. Uncheck *Create a Git repository*.
+4. Uncheck *Create Git repository*.
 5. Uncheck *Create a welcome script*.
 6. Click *Base conda*.
     1. If you receive an error saying **“No conda executable found”**, follow the [troubleshooting guide](#troubleshooting-guide) to locate and select the Conda executable manually.
