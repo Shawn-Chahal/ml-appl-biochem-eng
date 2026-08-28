@@ -102,7 +102,7 @@ conda export > environment.yaml
 ```
 
 27. Open the newly generated `environment.yaml` file and verify that all the libraries have installed.
-27. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
+28. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
 
@@ -111,7 +111,7 @@ conda export > environment.yaml
 Now that you have created and activated the `chg4360c-fall2026` environment, you can test to see that it is working as
 intended.
 
-1. Download [`test_environment.py`](test_environment.py) to the root of your project folder.
+1. Download [`test_environment.py`](test_environment.py) to your project folder (i.e., `chg4360c-demo`).
 2. Run `test_environment.py`, by right-clicking its tab when open in PyCharm and clicking *Run 'test_environment'*.
 3. If the code ran successfully then:
     1. The Terminal should show:
