@@ -63,6 +63,13 @@ throughout the course to minimize differences in code execution.
 11. Copy the following command into the terminal and press ENTER.
 
 ```
+conda update --name base conda
+```
+
+12. Wait for the installation to finish.
+12. Copy the following command into the terminal and press ENTER.
+
+```
 conda create --name chg4360c-fall2026 python=3.14.7 matplotlib=3.11.0 numpy=2.5.2 pandas=3.0.5 scikit-learn=1.9.0 scipy=1.18.0
 ```
 
