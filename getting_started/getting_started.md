@@ -51,47 +51,48 @@ throughout the course to minimize differences in code execution.
 1. Open PyCharm.
 2. File > New Project
 3. Choose your preferred **Location** to save this project.
-4. Uncheck *Create a welcome script*.
-5. Click *Base conda*.
+4. Uncheck *Create a Git repository*.
+5. Uncheck *Create a welcome script*.
+6. Click *Base conda*.
     1. If you receive an error saying **“No conda executable found”**, follow the [troubleshooting guide](#troubleshooting-guide) to locate and select the Conda executable manually.
-6. Click *Create*.
-7. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
+7. Click *Create*.
+8. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
    is completely finished before moving on to the next step.
-8. Click the **Terminal** icon in the bottom-left corner (Usually looks something like this: **| >_ |**).
-9. Wait for the terminal to fully load. It should say **(base)** followed by the location of your project.
-10. Copy the following command into the terminal and press ENTER.
+9. Click the **Terminal** icon in the bottom-left corner (Usually looks something like this: **| >_ |**).
+10. Wait for the terminal to fully load. It should say **(base)** followed by the location of your project.
+11. Copy the following command into the terminal and press ENTER.
 
 ```
 conda create --name chg4360c-fall2026 python=3.14.7 matplotlib=3.11.0 numpy=2.5.2 pandas=3.0.5 scikit-learn=1.9.0 scipy=1.18.0
 ```
 
-11. Wait for the installation to finish.
-12. Click **miniconda3** in the bottom-right corner.
-13. Click **Add New Interpreter > Add Local Interpreter**.
-14. Use the following settings:
+12. Wait for the installation to finish.
+13. Click **miniconda3** in the bottom-right corner.
+14. Click **Add New Interpreter > Add Local Interpreter**.
+15. Use the following settings:
     1. Environment: Select existing
     2. Type: Conda
     3. Environment: chg4360c-fall2026
-15. Click *OK*.
-16. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
+16. Click *OK*.
+17. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
     is completely finished before moving on to the next step.
-17. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
-18. Open the Terminal.
-19. Wait for the terminal to fully load. It should say **(chg4360c-fall2026)** followed by the location of your project.
-20. Copy the following command into the terminal and press ENTER:
+18. Close the Terminal by clicking “x” in the tab next to Terminal. Do not minimize it.
+19. Open the Terminal.
+20. Wait for the terminal to fully load. It should say **(chg4360c-fall2026)** followed by the location of your project.
+21. Copy the following command into the terminal and press ENTER:
 
 ```
 pip install torch==2.13.0 torchvision==0.28.0
 ```
 
-21. Wait for the installation to finish.
-22. Copy the following command into the terminal and press ENTER to verify that all the libraries have installed:
+22. Wait for the installation to finish.
+23. Copy the following command into the terminal and press ENTER to verify that all the libraries have installed:
 
 ```
 conda export > environment.yaml
 ```
 
-23. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
+24. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
 
