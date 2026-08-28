@@ -53,7 +53,7 @@ throughout the course to minimize differences in code execution.
 3. Choose your preferred **Location** to save this project.
 4. Uncheck *Create a welcome script*.
 5. Click *Base conda*.
-    1. If you receive an error saying **“No conda executable found”**, follow the [troubleshooting guide](##troubleshooting-guide) at the end of
+    1. If you receive an error saying **“No conda executable found”**, follow the [troubleshooting guide](#troubleshooting-guide) at the end of
        this document to locate and select the Conda executable manually.
 6. Click *Create*.
 7. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
