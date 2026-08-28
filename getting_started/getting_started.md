@@ -179,7 +179,7 @@ git remote add origin https://github.com/<username>/chg4360c-demo.git
 git push -u origin main
 ```
 
-8. Refresh the web page for your repository on GitHub. It should be updated to show your project files.
+8. Refresh the web page for your repository on GitHub. It should now show your project files.
 
 9. Open `README.md` in PyCharm and copy the following text in it:
 
@@ -202,7 +202,7 @@ git commit -m "Updated README"
 git push
 ```
 
-11. Refresh the web page for your repository on GitHub. It should be updated to show your project files.
+11. Refresh the web page for your repository on GitHub. It should now show your updated project files.
 
 ## Troubleshooting guide
 
