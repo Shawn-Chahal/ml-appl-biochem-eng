@@ -2,12 +2,12 @@
 PH_MIN = 6.5
 PH_MAX = 7.5
 
-TEMP_MIN = 36  # °C
-TEMP_MAX = 38  # °C
+TEMP_MIN = 36  # C
+TEMP_MAX = 38  # C
 
 # Variables are typically written in lower_case.
-ph = 8.0
-temperature = 35
+ph = 8.05
+temperature = 35.0
 
 # \n indicates a new line
 print("\n------------------")
