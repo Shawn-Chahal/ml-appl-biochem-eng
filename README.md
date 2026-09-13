@@ -10,12 +10,32 @@ to GitHub.
 
 ## Course Topics
 
-- Applications of machine learning for the analysis, modelling, monitoring, and forecasting of biochemical processes.
-- Python programming for data processing, visualization, and model development.
-- Exploratory data analysis and unsupervised learning techniques including principal component analysis and clustering.
-- Linear and nonlinear regression methods, model evaluation, validation, and hyperparameter optimization.
-- Mechanistic, data-driven, and hybrid models.
-- Time series analysis, bioprocess monitoring, and forecasting using autoregressive models.
-- Artificial neural networks and deep learning architectures.
-- Classification methods and performance assessment.
-- Model deployment, lifecycle management, performance monitoring, data drift, and model retraining. 
+### Lecture 1: Introduction
+
+- Getting started
+- Environment setup
+
+### Lecture 2: Python and Unsupervised Learning
+
+#### Python
+
+- Data types
+- Operations
+- Lists
+- Tuples
+- Conditionals
+- Loops
+- Functions
+
+#### Data science libraries
+
+- NumPy
+- pandas
+- matplotlib
+
+#### Unsupervised learning
+
+- Data preprocessing
+- Principal component analysis (PCA)
+- *k*-means clustering
+
