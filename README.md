@@ -1,41 +1,34 @@
 # Machine Learning Applied to Biochemical Engineering
 
-## Getting Started
-
 This repository contains course material for the Fall 2026 session of CHG 4360-C: *Machine Learning Applied to
 Biochemical Engineering* at the University of Ottawa.
 
 Follow the [Getting Started Guide](lectures/lecture_01/getting_started.md) to set up your Python environment and connect
 to GitHub.
 
-## Course Topics
+## Course Outline
 
-### Lecture 1: Introduction
+### Lecture 1: Setting up your Python Environment
 
-- Getting started
-- Environment setup
+1. [Getting started](lectures/lecture_01/getting_started.md)
 
-### Lecture 2: Python and Unsupervised Learning
+### Lecture 2: Introduction to Python for Data Science
 
-#### Python
+#### Python basics
 
-- Data types
-- Operations
-- Lists
-- Tuples
-- Conditionals
-- Loops
-- Functions
+1. [Data types and operations](lectures/lecture_02/main_01_basics.py)
+2. [Lists and tuples](lectures/lecture_02/main_02_lists_tuples.py)
+3. [For loops](lectures/lecture_02/main_03_for_loops.py)
 
-#### Data science libraries
+#### Building a process control simulator
 
-- NumPy
-- pandas
-- matplotlib
+4. [Conditionals](lectures/lecture_02/main_04_conditionals.py)
+5. [While loops](lectures/lecture_02/main_05_while_loops.py)
+6. [Functions](lectures/lecture_02/main_06_functions.py)
+7. [Classes](lectures/lecture_02/main_07_classes.py)
 
-#### Unsupervised learning
+#### Data analysis and visualization
 
-- Data preprocessing
-- Principal component analysis (PCA)
-- *k*-means clustering
-
+8. [NumPy](lectures/lecture_02/main_08_numpy.py)
+9. [Pandas](lectures/lecture_02/main_09_pandas.py)
+10. [Matplotlib](lectures/lecture_02/main_10_matplotlib.py)
