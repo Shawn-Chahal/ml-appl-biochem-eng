@@ -1,3 +1,18 @@
+# ============================================================================
+#   Lists and Tuples
+# ============================================================================
+#
+#   * Experimental measurements and process variables are often stored as
+#     collections of values.
+#
+#   * Python lists provide a flexible way to organize, access, and modify
+#     collections of data using indexing and slicing operations.
+#
+#   * Understanding lists and tuples is an important step toward working
+#     with NumPy arrays, datasets, and machine learning features.
+#
+# ============================================================================
+
 print()
 
 print("You can make a list of values:")

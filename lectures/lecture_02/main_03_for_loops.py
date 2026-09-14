@@ -1,3 +1,18 @@
+# ============================================================================
+#   For Loops and List Comprehensions
+# ============================================================================
+#
+#   * Many machine learning and data analysis tasks require processing large
+#     collections of samples, features, or experimental measurements.
+#
+#   * For loops provide a way to systematically iterate through data and
+#     perform repeated calculations.
+#
+#   * List comprehensions offer a compact and efficient method for generating
+#     new datasets and transformed features.
+#
+# ============================================================================
+
 print()
 
 print("You can use a for loop to iterate over a range of numbers:")
@@ -22,4 +37,5 @@ print()
 print("You can use a list comprehension to automate list construction:")
 x = [i ** 2 for i in range(10)]  # Make a list with the first 10 squares
 print(f"  {x = }")
+
 print()

@@ -1,3 +1,18 @@
+# ============================================================================
+#   While Loops
+# ============================================================================
+#
+#   * Process control systems often monitor variables such as pH and
+#     temperature and apply corrective actions when limits are exceeded.
+#
+#   * A while loop can be used to repeatedly evaluate process conditions and
+#     update operating variables.
+#
+#   * The loop continues until all process variables return to their desired
+#     operating ranges.
+#
+# ============================================================================
+
 PH_MIN = 6.5
 PH_MAX = 7.5
 PH_CHANGE = 0.1
@@ -14,7 +29,7 @@ temp_ok = (TEMP_MIN <= temperature <= TEMP_MAX)
 process_ok = (ph_ok and temp_ok)
 print(f"\nBioreactor status ({process_ok = }) | pH: {ph:.2f} ({ph_ok = }) | T: {temperature:.1f} C ({temp_ok = })")
 
-# We can use a while loop to run code "while" a condition is True
+# We can use a while loop to run code 'while' a condition is True
 while not process_ok:
 
     if ph > PH_MAX:

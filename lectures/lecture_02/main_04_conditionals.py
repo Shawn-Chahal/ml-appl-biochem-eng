@@ -1,3 +1,18 @@
+# ============================================================================
+#   Conditional Statements
+# ============================================================================
+#
+#   * Bioprocesses often require monitoring of operating conditions such as
+#     pH and temperature.
+#
+#   * Conditional statements allow a program to evaluate process conditions
+#     and determine whether corrective actions are required.
+#
+#   * Logical operators (e.g., and, or, not) can be used to combine
+#     multiple conditions into more complex decision rules.
+#
+# ============================================================================
+
 # Constants are typically written in UPPER_CASE.
 PH_MIN = 6.5
 PH_MAX = 7.5
@@ -9,12 +24,12 @@ TEMP_MAX = 38  # C
 ph = 8.05
 temperature = 35.0
 
-# \n indicates a new line
-print("\n------------------")
+print()
+
 print("Bioreactor Status")
 print(f"pH: {ph}")
-print(f"Temperature: {temperature} °C")
-print("------------------\n")
+print(f"Temperature: {temperature} C")
+print()
 
 if ph > PH_MAX:
     print("pH is too high.")
@@ -54,11 +69,11 @@ if ph_ok and temp_ok:
 else:
     print("Process alarm triggered.")
 
-# You can use "or" when at least one condition must be True.
+# You can use 'or' when at least one condition must be True.
 if ph_ok or temp_ok:
     print("At least one variable is within optimal range.")
 
-# You can use "not" to reverse the condition .
+# You can use 'not' to reverse the condition .
 # i.e., True becomes False. False becomes True.
 if not ph_ok:
     print("pH requires corrective action.")

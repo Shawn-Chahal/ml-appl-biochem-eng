@@ -1,10 +1,18 @@
-#########################################################################
-#   Functions make it is easier to reuse code.                          #
-#   They also makes it more clear what a piece of code is doing.        #
-#   Function names are typically written in lower_case.                 #
-#########################################################################
+# ============================================================================
+#   Functions
+# ============================================================================
+#
+#   * Functions allow commonly used calculations or operations to be defined
+#     once and reused throughout a program.
+#
+#   * Breaking a problem into smaller functions can make code easier to
+#     understand and maintain.
+#
+#   * In this example, the logic used to determine whether a bioreactor is
+#     operating within its acceptable range is placed in a reusable function.
+#
+# ============================================================================
 
-# CONSTANTS
 
 PH_MIN = 6.5
 PH_MAX = 7.5
@@ -15,8 +23,7 @@ TEMP_MAX = 38  # C
 TEMP_CHANGE = 0.3
 
 
-# FUNCTIONS
-
+# Function names are typically written in lower_case.
 def in_optimal_range(ph, temperature):
     ph_ok = (PH_MIN <= ph <= PH_MAX)
     temp_ok = (TEMP_MIN <= temperature <= TEMP_MAX)
@@ -26,7 +33,18 @@ def in_optimal_range(ph, temperature):
     return process_ok
 
 
-# MAIN PROGRAM
+# ============================================================================
+#   Main Program
+# ============================================================================
+#
+#   * Set the initial process conditions.
+#
+#   * Evaluate the process using the in_optimal_range() function.
+#
+#   * Continue applying corrective actions until the process operates within
+#     its acceptable range.
+#
+# ============================================================================
 
 ph = 8.05
 temperature = 35.0

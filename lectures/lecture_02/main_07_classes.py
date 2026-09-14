@@ -1,11 +1,18 @@
-##############################################################################
-#   You can define a class to represent a system.                            #
-#   For example, we can create a Bioreactor class to simplify our previous   #
-#   process control example to simulate different bioprocesses easily.       #
-#   Class names are typically written in CapitalizedWords.                   #
-##############################################################################
+# ============================================================================
+#   Classes
+# ============================================================================
+#
+#   * Classes provide a way to represent systems by combining attributes
+#     (data) and methods (behavior).
+#
+#   * In this example, a Bioreactor object stores process-specific operating
+#     limits and provides methods for simulating process control actions.
+#
+#   * Many machine learning libraries use classes to represent models and
+#     their associated functionality.
+#
+# ============================================================================
 
-# CLASSES
 
 class Bioreactor:
     def __init__(self, process_name, ph_min, ph_max, ph_change, temp_min, temp_max, temp_change):
@@ -54,9 +61,20 @@ class Bioreactor:
         print()
 
 
-# MAIN PROGRAM
+# ============================================================================
+#   Main Program
+# ============================================================================
+#
+#   * Create Bioreactor objects from the Bioreactor class.
+#
+#   * Each object can store different operating limits and process-specific
+#     control parameters.
+#
+#   * Run simulations using the methods defined within the class.
+#
+# ============================================================================
 
-# Instantiate bioreactor objects from the Bioreactor class
+# Instantiate Bioreactor objects from the Bioreactor class
 bioreactor_1 = Bioreactor(process_name="Ethanol fermentation",
                           ph_min=4.0, ph_max=5.0, ph_change=0.1,
                           temp_min=28, temp_max=32, temp_change=0.4)

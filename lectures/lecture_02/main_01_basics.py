@@ -1,3 +1,17 @@
+# ============================================================================
+#   Python Fundamentals
+# ============================================================================
+#
+#   * Variables are used to store experimental data, process parameters, and
+#     machine learning inputs and outputs.
+#
+#   * Common data types include booleans, integers, floats, and strings.
+#
+#   * These foundational concepts will be used throughout the course for data
+#     analysis, visualization, and machine learning applications.
+#
+# ============================================================================
+
 print()
 
 print("The print function can be used to print information from our code to the terminal.")
