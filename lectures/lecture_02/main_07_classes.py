@@ -13,7 +13,7 @@
 #
 # ============================================================================
 
-
+# Class names are typically written in CapitalizedWords.
 class Bioreactor:
     def __init__(self, process_name, ph_min, ph_max, ph_change, temp_min, temp_max, temp_change):
         self.process_name = process_name
