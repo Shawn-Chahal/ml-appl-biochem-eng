@@ -197,7 +197,6 @@ print()
 #
 # ============================================================================
 
-print("ANSWER:")
 print(f"  Concentration A: {x_mean[0]:.2f} +/- {x_sd[0]:.2f} mM")
 print(f"  Concentration B: {x_mean[1]:.2f} +/- {x_sd[1]:.2f} mM")
 print(f"  Concentration C: {x_mean[2]:.2f} +/- {x_sd[2]:.2f} mM")
