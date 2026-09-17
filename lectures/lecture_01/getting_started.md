@@ -14,6 +14,7 @@ underlying concepts or functionality of the code.
 Git is used for version control, to connect to GitHub, and submit your work.
 
 1. Download Git from: https://git-scm.com/install/
+    - Homebrew method recommended for macOS.
 2. Run the installer.
 3. I recommend changing the following settings during installation. You may use the default settings for everything
    else.
@@ -54,7 +55,8 @@ throughout the course to minimize differences in code execution.
 4. Uncheck *Create Git repository*.
 5. Uncheck *Create a welcome script*.
 6. Click *Base conda*.
-    1. If you receive an error saying **“No conda executable found”**, follow the [troubleshooting guide](#troubleshooting-guide) to locate and select the Conda executable manually.
+    - If you receive an error saying **“No conda executable found”**, go to [*Finding the conda
+      executable*](#finding-the-conda-executable) to locate and select the Conda executable manually.
 7. Click *Create*.
 8. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
    is completely finished before moving on to the next step.
@@ -89,10 +91,14 @@ conda create --name chg4360c-fall2026 python=3.14.7 matplotlib=3.11.0 numpy=2.5.
 23. Copy the following command into the terminal and press ENTER:
 
 ```
-pip install torch==2.13.0 torchvision==0.28.0
+pip3 install torch==2.13.0 torchvision==0.28.0
 ```
 
+- If you receive an error on macOS go to [*Installing PyTorch on macOS*](#installing-pytorch-on-macos) for an
+  alternative command.
+
 24. Follow any instructions in the terminal, then wait for the installation to finish.
+
 25. There will be a blue progress bar in the bottom-right corner. It will shift through different cycles. Wait until it
     is completely finished before moving on to the next step.
 26. Copy the following command into the terminal and press ENTER:
@@ -101,7 +107,8 @@ pip install torch==2.13.0 torchvision==0.28.0
 conda export > environment.yaml
 ```
 
-27. Open the newly generated `environment.yaml` file and verify that all the libraries have installed.
+27. Open the newly generated `environment.yaml` file and verify that all the libraries have installed. Delete the last
+    line that says `prefix`.
 28. You have now created and activated the `chg4360c-fall2026` environment. Use this environment for all course projects
     and assignments unless instructed otherwise. Using the same environment will help ensure that you, your group
     members, the instructor, and the course materials all use consistent versions of Python and the required libraries.
@@ -179,9 +186,12 @@ git remote add origin https://github.com/<username>/chg4360c-demo.git
 git push -u origin main
 ```
 
+- If you receive an error on macOS go to [*Installing GitHub CLI on macOS*](#installing-github-cli-on-macos) for an
+  alternative command.
+
 8. Refresh the web page for your repository on GitHub. It should now show your project files.
 
-9. Open `README.md` in PyCharm and copy the following text in it:
+9. Open `README.md` in PyCharm and replace the text with the following text:
 
 ```
 # CHG 4360-C (Fall 2026)
@@ -193,8 +203,8 @@ git push -u origin main
 This is my second commit.
 ```
 
-10. Now that your local project is connected to your GitHub repository, you only need to enter these lines
-    one-by-one in the PyCharm terminal.
+10. Now that your local project is connected to your GitHub repository, you only need to enter these lines one-by-one in
+    the PyCharm terminal.
 
 ```
 git add .
@@ -206,7 +216,7 @@ git push
 
 ## Troubleshooting guide
 
-### “No conda executable found”
+### Finding the conda executable
 
 PyCharm may display the error **“No conda executable found”** if it cannot automatically locate your Miniconda
 installation. Follow the instructions below to locate and select the Conda executable manually. The location of the
@@ -268,3 +278,37 @@ following command, and press ENTER:
 ```
 which conda
 ```
+
+### Common issues on macOS
+
+#### Installing PyTorch on macOS
+
+If the command for installing PyTorch does not work on macOS, use the following command instead:
+
+```
+pip3 install torch torchvision
+```
+
+#### Installing GitHub CLI on macOS
+
+If you are having trouble logging into GitHub when trying to use `git push -u origin main`, try the following steps:
+
+1. Search for Terminal in macOS, open it, and enter the command found here to install Homebrew if you haven't already
+   from: https://brew.sh/
+2. Close the Terminal and open it again. Enter the command found here to install GitHub CLI for
+   macOS-Homebrew: https://cli.github.com/
+3. Close the Terminal and open it again. In the Terminal enter the following command:
+
+```
+gh auth login
+```
+
+4. Follow the instructions and use the default settings.
+5. Go back to PyCharm. Close the PyCharm Terminal using "x". Open the PyCharm Terminal again and enter the following
+   command:
+
+```
+git push -u origin main
+```
+
+6. Return to the main guide and continue following the steps.
