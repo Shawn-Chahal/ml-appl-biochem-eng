@@ -32,3 +32,7 @@ to GitHub.
 8. [NumPy](lectures/lecture_02/main_08_numpy.py)
 9. [Pandas](lectures/lecture_02/main_09_pandas.py)
 10. [Matplotlib](lectures/lecture_02/main_10_matplotlib.py)
+
+#### Organizing Python projects
+
+11. [Repository structure](https://github.com/Shawn-Chahal/chg4360c-repo-template)
