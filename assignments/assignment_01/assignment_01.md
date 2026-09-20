@@ -32,7 +32,7 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
     - Features
         - What does your custom Python class do?
     - Technologies used
-        - Python + Libraries used including version numbers
+        - Python + Libraries used, including version numbers.
         - Note: You may have many libraries installed in your environment, but here you should only mention the ones you
           actually used.
     - Code design
@@ -84,13 +84,13 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
   be used and serves as a specification for your implementation.
 
 - This script has already been completed and should not be modified. If you do decide to modify it, make sure to revert
-  it back to its original when running your final tests.
+  it back to its original state when running your final tests.
 
 [`classes.py`](provided_files/classes.py)
 
 - This file contains the template of the `BioprocessMonitor` class.
 
-- Your task is to implement all missing functionality to complete the tasks stated below.
+- Your task is to implement all missing functionality according to the specifications provided within each method.
 
 [`dataset_fermentation.csv`](provided_files/dataset_fermentation.csv)
 
