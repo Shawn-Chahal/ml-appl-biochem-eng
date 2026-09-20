@@ -1,7 +1,5 @@
 # Assignment 1: Bioprocess Monitoring with Python
 
----
-
 ## Background
 
 Fermentation processes can be monitored continuously to ensure that their operating conditions remain within acceptable
@@ -13,8 +11,6 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 2. Identification of measurements within acceptable operating ranges.
 3. Generation of dashboard figures.
 4. Creation of batch-level summary tables.
-
----
 
 ## Task
 
@@ -61,20 +57,16 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 | 4        | 100.0              | 96.47                       | 48.6                   |
 | 5        | 48.62              | 99.08                       | 24.7                   |
 
----
-
 ## Setting up your assignment
 
 1. You can start by downloading the [repository template](https://github.com/Shawn-Chahal/chg4360c-repo-template) for
    the course.
 
-2. Replace `main.py` and `classes.py` in your local repository, with the files found in the
+2. Replace `main.py` and `classes.py` in your local repository, with the equivalent files found in the
    [`provided_files`](provided_files/) directory.
 
 3. Add [`dataset_fermentation.csv`](provided_files/dataset_fermentation.csv) to the `datasets` directory in your local
    repository.
-
----
 
 ## Provided files
 
@@ -105,8 +97,6 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
     - `C_biomass_g_L^-1`: Biomass concentration in units of g/L.
     - `C_product_g_L^-1`: Product concentration in units of g/L.
 
----
-
 ## Expected Program Behavior
 
 The provided `main.py` script should run without modification.
@@ -118,16 +108,12 @@ When `main.py` is run, it should generate:
 - a table for each mode in the `tables` directory.
     - An example table for Mode A can be found [here](example_results/Summary_Mode_A.csv).
 
----
-
 ## Submission Requirements
 
 - Submit a link to your GitHub repository through the Brightspace assignment page.
 
 - The timestamp of your submission will be whichever is latest between the timestamp of the last commit in your GitHub
   repository and the timestamp of your Brightspace submission.
-
----
 
 ## Rubric
 
