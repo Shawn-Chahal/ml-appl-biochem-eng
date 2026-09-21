@@ -1,79 +1,5 @@
 # ============================================================================
-#   NumPy Arrays
-# ============================================================================
-#
-#   * Machine learning datasets are often organized as NumPy arrays.
-#
-#   * Rows typically represent samples, while columns represent measured
-#     features or process variables.
-#
-#   * NumPy makes it easy to calculate statistics, perform mathematical
-#     operations, and analyze multidimensional datasets.
-#
-# ============================================================================
-
-# We need to import the numpy library
-import numpy as np
-
-# You can create lists
-x_list = [7, 4, 5]
-y_list = [2, 1, 3]
-
-# You can create numpy arrays from lists
-x_array = np.array(x_list)
-y_array = np.array(y_list)
-
-print("Numpy arrays are distinct from lists:")
-print(f"  {x_list = }")
-print(f"  {y_list = }")
-print(f"  {x_array = }")
-print(f"  {y_array = }")
-print()
-
-print("Adding two lists together will concatenate them:")
-print(f"  {x_list = }")
-print(f"  {y_list = }")
-print(f"  {x_list + y_list = }")
-print()
-
-print("Adding two numpy arrays will perform element-wise addition:")
-print(f"  {x_array = }")
-print(f"  {y_array = }")
-print(f"  {x_array + y_array = }")
-print()
-
-print("You can perform many types of element-wise operations using numpy:")
-print(f"  Addition:       {x_array + y_array = }")
-print(f"  Subtraction:    {x_array - y_array = }")
-print(f"  Multiplication: {x_array * y_array = }")
-print(f"  Division:       {x_array / y_array = }")
-print(f"  Power:          {x_array ** y_array = }")
-print()
-
-print("You can also perform the dot product using numpy:")
-print(f"  Dot product:    {np.dot(x_array, y_array) = }")
-print()
-
-print("Many common functions are already built in to numpy:")
-print(f"  Square root:   {np.sqrt(x_array) = }")
-print(f"  Sine function: {np.sin(x_array) = }")
-print(f"  Log(Base10):   {np.log10(x_array) = }")
-print(f"  Exponential:   {np.exp(x_array) = }")
-print()
-
-print("You can obtain basic stats using numpy:")
-a = np.array([2, 3, 1, 12, 5])
-print(f"  Data:      {a = }")
-print(f"  Mean:      {np.mean(a) = }")
-print(f"  Std. Dev.: {np.std(a) = }")
-print(f"  Median:    {np.median(a) = }")
-print(f"  Maximum:   {np.max(a) = }")
-print(f"  Minimum:   {np.min(a) = }")
-print(f"  Summation: {np.sum(a) = }")
-print()
-
-# ============================================================================
-#   PROBLEM 
+#   PROBLEM
 # ============================================================================
 #
 #   Consider the following dataset with:
@@ -99,7 +25,7 @@ print()
 # ============================================================================
 
 # ============================================================================
-#   SOLUTION 
+#   SOLUTION
 # ============================================================================
 #
 #   Approach:
@@ -116,6 +42,8 @@ print()
 #     * etc...:  axis=2, 3, 4, 5
 #
 # ============================================================================
+
+import numpy as np
 
 print("============\n  SOLUTION  \n============\n")
 
