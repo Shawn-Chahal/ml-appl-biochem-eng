@@ -16,7 +16,21 @@
 print()
 
 print("You can use a for loop to iterate over a range of numbers:")
-for i in range(10):  # Iterate 10 times ranging from 0 to 9
+for i in range(10):  # Iterate from 0 to 10, but exclude 10
+    print(f"  {i = }")
+
+print()
+
+print("You can specify a start, stop, and step size in range():")
+for i in range(1, 11, 2):  # Iterate from 1 to 11, in steps of 2, but exclude 11
+    print(f"  {i = }")
+
+print()
+
+print("You can also use variables in range():")
+x = 3
+y = 7
+for i in range(x, y + 1):  # Iterate from x to y+1,but exclude y+1
     print(f"  {i = }")
 
 print()
