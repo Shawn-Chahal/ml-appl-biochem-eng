@@ -6,6 +6,11 @@ Biochemical Engineering* at the University of Ottawa.
 Follow the [Getting Started Guide](lectures/lecture_01/getting_started.md) to set up your Python environment and connect
 to GitHub.
 
+## Assignments
+
+1. [Assignment 1: Bioprocess Monitoring with Python](assignments/assignment_01/assignment_01.md)
+    - Due: Monday, October 5 at 11:59 PM
+
 ## Course Outline
 
 ### Lecture 1: Setting up your Python Environment
@@ -17,22 +22,28 @@ to GitHub.
 #### Python basics
 
 1. [Data types and operations](lectures/lecture_02/main_01_basics.py)
-2. [Lists and tuples](lectures/lecture_02/main_02_lists_tuples.py)
-3. [For loops](lectures/lecture_02/main_03_for_loops.py)
+2. [Lists and Tuples](lectures/lecture_02/main_02_lists_tuples.py)
+3. [Dictionaries](lectures/lecture_02/main_03_dicts.py)
+4. [For loops](lectures/lecture_02/main_04_for_loops.py)
 
 #### Building a process control simulator
 
-4. [Conditionals](lectures/lecture_02/main_04_conditionals.py)
-5. [While loops](lectures/lecture_02/main_05_while_loops.py)
-6. [Functions](lectures/lecture_02/main_06_functions.py)
-7. [Classes](lectures/lecture_02/main_07_classes.py)
+5. [Conditionals](lectures/lecture_02/main_05_conditionals.py)
+6. [While loops](lectures/lecture_02/main_06_while_loops.py)
+7. [Functions](lectures/lecture_02/main_07_functions.py)
+8. [Classes](lectures/lecture_02/main_08_classes.py)
 
 #### Data analysis and visualization
 
-8. [NumPy](lectures/lecture_02/main_08_numpy.py)
-9. [Pandas](lectures/lecture_02/main_09_pandas.py)
-10. [Matplotlib](lectures/lecture_02/main_10_matplotlib.py)
+9. [NumPy: Part 1](lectures/lecture_02/main_09_numpy_notes.py)
+10. [NumPy: Part 2](lectures/lecture_02/main_10_numpy_practice.py)
+11. [Pandas: Part 1](lectures/lecture_02/main_11_pandas_notes.py)
+12. [Pandas: Part 2](lectures/lecture_02/main_12_pandas_practice.py)
+13. [Matplotlib: Part 1](lectures/lecture_02/main_13_matplotlib_a.py)
+14. [Matplotlib: Part 2](lectures/lecture_02/main_14_matplotlib_b.py)
+15. [Matplotlib: Part 3](lectures/lecture_02/main_15_matplotlib_c.py)
+16. [Matplotlib: Part 4](lectures/lecture_02/main_16_matplotlib_d.py)
 
 #### Organizing Python projects
 
-11. [Repository structure](https://github.com/Shawn-Chahal/chg4360c-repo-template)
+17. [Repository structure](https://github.com/Shawn-Chahal/chg4360c-repo-template)
