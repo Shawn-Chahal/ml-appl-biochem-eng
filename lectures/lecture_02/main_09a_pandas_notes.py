@@ -15,6 +15,7 @@
 
 import os
 
+import numpy as np
 import pandas as pd
 
 LINE_BREAK = "\n" + 500 * "=" + "\n"
@@ -57,70 +58,43 @@ columns_numpy = df.columns[1:]  # Skips the 1st column (i.e., 'wine') since it i
 print(df.loc[:, columns_numpy].to_numpy())
 print(LINE_BREAK)
 
-# ============================================================================
-#   PROBLEM
-# ============================================================================
-#
-#   Consider the wine dataset contained in dataset_wine.csv
-#    * 178 samples
-#    * 13 features (+ 1 label)
-#
-#   You are interested in performing data analysis on the
-#   proline/malic_acid ratio in wines, alongside a few other
-#   features.
-#
-#   Export a DataFrame that contains columns for:
-#    * wine
-#    * alcohol
-#    * color_intensity
-#    * flavanoids
-#    * od280_od315_ratio
-#    * proline_malic_acid_ratio
-#
-#   Note: We are just exporting the DataFrame here.
-#   We will perform the analysis in the next module.
-#
-# ============================================================================
+print("You can use masks to select parts of a DataFrame:\n")
+alcohol_threshold = 14.0
+wine_target = "wine_0"
+mask_alcohol_high = df.loc[:, "alcohol"] > alcohol_threshold
+mask_wine_target = df.loc[:, "wine"] == wine_target
+mask = mask_alcohol_high * mask_wine_target
+print(f"  {mask.to_numpy() = }")
+print()
 
-# ============================================================================
-#   SOLUTION
-# ============================================================================
-#
-#   1) Import the dataset into a pandas DataFrame.
-#   2) Create the proline_malic_acid_ratio feature.
-#   3) Select the columns required for analysis.
-#   4) Export the resulting DataFrame to a csv file.
-#
-# ============================================================================
+print(f"This DataFrame shows wines belonging to {wine_target} with alcohol > {alcohol_threshold}:\n")
+print(df.loc[mask, :])
+print(LINE_BREAK)
 
-print("============\n  SOLUTION  \n============\n")
+print("You can make a DataFrame from within your code as well:\n")
+n_samples = 101
 
-# Note: We could technically use the same 'df' from above, but for
-# completeness we will show the full solution here.
+# Monod equation
+mu_max = 0.5  # h^-1
+k_s = 100  # mg/L
+s = np.linspace(0, 1000, n_samples)  # mg/L
+mu = mu_max * (s / (k_s + s))  # h^-1
 
+records = []
+for i in range(n_samples):
+    # Create a record for each row in your DataFrame
+    record = (s[i], k_s, mu[i], mu_max)
+    records.append(record)
 
-# Import the dataset into a pandas DataFrame:
-path_import = os.path.join("datasets", "dataset_wine.csv")
-df = pd.read_csv(path_import)
+# Create the column names. Make sure they are in the same order as the record values.
+column_names = ["S [mg/L]", "K_S [mg/L]", "mu [h^-1]", "mu_max [h^-1]"]
+df_export = pd.DataFrame(records, columns=column_names)
 
-# Create a new column for proline_malic_acid_ratio:
-df.loc[:, "proline_malic_acid_ratio"] = df.loc[:, "proline"] / df.loc[:, "malic_acid"]
+# We can export the DataFrame to a CSV file:
+filepath_export = os.path.join("tables", "table_monod_kinetics.csv")
 
-# Create a list of the columns to be exported:
-columns_export = [
-    "wine",
-    "alcohol",
-    "color_intensity",
-    "flavanoids",
-    "od280_od315_ratio",
-    "proline_malic_acid_ratio"
-]
-
-# Create a DataFrame that contains just the columns we want to export:
-df_export = df.loc[:, columns_export]
-
-# Export the DataFrame to a csv file:
-path_export = os.path.join("tables", "table_wine_analysis.csv")
-df_export.to_csv(path_export, index=False)  # index=False, prevents the index column from being copied to the csv file.
+# Assign index=False to prevent the index column from being copied to the csv file.
+df_export.to_csv(filepath_export, index=False)
 
 print(df_export)
+print(LINE_BREAK)

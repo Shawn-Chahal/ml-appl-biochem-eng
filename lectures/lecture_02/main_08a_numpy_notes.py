@@ -99,3 +99,35 @@ c = np.array(["HEK 293", "HEK 293", "E. coli", "S. cerevisiae",
 print(f"  {c = }")
 print(f"  {np.unique(c) = }")
 print()
+
+print("You can create a linearly spaced array of values:")
+ph_vals = np.linspace(6, 8, 11)  # Create 11 equally spaced values between (and including) 6 and 8.
+print(f"  {ph_vals = }")
+print()
+
+print("You can create a mask to select specific values from an array:")
+mask_acidic = ph_vals < 7.0
+print(f"  {mask_acidic = }")
+print(f"  {ph_vals[mask_acidic] = }")
+print()
+
+print("You can invert masks as well:")
+mask_basic_or_neutral = ~mask_acidic
+print(f"  {mask_basic_or_neutral = }")
+print(f"  {ph_vals[mask_basic_or_neutral] = }")
+print()
+
+print("You can add masks together if you want to select values where EITHER condition is True:")
+ph_lims = (7.1, 7.5)
+mask_ph_low = ph_vals < ph_lims[0]
+mask_ph_high = ph_vals > ph_lims[1]
+mask_ph_not_ok = mask_ph_low + mask_ph_high
+print(f"  {mask_ph_not_ok = }")
+print(f"  {ph_vals[mask_ph_not_ok] = }")
+print()
+
+print("You can multiply masks together if you want to select values where BOTH conditions are True:")
+mask_ph_ok = (ph_vals >= ph_lims[0]) * (ph_vals <= ph_lims[1])
+print(f"  {mask_ph_ok = }")
+print(f"  {ph_vals[mask_ph_ok] = }")
+print()

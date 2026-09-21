@@ -73,3 +73,28 @@ print(f"  {z_div = }")
 print(f"  {z_pow = }")
 print(f"  {z_mod = }")
 print()
+
+print("Booleans can be converted to numbers and vice-versa:")
+print(f"  {int(True) = }")
+print(f"  {int(False) = }")
+print(f"  {bool(0) = }")
+print(f"  {bool(1) = }")
+print(f"  {bool(2) = }")
+print(f"  {bool(2.4) = }")
+print(f"  {bool(-1) = }")
+print()
+
+print("NOTE: Zero is treated as False, and any nonzero numeric value is treated as True")
+print("      when converted to a Boolean or evaluated in a Boolean context.")
+print()
+
+print("You can perform mathematical operations on booleans as well:")
+print(f"  {bool(True  * True)  = }")
+print(f"  {bool(True  * False) = }")
+print(f"  {bool(False * False) = }")
+print(f"  {bool(True  + True)  = }")
+print(f"  {bool(True  + False) = }")
+print(f"  {bool(False + False) = }")
+print()
+
+# NOTE: Boolean math will become important later, especially when dealing with masks.
