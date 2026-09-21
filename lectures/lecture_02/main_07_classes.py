@@ -15,13 +15,13 @@
 
 # Class names are typically written in CapitalizedWords.
 class Bioreactor:
-    def __init__(self, process_name, ph_min, ph_max, ph_change, temp_min, temp_max, temp_change):
+    def __init__(self, process_name, ph_lims, ph_change, temp_lims, temp_change):
         self.process_name = process_name
-        self.ph_min = ph_min
-        self.ph_max = ph_max
+        self.ph_min = ph_lims[0]
+        self.ph_max = ph_lims[1]
         self.ph_change = ph_change
-        self.temp_min = temp_min
-        self.temp_max = temp_max
+        self.temp_min = temp_lims[0]
+        self.temp_max = temp_lims[1]
         self.temp_change = temp_change
 
     def in_optimal_range(self, ph, temperature):
@@ -36,7 +36,7 @@ class Bioreactor:
         return process_ok
 
     def simulate_process(self, initial_ph, initial_temperature):
-        print(f"\n===== {self.process_name} START =====")
+        print(f"\n===== {self.process_name} CONTROL START =====")
         ph = initial_ph
         temperature = initial_temperature
         process_ok = self.in_optimal_range(ph, temperature)
@@ -57,7 +57,7 @@ class Bioreactor:
 
             process_ok = self.in_optimal_range(ph, temperature)
 
-        print(f"\n===== {self.process_name} END =======")
+        print(f"\n===== {self.process_name} CONTROL END =======")
         print()
 
 
@@ -76,12 +76,12 @@ class Bioreactor:
 
 # Instantiate Bioreactor objects from the Bioreactor class
 bioreactor_1 = Bioreactor(process_name="Ethanol fermentation",
-                          ph_min=4.0, ph_max=5.0, ph_change=0.1,
-                          temp_min=28, temp_max=32, temp_change=0.4)
+                          ph_lims=(4.0, 5.0), ph_change=0.1,
+                          temp_lims=(28, 32), temp_change=0.4)
 
 bioreactor_2 = Bioreactor(process_name="Thermophilic anaerobic digestion",
-                          ph_min=6.8, ph_max=7.8, ph_change=0.1,
-                          temp_min=50, temp_max=60, temp_change=0.8)
+                          ph_lims=(6.8, 7.8), ph_change=0.1,
+                          temp_lims=(50, 60), temp_change=0.8)
 
 # Run simulations
 bioreactor_1.simulate_process(initial_ph=5.15, initial_temperature=26.1)
