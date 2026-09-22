@@ -59,8 +59,7 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 
 ## Setting up your assignment
 
-1. You can start by downloading the [repository template](https://github.com/Shawn-Chahal/chg4360c-repo-template) for
-   the course.
+1. Download the [repository template](https://github.com/Shawn-Chahal/chg4360c-repo-template) for the course.
 
 2. Replace `main.py` and `classes.py` in your local repository, with the equivalent files found in the
    [`provided_files`](provided_files/) directory.
@@ -70,6 +69,9 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 
 4. When you open the project in PyCharm, make sure that you have the course environment selected in the bottom-right
    corner.
+
+5. Make sure you replaced any placeholder files from the repository template with the appropriate content and deleted
+   any placeholder files that you are not using.
 
 ## Provided files
 
