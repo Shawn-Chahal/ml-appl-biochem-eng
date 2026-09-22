@@ -68,6 +68,9 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 3. Add [`dataset_fermentation.csv`](provided_files/dataset_fermentation.csv) to the `datasets` directory in your local
    repository.
 
+4. When you open the project in PyCharm, make sure that you have the course environment selected in the bottom-right
+   corner.
+
 ## Provided files
 
 [`main.py`](provided_files/main.py)
