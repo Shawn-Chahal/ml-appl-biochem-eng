@@ -1,3 +1,18 @@
+# ============================================================================
+#   Standardization
+# ============================================================================
+#
+#   * Standardization transforms features so they have a mean of 0 and a
+#     standard deviation of 1.
+#
+#   * The scaling parameters are learned from a training dataset and then
+#     applied to new data using the same transformation.
+#
+#   * Standardization helps ensure that features with different scales
+#     contribute more equally to machine learning models.
+#
+# ============================================================================
+
 import os
 
 import numpy as np
