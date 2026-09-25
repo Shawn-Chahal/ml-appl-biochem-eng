@@ -33,7 +33,7 @@ n_split = 400  # samples
 x_1 = x[:n_split, :]  # Contains the first 400 samples
 x_2 = x[n_split:, :]  # Contains the remaining 100 samples
 
-# Create a standard scaler instance
+# Create an instance of StandardScaler
 scaler = StandardScaler()
 
 # Learn the mean and SD of each feature using x_1

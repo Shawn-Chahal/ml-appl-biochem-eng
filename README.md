@@ -34,9 +34,6 @@ throughout the course.
 2. [Lists and Tuples](lectures/lecture_02/main_02_lists_tuples.py)
 3. [Dictionaries](lectures/lecture_02/main_03_dicts.py)
 4. [For loops](lectures/lecture_02/main_04_for_loops.py)
-
-#### Building a process control simulator
-
 5. [Conditionals](lectures/lecture_02/main_05_conditionals.py)
 6. [While loops](lectures/lecture_02/main_06_while_loops.py)
 7. [Functions](lectures/lecture_02/main_07_functions.py)
@@ -59,7 +56,6 @@ throughout the course.
 
 ### Lecture 3: Fundamentals of Machine Learning
 
-#### Data preprocessing
-
 1. [Normalization](lectures/lecture_03/main_01_normalization.py)
 2. [Standardization](lectures/lecture_03/main_02_standardization.py)
+3. [Linear regression](lectures/lecture_03/main_03_linear_regression.py)
