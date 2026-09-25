@@ -1,17 +1,26 @@
 # Machine Learning Applied to Biochemical Engineering
 
-This repository contains course material for the Fall 2026 session of CHG 4360-C: *Machine Learning Applied to
-Biochemical Engineering* at the University of Ottawa.
+This repository contains course material for the course CHG 4360-C: *Machine Learning Applied to Biochemical
+Engineering* at the University of Ottawa.
 
 Follow the [Getting Started Guide](lectures/lecture_01/getting_started.md) to set up your Python environment and connect
 to GitHub.
+
+## Table of Contents
+
+1. [Setting up your Python Environment](#lecture-1-setting-up-your-python-environment)
+2. [Introduction to Python for Data Science](#lecture-2-introduction-to-python-for-data-science)
+3. [Fundamentals of Machine Learning](#lecture-3-fundamentals-of-machine-learning)
 
 ## Assignments
 
 1. [Assignment 1: Bioprocess Monitoring with Python](assignments/assignment_01/assignment_01.md)
     - Due: Monday, October 5 at 11:59 PM
 
-## Course Outline
+## Course Notes
+
+Lecture slides are available on Brightspace. This repository contains the code examples, exercises, and notes used
+throughout the course.
 
 ### Lecture 1: Setting up your Python Environment
 
@@ -47,3 +56,10 @@ to GitHub.
 #### Organizing Python projects
 
 17. [Repository structure](https://github.com/Shawn-Chahal/chg4360c-repo-template)
+
+### Lecture 3: Fundamentals of Machine Learning
+
+#### Data preprocessing
+
+1. [Normalization](lectures/lecture_03/main_01_normalization.py)
+2. [Standardization](lectures/lecture_03/main_02_standardization.py)
