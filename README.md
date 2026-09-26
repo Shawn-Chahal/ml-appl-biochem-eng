@@ -61,6 +61,6 @@ throughout the course.
 3. [Linear regression](lectures/lecture_03/main_03_linear_regression.py)
 4. [Pipelines](lectures/lecture_03/main_04_pipelines.py)
 5. [Cross-validation](lectures/lecture_03/main_05_cross_validation.py)
-
+6. [Polynomial regression](lectures/lecture_03/main_06_polynomial_regression.py)
 
 
