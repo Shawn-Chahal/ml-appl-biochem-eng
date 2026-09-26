@@ -62,5 +62,5 @@ throughout the course.
 4. [Pipelines](lectures/lecture_03/main_04_pipelines.py)
 5. [Cross-validation](lectures/lecture_03/main_05_cross_validation.py)
 6. [Polynomial regression](lectures/lecture_03/main_06_polynomial_regression.py)
-
+7. [Bias-variance tradeoff](lectures/lecture_03/main_07_bias_variance_tradeoff.py)
 
