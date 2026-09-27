@@ -71,7 +71,7 @@ ax.set_ylabel(y_feature, fontsize=10)
 ax.tick_params(axis='both', which='major', labelsize=10)
 
 # Save the figure as a png file to the 'figures' directory:
-fig.savefig(os.path.join("figures", "figure_01.png"))
+fig.savefig(os.path.join("figures", "figure_13.png"))
 
 # Close the figure to free up memory:
 plt.close(fig)

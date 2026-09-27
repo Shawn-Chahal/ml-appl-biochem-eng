@@ -17,7 +17,40 @@ import os
 
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 from sklearn.preprocessing import StandardScaler
+
+
+# Define functions
+def generate_figure(x_data, tag, standardized_data=False):
+    markers = ["o", "D", "s", "^", "X", "P", "*", "v"]
+    fig_width = 14.33 / 2.54
+    fig_height = 10.24 / 2.54
+    fontsize_xy_label = 14
+    fontsize_ticks = 12
+    fontsize_legend = 12
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(fig_width, fig_height), dpi=200, layout="constrained")
+    for i, feature in enumerate(features):
+        x_plot = x_data[:, i]
+        y_plot = i * np.ones_like(x_plot)
+        label = feature
+
+        if standardized_data:
+            idx_end = label.find('[') - 1
+            if idx_end > 0:
+                label = label[:label.find('[')]
+
+        ax.scatter(x_plot, y_plot, label=label, marker=markers[i], edgecolors="black", alpha=0.1)
+
+    ax.set_xlabel("Feature value", fontsize=fontsize_xy_label)
+    ax.set_yticks([])
+    ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
+    ax.set_ylim(bottom=-0.5, top=len(features) + 0.5)
+    ax.legend(ncols=2, loc="upper center", fontsize=fontsize_legend)
+
+    fig.savefig(os.path.join("figures", f"figure_02_{tag}.png"))
+    plt.close(fig)
+
 
 # Import dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_protein_yield.csv"))
@@ -67,3 +100,10 @@ print(f"  {np.std(x_2_std, axis=0).round(2) = }")
 print()
 
 print("Note how the mean and SD are (0, 1) for x_1, but not for x_2.")
+
+# ========================
+#   PLOT x_1 and x_1_std
+# ========================
+
+generate_figure(x_1, "RawData")
+generate_figure(x_1_std, "Standardized", standardized_data=True)

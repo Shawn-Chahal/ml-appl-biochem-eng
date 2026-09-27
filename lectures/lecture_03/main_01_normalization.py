@@ -17,12 +17,7 @@ import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from sklearn.preprocessing import normalize
-
-# Define constants
-LINESTYLES = ["-", ":", "--", "-."]
-FIG_WIDTH = 14.33 / 2.54
-FIG_HEIGHT = 10.24 / 2.54
+from sklearn.preprocessing import normalize, StandardScaler
 
 
 # Define functions
@@ -36,17 +31,22 @@ def norm_l2(x):
     return np.sqrt(np.sum(x ** 2, axis=1))
 
 
-def generate_figure(spectra_type, tag):
+def generate_figure(spectra_type, tag, plot_legend=True):
+    linestyles = ["-", ":", "--", "-."]
+    fig_width = 14.33 / 2.54
+    fig_height = 10.24 / 2.54
     fontsize_xy_label = 14
     fontsize_ticks = 12
     fontsize_legend = 12
-    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(FIG_WIDTH, FIG_HEIGHT), dpi=200, layout="constrained")
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(fig_width, fig_height), dpi=200, layout="constrained")
     for i in range(spectra.shape[0]):
-        ax.plot(wavelengths, spectra_type[i, :], label=f"Sample {i}", linestyle=LINESTYLES[i])
-        ax.set_xlabel("Wavelength [nm]", fontsize=fontsize_xy_label)
-        ax.set_ylabel("Fluorescence [a.u.]", fontsize=fontsize_xy_label)
-        ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
-        ax.legend(ncols=1, fontsize=fontsize_legend)
+        ax.plot(wavelengths, spectra_type[i, :], label=f"Sample {i}", linestyle=linestyles[i])
+
+    ax.set_xlabel("Wavelength [nm]", fontsize=fontsize_xy_label)
+    ax.set_ylabel("Fluorescence [a.u.]", fontsize=fontsize_xy_label)
+    ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
+    if plot_legend:
+        ax.legend(fontsize=fontsize_legend)
 
     fig.savefig(os.path.join("figures", f"figure_01_{tag}.png"))
     plt.close(fig)
@@ -85,3 +85,11 @@ print("\nCalculating L2 norm...")
 print(f"  {norm_l2(spectra)    = }")
 print(f"  {norm_l2(spectra_l1) = }")
 print(f"  {norm_l2(spectra_l2) = }")
+
+# ===================================
+#   AN EXAMPLE OF WHAT NOT TO DO
+# ===================================
+
+scaler = StandardScaler()
+spectra_std = scaler.fit_transform(spectra)
+generate_figure(spectra_std, "Standardized", plot_legend=False)

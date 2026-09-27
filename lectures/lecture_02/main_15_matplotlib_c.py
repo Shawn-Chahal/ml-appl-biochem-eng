@@ -86,5 +86,5 @@ for x_idx, x_feature in enumerate(features):
         axes[y_idx, x_idx].tick_params(axis='both', which='major', labelsize=10)
         axes[y_idx, x_idx].legend(fontsize=10)
 
-fig.savefig(os.path.join("figures", "figure_03.png"))
+fig.savefig(os.path.join("figures", "figure_15.png"))
 plt.close(fig)

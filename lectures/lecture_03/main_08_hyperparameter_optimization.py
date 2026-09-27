@@ -97,5 +97,5 @@ ax.legend(ncols=1, fontsize=fontsize_legend)
 ax.set_ylim(bottom=0)
 ax.xaxis.set_major_locator(MultipleLocator(1))
 
-fig.savefig(os.path.join("figures", "figure_02.png"))
+fig.savefig(os.path.join("figures", "figure_08.png"))
 plt.close(fig)

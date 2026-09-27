@@ -74,5 +74,5 @@ ax.tick_params(axis='both', which='major', labelsize=10)
 # Create a legend
 ax.legend(fontsize=10)
 
-fig.savefig(os.path.join("figures", "figure_02.png"))
+fig.savefig(os.path.join("figures", "figure_14.png"))
 plt.close(fig)
