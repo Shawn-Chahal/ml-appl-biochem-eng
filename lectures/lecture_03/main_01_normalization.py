@@ -17,7 +17,7 @@ import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from sklearn.preprocessing import normalize, StandardScaler
+from sklearn.preprocessing import normalize
 
 
 # Define functions
@@ -52,11 +52,24 @@ def generate_figure(spectra_type, tag, plot_legend=True):
     plt.close(fig)
 
 
+def wavelength_string_to_float(wavelength_string):
+    # Create a list of strings. E.g., "410 nm" becomes ["410", "nm"]
+    wavelength_string_list = wavelength_string.split(" ")
+
+    # Get the first item in the list. E.g., "410"
+    wavelength_string_value = wavelength_string_list[0]
+
+    # Convert the number from a string to a float. E.g., "410" becomes 410.0
+    wavelength_float = float(wavelength_string_value)
+
+    return wavelength_float
+
+
 # Import the dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_fluo_spectra.csv"))
 
 # Remove the "nm" from column labels and convert from string to float
-wavelengths = np.array([float(col.split(" ")[0]) for col in df.columns])
+wavelengths = [wavelength_string_to_float(col) for col in df.columns]
 
 # Convert the entire DataFrame into a numpy array
 spectra = df.to_numpy()
@@ -89,7 +102,9 @@ print(f"  {norm_l2(spectra_l2) = }")
 # ===================================
 #   AN EXAMPLE OF WHAT NOT TO DO
 # ===================================
-
-scaler = StandardScaler()
-spectra_std = scaler.fit_transform(spectra)
-generate_figure(spectra_std, "Standardized", plot_legend=False)
+#
+# You can try this code once you've learned about standardization.
+#
+# scaler = StandardScaler()
+# spectra_std = scaler.fit_transform(spectra)
+# generate_figure(spectra_std, "Standardized", plot_legend=False)
