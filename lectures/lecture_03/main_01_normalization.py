@@ -71,7 +71,7 @@ spectra_l2 = normalize(spectra, norm="l2")
 print(f"{spectra.shape = }")
 
 # Generate figures
-generate_figure(spectra, "Regular")
+generate_figure(spectra, "RawData")
 generate_figure(spectra_l1, "L1")
 generate_figure(spectra_l2, "L2")
 
