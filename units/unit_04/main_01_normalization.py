@@ -17,7 +17,7 @@ import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from sklearn.preprocessing import normalize
+from sklearn.preprocessing import normalize, StandardScaler
 
 
 # Define functions
@@ -99,12 +99,17 @@ print(f"  {norm_l2(spectra)    = }")
 print(f"  {norm_l2(spectra_l1) = }")
 print(f"  {norm_l2(spectra_l2) = }")
 
-# ===================================
-#   AN EXAMPLE OF WHAT NOT TO DO
-# ===================================
+# ============================================================================
+#   An example of what not to do...
+# ============================================================================
 #
-# You can try this code once you've learned about standardization.
+#   * You can try this code once you've learned about standardization.
 #
-# scaler = StandardScaler()
-# spectra_std = scaler.fit_transform(spectra)
-# generate_figure(spectra_std, "Standardized", plot_legend=False)
+# ============================================================================
+
+learned_about_standardization = True
+
+if learned_about_standardization:
+    scaler = StandardScaler()
+    spectra_std = scaler.fit_transform(spectra)
+    generate_figure(spectra_std, "Standardized", plot_legend=False)

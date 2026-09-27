@@ -91,7 +91,7 @@ column_names = ["S [mg/L]", "K_S [mg/L]", "mu [h^-1]", "mu_max [h^-1]"]
 df_export = pd.DataFrame(records, columns=column_names)
 
 # We can export the DataFrame to a CSV file:
-filepath_export = os.path.join("tables", "table_monod_kinetics.csv")
+filepath_export = os.path.join("tables", "table_03_monod_kinetics.csv")
 
 # Assign index=False to prevent the index column from being copied to the csv file.
 df_export.to_csv(filepath_export, index=False)

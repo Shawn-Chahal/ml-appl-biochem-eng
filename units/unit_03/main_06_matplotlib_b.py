@@ -6,7 +6,7 @@ import pandas as pd
 
 # Previously on matplotlib...
 
-df = pd.read_csv(os.path.join("tables", "table_wine_analysis.csv"))
+df = pd.read_csv(os.path.join("tables", "table_04_wine_analysis.csv"))
 x_feature = "flavanoids"
 y_feature = "proline_malic_acid_ratio"
 
@@ -74,5 +74,5 @@ ax.tick_params(axis='both', which='major', labelsize=10)
 # Create a legend
 ax.legend(fontsize=10)
 
-fig.savefig(os.path.join("figures", "figure_14.png"))
+fig.savefig(os.path.join("figures", "figure_06.png"))
 plt.close(fig)

@@ -65,7 +65,7 @@ columns_export = [
 df_export = df.loc[:, columns_export]
 
 # Export the DataFrame to a csv file:
-path_export = os.path.join("tables", "table_wine_analysis.csv")
+path_export = os.path.join("tables", "table_04_wine_analysis.csv")
 df_export.to_csv(path_export, index=False)
 
 print(df_export)

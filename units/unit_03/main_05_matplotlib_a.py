@@ -20,7 +20,7 @@ import pandas as pd
 
 # Let's visualize the data in 'table_wine_analysis.csv
 
-df = pd.read_csv(os.path.join("tables", "table_wine_analysis.csv"))
+df = pd.read_csv(os.path.join("tables", "table_04_wine_analysis.csv"))
 
 # Let's start with a basic figure plotting
 # 'proline_malic_acid_ratio' vs 'flavanoids':
@@ -71,7 +71,7 @@ ax.set_ylabel(y_feature, fontsize=10)
 ax.tick_params(axis='both', which='major', labelsize=10)
 
 # Save the figure as a png file to the 'figures' directory:
-fig.savefig(os.path.join("figures", "figure_13.png"))
+fig.savefig(os.path.join("figures", "figure_05.png"))
 
 # Close the figure to free up memory:
 plt.close(fig)

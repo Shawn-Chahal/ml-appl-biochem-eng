@@ -26,7 +26,7 @@ COLORS = ["tab:blue", "tab:orange", "tab:green", "tab:red",
 
 MARKERS = ["o", "D", "s", "^", "X", "P", "*", "v"]
 
-df = pd.read_csv(os.path.join("tables", "table_wine_analysis.csv"))
+df = pd.read_csv(os.path.join("tables", "table_04_wine_analysis.csv"))
 
 x_feature = "flavanoids"
 y_feature = "proline_malic_acid_ratio"
@@ -86,5 +86,5 @@ for x_idx, x_feature in enumerate(features):
         axes[y_idx, x_idx].tick_params(axis='both', which='major', labelsize=10)
         axes[y_idx, x_idx].legend(fontsize=10)
 
-fig.savefig(os.path.join("figures", "figure_15.png"))
+fig.savefig(os.path.join("figures", "figure_07.png"))
 plt.close(fig)

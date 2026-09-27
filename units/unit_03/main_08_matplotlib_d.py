@@ -40,5 +40,5 @@ for ax in np.ravel(axes):
     ax.set_ylabel("Concentration [mM]")
     ax.legend()
 
-fig.savefig(os.path.join("figures", "figure_16.png"))
+fig.savefig(os.path.join("figures", "figure_08.png"))
 plt.close(fig)

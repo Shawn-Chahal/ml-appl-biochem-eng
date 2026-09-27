@@ -62,7 +62,7 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 1. Download the [repository template](https://github.com/Shawn-Chahal/chg4360c-repo-template) for the course.
 
 2. Replace `main.py` and `classes.py` in your local repository, with the equivalent files found in the
-   [`provided_files`](provided_files/) directory.
+   [`provided_files`](provided_files) directory.
 
 3. Add [`dataset_fermentation.csv`](provided_files/dataset_fermentation.csv) to the `datasets` directory in your local
    repository.

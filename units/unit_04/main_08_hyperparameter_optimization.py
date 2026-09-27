@@ -46,7 +46,7 @@ param_grid = dict(polynomialfeatures__degree=[i for i in range(1, 11)])
 
 # Create the model using GridSearchCV
 model_gscv = GridSearchCV(model, param_grid=param_grid,
-                          cv=5, scoring="neg_root_mean_squared_error", return_train_score=True)
+                          cv=4, scoring="neg_root_mean_squared_error", return_train_score=True)
 
 # Fit the model
 model_gscv.fit(x_train, y_train)
@@ -81,7 +81,7 @@ fontsize_xy_label = 14
 fontsize_ticks = 12
 fontsize_legend = 12
 
-plot_n = 5
+plot_n = 4
 degrees = df.loc[:, "param_polynomialfeatures__degree"].to_numpy()
 rmse_train = - df.loc[:, "mean_train_score"].to_numpy()
 rmse_test = - df.loc[:, "mean_test_score"].to_numpy()
