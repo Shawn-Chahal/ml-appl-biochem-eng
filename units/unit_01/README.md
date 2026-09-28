@@ -1,4 +1,4 @@
-# Getting Started
+# Unit 1: Getting Started with Python
 
 This document will guide you through installing the required software and setting up the course's development
 environment.
@@ -8,6 +8,16 @@ environment.
 If you are using a different package manager, IDE, or OS, you may occasionally notice minor differences between your
 development environment and the one demonstrated in class. These differences are normal and typically do not affect the
 underlying concepts or functionality of the code.
+
+## Table of Contents
+
+1. [Install Git](#step-1-install-git)
+2. [Install Miniconda](#step-2-install-miniconda)
+3. [Install PyCharm](#step-3-install-pycharm)
+4. [Create the conda environment](#step-4-create-the-conda-environment)
+5. [Test the conda environment](#step-5-test-the-conda-environment)
+6. [Connect to GitHub](#step-6-connect-to-github)
+7. [Troubleshooting guide](#troubleshooting-guide)
 
 ## Step 1: Install Git
 
