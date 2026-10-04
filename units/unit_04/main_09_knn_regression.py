@@ -1,15 +1,16 @@
 # ============================================================================
-#   k-Nearest Neighbors Regression
+#   k-Nearest Neighbors (kNN) Regression
 # ============================================================================
 #
-#   * Polynomial regression extends linear regression using higher-order
-#     terms of the input features.
+#   * kNN regression predicts the target value by averaging the values
+#     of the k nearest training samples.
 #
-#   * These additional terms allow the model to capture nonlinear
-#     relationships in the data.
+#   * Feature scaling is often important because distance-based models
+#     are sensitive to differences in feature scale.
 #
-#   * More complex polynomial models can improve fit but may increase the
-#     risk of overfitting.
+#   * The choice of k controls model complexity:
+#       - Smaller k values can capture local patterns but may overfit.
+#       - Larger k values produce smoother predictions but may underfit.
 #
 # ============================================================================
 
