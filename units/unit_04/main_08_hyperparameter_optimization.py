@@ -66,13 +66,13 @@ print()
 
 # Print the final test score on data that was never seen by GridSearchCV
 print(f"Final Test negative RMSE: {model_gscv.score(x_test, y_test):.6f} mg/L\n")
-print("Note how it is slightly worse than the best mean_test_score in the GridSearchCV results.")
 print()
 
-# =========
-#   PLOT
-# =========
+# ==========================
+#   Plot Validation Curves
+# ==========================
 
+COLORS = ["tab:blue", "tab:orange", "tab:green", "tab:red"]
 LINESTYLES = ["-", ":", "--", "-."]
 FIG_WIDTH = 14.39 / 2.54
 FIG_HEIGHT = 12.09 / 2.54
@@ -88,8 +88,8 @@ rmse_test = - df.loc[:, "mean_test_score"].to_numpy()
 
 fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(FIG_WIDTH, FIG_HEIGHT), dpi=200, layout="constrained")
 
-ax.plot(degrees[:plot_n], rmse_train[:plot_n], label=f"Train", linestyle=LINESTYLES[0])
-ax.plot(degrees[:plot_n], rmse_test[:plot_n], label=f"Test", linestyle=LINESTYLES[1])
+ax.plot(degrees[:plot_n], rmse_train[:plot_n], label=f"Train (Poly)", color=COLORS[0], linestyle="-")
+ax.plot(degrees[:plot_n], rmse_test[:plot_n], label=f"Test (Poly)", color=COLORS[0], linestyle="--")
 ax.set_xlabel("Polynomial Degree", fontsize=fontsize_xy_label)
 ax.set_ylabel("Protein Yield RMSE [mg/L]", fontsize=fontsize_xy_label)
 ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
