@@ -55,4 +55,9 @@ Lecture slides are available on Brightspace. This repository contains the code e
 6. [Polynomial regression](units/unit_04/main_06_polynomial_regression.py)
 7. [Bias-variance tradeoff](units/unit_04/main_07_bias_variance_tradeoff.py)
 8. [Hyperparameter optimization](units/unit_04/main_08_hyperparameter_optimization.py)
+9. [*k*-Nearest neighbors regression](units/unit_04/main_09_knn_regression.py)
+10. [Learning curve](units/unit_04/main_10_learning_curve.py)
 
+### Unit 5: Time Series Forecasting
+
+Coming soon...
