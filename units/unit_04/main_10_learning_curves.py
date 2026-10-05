@@ -1,5 +1,5 @@
 # ============================================================================
-#   Learning Curve
+#   Learning Curves
 # ============================================================================
 #
 #   * A learning curve shows how model performance changes as the

@@ -95,7 +95,7 @@ for i, weight in enumerate(param_grid["kneighborsregressor__weights"], start=1):
     rmse_test = - df_sub.loc[:, "mean_test_score"].to_numpy()
 
     ax.plot(n_neighbors, rmse_train, label=f"Train (kNN: {weight})", color=COLORS[i], linestyle="-")
-    ax.plot(n_neighbors, rmse_test, label=f"Test (kNN: {weight})", color=COLORS[i], linestyle="--")
+    ax.plot(n_neighbors, rmse_test, label=f"Valid (kNN: {weight})", color=COLORS[i], linestyle="--")
 
 ax.set_xlabel("k", fontsize=fontsize_xy_label)
 ax.set_ylabel("Protein Yield RMSE [mg/L]", fontsize=fontsize_xy_label)
@@ -103,5 +103,5 @@ ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
 ax.legend(ncols=1, fontsize=fontsize_legend)
 ax.set_ylim(bottom=0)
 
-fig.savefig(os.path.join("figures", "figure_09.png"))
+fig.savefig(os.path.join("figures", "figure_09_validation_curve_knn.png"))
 plt.close(fig)
