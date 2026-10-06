@@ -2,8 +2,9 @@
 #   k-Nearest Neighbors (kNN) Regression
 # ============================================================================
 #
-#   * kNN regression predicts the target value by averaging the values
-#     of the k nearest training samples.
+#   * kNN regression predicts the target value of new samples by taking
+#     the (weighted) average of the values of the k nearest training
+#     samples.
 #
 #   * Feature scaling is often important because distance-based models
 #     are sensitive to differences in feature scale.
@@ -40,8 +41,8 @@ model = make_pipeline(
 
 # Define the "Grid" that we want to "Search" when performing "CV" in GridSearchCV
 param_grid = dict(
-    kneighborsregressor__n_neighbors=[i for i in range(1, 81)],  # Try every value of n_neighbors from 1 to 10
-    kneighborsregressor__weights=["uniform", "distance"],  # Try both weight functions
+    kneighborsregressor__n_neighbors=[i for i in range(1, 81)],  # Try every value of n_neighbors from 1 to 80
+    kneighborsregressor__weights=["uniform", "distance"],  # Try both weight algorithms
 )
 
 # Create the model using GridSearchCV
