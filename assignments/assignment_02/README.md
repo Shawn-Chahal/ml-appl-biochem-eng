@@ -16,44 +16,73 @@ growth under different operating conditions.
 - Your task for this assignment is to develop a machine learning model that can predict the specific growth rate of
   cells based on the temperature, pH, glucose concentration and lactate concentration of a cell culture.
 
+- In your GitHub repository, you should add a description to the "About" section.
+    - Describe your project. (10 - 20 words)
 
 - You must also include a `README.md` file which has the following structure:
-    - Project Name (Come up with a name for your project)
-        - One sentence description.
-    - Overview
-        - What were the goals/objectives of this project?
-    - Technologies Used
-        - Python + Libraries used, including version numbers.
-        - Note: You may have many libraries installed in your environment, but here you should only mention the ones you
-          actually used.
-    - Code Design
-        - Describe what your code does after you run `main.py`.
-        - Don't simply state what functions/classes it is calling.
-        - Explain why you are using the function or class.
-        - Explain the overall workflow of the program and why each major stage exists (e.g., data loading,
-          preprocessing, training, evaluation, visualization, etc.).
-    - Analysis
-        - You must justify your choice of model architecture (i.e., model and hyperparameters).
-        - Provide evidence for why this model architecture was better than alternatives for this dataset.
-        - Evidence can be in the form of exported tables as CSV files and/or figures as PNG files.
-        - Describe advantages of your model over alternatives.
-        - Describe the limitations of your model.
-        - Describe how temperature, pH, glucose concentration, and lactate concentration affect the specific growth
-          rate.
-        - Describe cell culture conditions that result in a high specific growth rate.
-        - Describe cell culture conditions that result in a low specific growth rate.
-        - Describe cell culture conditions where the model's predictions may not be reliable.
-        - Describe some applications of the model you developed and how it would be used.
+    - **Project Name**
+        - Heading 1
+        - 40 - 80 words
+        - What does your code do?
+        - What problem does it solve?
+        - Replace heading with your own project name.
+        - The project name should resemble your repository name, but it does not need to be identical.
+    - **Highlights**
+        - Heading 2
+        - 3 - 10 words per bullet point
+        - Include 5 bullet points in an unordered list.
+        - Begin each bullet point with a strong action verb.
+            - E.g., https://capd.mit.edu/resources/resume-action-verbs/
+        - Focus on significant technical work, such as what you built, designed, implemented, optimized, tested, or
+          learned.
+        - Consider what you would want a potential employer to know about your Python skills after reading this section.
+        - Avoid using this section as a feature list.
+    - **Environment**
+        - Heading 2
+        - List the Python version and all libraries used in the project, including version numbers.
+        - Use an unordered list.
+        - List Python first, followed by the libraries in alphabetical order.
+        - Only include libraries that were actually used in the project. Do not include packages that are installed in
+          your environment but were not used.
+    - **Code Design**
+        - Heading 2
+        - 500 - 1000 words
+        - Describe the workflow of the program after `main.py` is executed.
+        - Explain the purpose of each major stage of the workflow and why it exists.
+        - Examples of major stages include data loading, preprocessing, feature engineering, training, evaluation, and
+          visualization.
+        - Do not simply list the functions and classes that are called.
+        - Organize this section using Heading 3 subsections.
+        - For each subsection, describe:
+            - What does this stage of the workflow do?
+            - Why is this stage necessary?
+            - How does this stage contribute to the overall workflow?
+    - **Analysis**
+        - Heading 2
+        - 1000 - 2000 words
+        - Justify your choice of model architecture, including both the model and hyperparameters.
+        - Compare your selected model against reasonable alternatives.
+        - Provide evidence supporting your conclusions. Evidence may include exported CSV tables, PNG figures, or both.
+        - Discuss the advantages and limitations of your model.
+        - Explain how temperature, pH, glucose concentration, and lactate concentration influence specific growth rate.
+        - Describe cell culture conditions:
+            - that result in a high specific growth rate.
+            - that result in a low specific growth rate.
+            - where the model's predictions may not be reliable.
+        - Describe potential applications of the model and how it could be used in practice.
+        - Organize this section using Heading 3 subsections.
 
 
 - Additional Information:
     - There is not a single correct model architecture.
     - You are primarily being evaluated on your ability to justify your use of a model rather than developing a model
       with the lowest possible error.
+    - Figures and tables do not count towards the word count.
     - You can use this website to convert CSV to Markdown, if needed: https://convertcsv.com/csv-to-markdown.htm
     - You should present your repository like a portfolio project rather than an assignment for a course. I would
       encourage you not to make any references to the course (e.g., course code, course name, assignment number, student
       ID, etc.).
+    - You can find the major Markdown syntax elements here: https://www.markdownguide.org/cheat-sheet/
 
 ## Setting up your assignment
 
@@ -97,15 +126,15 @@ You are free to use the libraries found in the course environment to accomplish 
 
 ## Rubric
 
-| Component               | Weight |
-|-------------------------|--------|
-| Repository organization | 5%     |
-| Code execution          | 20%    |
-| Project name            | 5%     |
-| Overview                | 5%     |
-| Technologies Used       | 5%     |
-| Code Design             | 30%    |
-| Analysis                | 30%    |
+| Component         | Weight |
+|-------------------|--------|
+| Code Execution    | 15%    |
+| GitHub Repository | 15%    |
+| Project Name      | 5%     |
+| Highlights        | 5%     |
+| Environment       | 5%     |
+| Code Design       | 20%    |
+| Analysis          | 35%    |
 
 
 
