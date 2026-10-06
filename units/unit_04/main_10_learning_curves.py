@@ -33,9 +33,32 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 
-# By default, matplotlib makes math in italics,
-# but we want our units in regular.
+# By default, matplotlib makes math in italics, but we want our units in regular.
 plt.rcParams['mathtext.default'] = 'regular'
+
+# Constants for plotting. Could have been made in all capitals, but they are not really involved in any math.
+fig_width = 14.39 / 2.54
+fig_height = 12.09 / 2.54
+fontsize_xy_label = 14
+fontsize_ticks = 12
+fontsize_legend = 12
+fontsize_text = 8
+str_hm1 = r"$h^{-1}$"  # Will show a proper superscript in the figure.
+dx = 0.1  # Plot every 0.1 C on the x-axis
+c_poly = "tab:blue"
+c_knn = "tab:orange"
+c_test = "tab:green"
+
+# Define our GridSearchCV parameters.
+kwargs_gscv = dict(cv=4, scoring="neg_root_mean_squared_error", return_train_score=True)
+
+param_grid_poly = dict(polynomialfeatures__degree=[i for i in range(1, 21)])
+
+param_grid_knn = dict(kneighborsregressor__n_neighbors=[i for i in range(1, 11)],
+                      kneighborsregressor__weights=["uniform", "distance"])
+
+# Initialize a random number generator. We will use it when we want to select random subsets of our full dataset.
+rng = np.random.default_rng(seed=1)
 
 df = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_temperature.csv"))
 
@@ -45,30 +68,7 @@ target = df.columns[-1]
 x_all = df.loc[:, features].to_numpy()
 y_all = df.loc[:, target].to_numpy()
 
-# Initialize a random number generator
-rng = np.random.default_rng(1)
-
-kwargs_gscv = dict(cv=4, scoring="neg_root_mean_squared_error", return_train_score=True)
-
-param_grid_poly = dict(polynomialfeatures__degree=[i for i in range(1, 21)])
-
-param_grid_knn = dict(kneighborsregressor__n_neighbors=[i for i in range(1, 11)],
-                      kneighborsregressor__weights=["uniform", "distance"])
-
-fig_width = 14.39 / 2.54
-fig_height = 12.09 / 2.54
-fontsize_xy_label = 14
-fontsize_ticks = 12
-fontsize_legend = 12
-fontsize_text = 8
-str_hm1 = r"$h^{-1}$"  # Will show a proper superscript in the figure.
-dx = 0.1  # Plot every 0.1 C on the x-axis
-
-c_poly = "tab:blue"
-c_knn = "tab:orange"
-c_test = "tab:green"
-
-# We are going to generate a learning curve to monitor how RMSE changes with number of training samples
+# We will need to store the various RMSE values at each sample size to generate our learning curve.
 lc_n_training_samples = []
 lc_rmse_poly_train = []
 lc_rmse_knn_train = []
@@ -76,22 +76,24 @@ lc_rmse_poly_test = []
 lc_rmse_knn_test = []
 
 for n_samples in range(20, 110, 10):
-    # We want to look at the effect of number of training samples on model performance.
-    # We will select a random subset of the dataset before splitting into train and test.
+    # We will select a random subset of n_samples from the dataset.
     idxs = rng.choice(x_all.shape[0], size=n_samples, replace=False)
     x = x_all[idxs]
     y = y_all[idxs]
 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
 
+    # Instantiate a GridSearchCV object for the polynomial model.
     model_poly = make_pipeline(StandardScaler(), PolynomialFeatures(include_bias=False), LinearRegression())
     model_gscv_poly = GridSearchCV(model_poly, param_grid=param_grid_poly, **kwargs_gscv)
     model_gscv_poly.fit(x_train, y_train)
 
+    # Instantiate a GridSearchCV object for the kNN model.
     model_knn = make_pipeline(StandardScaler(), KNeighborsRegressor())
     model_gscv_knn = GridSearchCV(model_knn, param_grid=param_grid_knn, **kwargs_gscv)
     model_gscv_knn.fit(x_train, y_train)
 
+    # Compute the min and max once here since it will be used many times later.
     x_min = np.min(x)
     x_max = np.max(x)
 
@@ -103,21 +105,24 @@ for n_samples in range(20, 110, 10):
     y_plot_poly = model_gscv_poly.predict(x_plot)
     y_plot_knn = model_gscv_knn.predict(x_plot)
 
+    # x_buffer will help determine the limits of the x-axis when plotting
+    x_buffer = 0.05 * (x_max - x_min)
+
+    # Calculate the training and test RMSE on the best set of hyperparameters from each grid search
     rmse_poly_train = root_mean_squared_error(y_train, model_gscv_poly.predict(x_train))
     rmse_knn_train = root_mean_squared_error(y_train, model_gscv_knn.predict(x_train))
-
     rmse_poly_test = root_mean_squared_error(y_test, model_gscv_poly.predict(x_test))
     rmse_knn_test = root_mean_squared_error(y_test, model_gscv_knn.predict(x_test))
 
+    # Extract the best hyperparameters
     best_degree = model_gscv_poly.best_params_["polynomialfeatures__degree"]
     best_n_neighbors = model_gscv_knn.best_params_["kneighborsregressor__n_neighbors"]
     best_weight = model_gscv_knn.best_params_["kneighborsregressor__weights"]
 
+    # Extract the number of training samples
     n_training_samples = x_train.shape[0]
 
-    # x_buffer will help determine the limits of the x-axis when plotting
-    x_buffer = 0.05 * (x_max - x_min)
-
+    # We will print this message in our figures
     message = (
         f"{n_training_samples} training samples\n"
         f"Poly degree={best_degree}\n"
@@ -134,13 +139,13 @@ for n_samples in range(20, 110, 10):
     lc_rmse_poly_test.append(rmse_poly_test)
     lc_rmse_knn_test.append(rmse_knn_test)
 
-    # Note how we are only plotting below here, all other calculations or definitions were done above.
+    # Note how we are only plotting below here, all other calculations or definitions were done above
     fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(fig_width, fig_height), dpi=200, layout="constrained")
 
-    ax.scatter(x_train, y_train, label="Training samples", s=20, color="grey", marker="o", edgecolors="none",
-               alpha=0.3, zorder=1)
-    ax.scatter(x_test, y_test, label="Test samples", s=36, color=c_test, marker="D", edgecolors="black",
-               linewidth=1.5, alpha=0.9, zorder=3)
+    ax.scatter(x_train, y_train, label="Training samples", s=20, color="grey", marker="o", edgecolors="none", alpha=0.3,
+               zorder=1)  # zorder defines the order that the axes will be draw in
+    ax.scatter(x_test, y_test, label="Test samples", s=36, color=c_test, marker="D", edgecolors="black", linewidth=1.5,
+               alpha=0.9, zorder=3)
 
     ax.plot(x_plot, y_plot_poly, color=c_poly, label="Model (Poly)", linestyle=":", linewidth=2, zorder=2)
     ax.plot(x_plot, y_plot_knn, color=c_knn, label="Model (kNN)", linestyle="--", linewidth=2, zorder=2)
@@ -151,14 +156,13 @@ for n_samples in range(20, 110, 10):
     ax.legend(loc="upper left", ncols=1, fontsize=fontsize_legend)
 
     ax.set_xlim(left=x_min - x_buffer, right=x_max + x_buffer)
-    ax.hlines(y=0, xmin=x_min - 2 * x_buffer, xmax=x_max + 2 * x_buffer,
-              color="black", linewidth=0.5, alpha=0.3, zorder=0)
+    ax.hlines(y=0, xmin=x_min - 2 * x_buffer, xmax=x_max + 2 * x_buffer, color="black", linewidth=0.5, alpha=0.3,
+              zorder=0)  # hlines draws a horizontal line
 
-    # When using ax.text() with transform=ax.transAxes, the (x, y) positions range from
-    # (0,0) in the top-left corner to (1,1) in the bottom right corner.
-    # va and ha represent vertical and horizontal alignment, respectively.
-    ax.text(x=0.02, y=0.71, s=message, va='top', ha='left', transform=ax.transAxes,
-            fontname='monospace', fontsize=fontsize_text)
+    # When transform=ax.transAxes, the (x, y) positions range from (0,0) in the top-left corner to
+    # (1,1) in the bottom right corner. va and ha represent vertical and horizontal alignment, respectively.
+    ax.text(x=0.02, y=0.71, s=message, va='top', ha='left', transform=ax.transAxes, fontname='monospace',
+            fontsize=fontsize_text)
 
     fig.savefig(os.path.join("figures", f"figure_10_N{n_samples:03d}.png"))
     plt.close(fig)
