@@ -15,6 +15,9 @@ Engineering* at the University of Ottawa.
 1. [Assignment 1: Bioprocess Monitoring with Python](assignments/assignment_01/README.md)
     - Due: Monday, October 5 at 11:59 PM
 
+2. [Assignment 2: Predicting Cell Growth Rates with Machine Learning](assignments/assignment_02/README.md)
+    - Due: Monday, October 19 at 11:59 PM
+
 ## Course Notes
 
 Lecture slides are available on Brightspace. This repository contains the code examples used throughout the course.
