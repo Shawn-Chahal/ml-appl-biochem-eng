@@ -64,6 +64,10 @@ fontsize_text = 8
 str_hm1 = r"$h^{-1}$"  # Will show a proper superscript in the figure.
 dx = 0.1  # Plot every 0.1 C on the x-axis
 
+c_poly = "tab:blue"
+c_knn = "tab:orange"
+c_test = "tab:green"
+
 # We are going to generate a learning curve to monitor how RMSE changes with number of training samples
 lc_n_training_samples = []
 lc_rmse_poly_train = []
@@ -135,11 +139,11 @@ for n_samples in range(20, 110, 10):
 
     ax.scatter(x_train, y_train, label="Training samples", s=20, color="grey", marker="o", edgecolors="none",
                alpha=0.3, zorder=1)
-    ax.scatter(x_test, y_test, label="Test samples", s=36, color="tab:orange", marker="D", edgecolors="black",
+    ax.scatter(x_test, y_test, label="Test samples", s=36, color=c_test, marker="D", edgecolors="black",
                linewidth=1.5, alpha=0.9, zorder=3)
 
-    ax.plot(x_plot, y_plot_poly, color="tab:blue", label="Model (Poly)", linestyle=":", linewidth=2, zorder=2)
-    ax.plot(x_plot, y_plot_knn, color="tab:green", label="Model (kNN)", linestyle="--", linewidth=2, zorder=2)
+    ax.plot(x_plot, y_plot_poly, color=c_poly, label="Model (Poly)", linestyle=":", linewidth=2, zorder=2)
+    ax.plot(x_plot, y_plot_knn, color=c_knn, label="Model (kNN)", linestyle="--", linewidth=2, zorder=2)
 
     ax.set_xlabel(features[0], fontsize=fontsize_xy_label)
     ax.set_ylabel(target.replace("h^-1", str_hm1), fontsize=fontsize_xy_label)
@@ -161,10 +165,10 @@ for n_samples in range(20, 110, 10):
 
 # Plot the learning curve
 fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=200, layout="constrained")
-ax.plot(lc_n_training_samples, lc_rmse_poly_train, label="RMSE Train (Poly)", color="tab:blue", linestyle="-")
-ax.plot(lc_n_training_samples, lc_rmse_poly_test, label="RMSE Test (Poly)", color="tab:blue", linestyle="--")
-ax.plot(lc_n_training_samples, lc_rmse_knn_train, label="RMSE Train (kNN)", color="tab:green", linestyle="-.")
-ax.plot(lc_n_training_samples, lc_rmse_knn_test, label="RMSE Test (kNN)", color="tab:green", linestyle=":")
+ax.plot(lc_n_training_samples, lc_rmse_poly_train, label="RMSE Train (Poly)", color=c_poly, linestyle="-")
+ax.plot(lc_n_training_samples, lc_rmse_poly_test, label="RMSE Test (Poly)", color=c_poly, linestyle="--")
+ax.plot(lc_n_training_samples, lc_rmse_knn_train, label="RMSE Train (kNN)", color=c_knn, linestyle="-")
+ax.plot(lc_n_training_samples, lc_rmse_knn_test, label="RMSE Test (kNN)", color=c_knn, linestyle="--")
 ax.set_xlabel("Number of training samples", fontsize=fontsize_xy_label)
 ax.set_ylabel(f"RMSE [{str_hm1}]", fontsize=fontsize_xy_label)
 ax.tick_params(axis='both', which='major', labelsize=fontsize_ticks)
