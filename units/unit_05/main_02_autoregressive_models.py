@@ -57,7 +57,7 @@ nrows = ic_glucose.shape[0]
 ncols = ic_biomass.shape[0]
 
 # Evaluate autoregressive models with different numbers of lagged values.
-for p in range(1, 6):
+for p in range(1, 4):
     fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
     y_min = 0
     y_max = np.max(df.loc[:, feature])
@@ -120,7 +120,6 @@ for p in range(1, 6):
         # Plot actual values and forecasts
         ax.scatter(t_test, x_test, label="Test", s=10, color="tab:orange", edgecolors="black")
         ax.plot(t_test, x_forecast, label=f"AR({p})", color="black")
-        ax.legend(fontsize=8)
 
         y_max = max(y_max, np.max(x_forecast))
 
@@ -143,6 +142,9 @@ for p in range(1, 6):
                 axes[i, j].set_ylabel(feature)
             else:
                 axes[i, j].set_yticks([])
+
+            if i == 0 and j == 0:
+                axes[i, j].legend(fontsize=8)
 
     fig.savefig(os.path.join("figures", f"figure_02_p{p:02d}.png"))
     plt.close(fig)

@@ -44,16 +44,16 @@ batch_ids = np.unique(df.loc[:, "Batch ID"])
 # Select the time series feature of interest
 feature = "Biomass [g/L]"
 
-# Confidence level used to visualize uncertainty
-confidence_interval = 0.95
-alpha = 1 - confidence_interval
+# Fraction of predictions to visualize
+prediction_interval = 0.95
+alpha = 1 - prediction_interval
 
 # Define common x-axis limits
 x_left = np.min(df.loc[:, "Time [h]"]) - 1
 x_right = np.max(df.loc[:, "Time [h]"]) + 1
 
 # Evaluate autoregressive models with different numbers of lagged values.
-for p in range(1, 6):
+for p in range(1, 4):
 
     # Generate the lagged-value dataset used to train AR(p)
     x_lag, x_cur, t_cur = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids, df=df, feature=feature)
@@ -74,8 +74,8 @@ for p in range(1, 6):
 
     # We will store the residual mean and confidence intervals at each time point
     noise_mean = []
-    noise_ci_upper = []
-    noise_ci_lower = []
+    noise_pi_upper = []
+    noise_pi_lower = []
 
     # Analyze the residual distribution at each time point
     for t in t_unique:
@@ -87,36 +87,33 @@ for p in range(1, 6):
         # Calculate the confidence interval using the Student t distribution
         q = alpha / 2
         dof = x_cur_noise_t.shape[0] - 1
-        ci_sd = stats.t.isf(q=q, df=dof)
+        pi_sd = stats.t.isf(q=q, df=dof)
 
         noise_mean.append(n_mean)
-        noise_ci_upper.append(n_mean + ci_sd * n_sd)
-        noise_ci_lower.append(n_mean - ci_sd * n_sd)
+        noise_pi_upper.append(n_mean + pi_sd * n_sd)
+        noise_pi_lower.append(n_mean - pi_sd * n_sd)
 
     noise_mean = np.array(noise_mean)
-    noise_ci_upper = np.array(noise_ci_upper)
-    noise_ci_lower = np.array(noise_ci_lower)
+    noise_pi_upper = np.array(noise_pi_upper)
+    noise_pi_lower = np.array(noise_pi_lower)
 
     # Determine the plotting range needed to display all residual statistics symmetrically about zero
     y_max = max(np.max(np.abs(noise_mean)),
-                np.max(np.abs(noise_ci_upper)),
-                np.max(np.abs(noise_ci_lower)),
+                np.max(np.abs(noise_pi_upper)),
+                np.max(np.abs(noise_pi_lower)),
                 np.max(np.abs(x_cur_noise)))
 
-    # =============================
-    #   PLOT
-    # =============================
     fig, ax = plt.subplots(1, 1, figsize=((14.39 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
 
     ax.scatter(t_cur, x_cur_noise, label="Noise", color="tab:orange", s=12, edgecolors="black", linewidth=0.5,
                alpha=0.7, zorder=3)
     ax.plot(t_unique, noise_mean, label="Mean", color="black", zorder=4)
-    ax.fill_between(t_unique, noise_ci_lower, noise_ci_upper, label=f"{confidence_interval:.0%} CI", color="tab:blue",
+    ax.fill_between(t_unique, noise_pi_lower, noise_pi_upper, label=f"{prediction_interval:.0%} PI", color="tab:blue",
                     edgecolors="none", alpha=0.3, zorder=2)
     ax.axhline(y=0, color="black", linestyle="-", linewidth=0.5, alpha=0.5, zorder=1)
 
     ax.set_xlabel("Time [h]", fontsize=14)
-    ax.set_ylabel(f"{feature} (Noise)", fontsize=14)
+    ax.set_ylabel(f"{feature} (Residuals)", fontsize=14)
     ax.tick_params(axis='both', which='major', labelsize=12)
     ax.legend(loc="upper left", fontsize=12)
 
