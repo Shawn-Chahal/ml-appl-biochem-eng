@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def generate_x_lag_cur_ar(p, batch_ids, df, feature):
+def generate_x_lag_cur_ar(p, batch_ids, df, feature, col_batch="Batch ID", col_time="Time [h]"):
     """
     Generate lagged autoregressive features and corresponding target values.
 
@@ -98,16 +98,19 @@ def generate_x_lag_cur_ar(p, batch_ids, df, feature):
     # Store lagged predictors (x_lag) and current values (x_cur) from each batch separately before combining them.
     x_lag = []
     x_cur = []
+    t_cur = []
 
     # Process each batch independently.
     for batch_id in batch_ids:
 
         # Select rows belonging to the current batch and extract the feature of interest as a NumPy array.
-        mask = df.loc[:, "Batch ID"] == batch_id
+        mask = df.loc[:, col_batch] == batch_id
         data_batch = df.loc[mask, feature].to_numpy()
+        t_batch = df.loc[mask, col_time].to_numpy()
 
         # Current observations x_(t)
         current_values = data_batch[p:]
+        current_times = t_batch[p:]
 
         # Build autoregressive lag features, e.g., x_(t-1), x_(t-2), ..., x_(t-p).
         lagged_values = []
@@ -121,9 +124,11 @@ def generate_x_lag_cur_ar(p, batch_ids, df, feature):
         # Store this batch's feature matrix and target vector.
         x_lag.append(lagged_values)
         x_cur.append(current_values)
+        t_cur.append(current_times)
 
     # Concatenate the independently generated batches into overall input (x_lag) and output (x_cur) arrays.
     x_lag = np.concatenate(x_lag, axis=0)
     x_cur = np.concatenate(x_cur, axis=0)
+    t_cur = np.concatenate(t_cur, axis=0)
 
-    return x_lag, x_cur
+    return x_lag, x_cur, t_cur

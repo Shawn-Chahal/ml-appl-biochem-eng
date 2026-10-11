@@ -41,7 +41,7 @@ feature = "Biomass [g/L]"
 p = 3
 
 # Generate the lagged-value dataset used to train AR(p)
-x_lag, x_cur = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids, df=df, feature=feature)
+x_lag, x_cur, t_cur = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids, df=df, feature=feature)
 
 # ==========================
 #  Print to Terminal
@@ -52,7 +52,7 @@ print(f"{x_lag.shape = }")
 print(f"{x_cur.shape = }")
 print()
 
-message = f"{'x_(t)':>8s} | "
+message = f"{'Time [h]':>8s} | {'x_(t)':>8s} | "
 
 for j in range(1, p + 1):
     col = f"x_(t-{j})"
@@ -61,7 +61,7 @@ for j in range(1, p + 1):
 print(message)
 
 for i in range(x_lag.shape[0]):
-    message = f"{x_cur[i]:8.3f} | "
+    message = f"{t_cur[i]:8.1f} | {x_cur[i]:8.3f} | "
 
     for j in range(p):
         message += f"{x_lag[i, j]:8.3f} "

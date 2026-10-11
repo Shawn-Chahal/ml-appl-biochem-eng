@@ -69,7 +69,7 @@ for p in range(1, 6):
         batch_ids_train = np.array([i for i in batch_ids if i != batch_id_test])
 
         # Generate the lagged-value dataset used to train AR(p)
-        x_lag_train, x_cur_train = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids_train, df=df, feature=feature)
+        x_lag_train, x_cur_train, _ = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids_train, df=df, feature=feature)
 
         # Create and train the model
         model = make_pipeline(StandardScalerAR(), LinearRegression())
@@ -86,7 +86,7 @@ for p in range(1, 6):
 
         # Extract the data for the test batch
         mask = df.loc[:, "Batch ID"] == batch_id_test
-        t = df.loc[mask, "Time [h]"].to_numpy()
+        t_test = df.loc[mask, "Time [h]"].to_numpy()
         x_test = df.loc[mask, feature].to_numpy()
 
         # Initialize the forecast using the known initial value
@@ -94,7 +94,7 @@ for p in range(1, 6):
 
         # Generate the forecast recursively
         # Each newly predicted value becomes available for future predictions
-        while len(x_forecast) < t.shape[0]:
+        while len(x_forecast) < t_test.shape[0]:
             # We need to reverse the list and then take the first p values
             # This makes: x_lag[0] --> x_(t-1); x_lag[1] --> x_(t-2); etc.
             x_lag = x_forecast[::-1].copy()
@@ -118,8 +118,8 @@ for p in range(1, 6):
         x_forecast = np.array(x_forecast)
 
         # Plot actual values and forecasts
-        ax.scatter(t, x_test, label="Test", s=10, color="tab:orange", edgecolors="black")
-        ax.plot(t, x_forecast, label=f"AR({p})", color="black")
+        ax.scatter(t_test, x_test, label="Test", s=10, color="tab:orange", edgecolors="black")
+        ax.plot(t_test, x_forecast, label=f"AR({p})", color="black")
         ax.legend(fontsize=8)
 
         y_max = max(y_max, np.max(x_forecast))
