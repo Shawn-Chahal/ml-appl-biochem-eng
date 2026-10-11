@@ -33,8 +33,8 @@ from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 
+from units.unit_05.src.classes import StandardScalerAR
 from units.unit_05.src.functions import generate_x_lag_cur_ar
 
 # Import dataset
@@ -69,10 +69,10 @@ for p in range(1, 6):
         batch_ids_train = np.array([i for i in batch_ids if i != batch_id_test])
 
         # Generate the lagged-value dataset used to train AR(p)
-        x_lag_train, x_cur_train = generate_x_lag_cur_ar(batch_ids=batch_ids_train, p=p, df=df, feature=feature)
+        x_lag_train, x_cur_train = generate_x_lag_cur_ar(p=p, batch_ids=batch_ids_train, df=df, feature=feature)
 
         # Create and train the model
-        model = make_pipeline(StandardScaler(), LinearRegression())
+        model = make_pipeline(StandardScalerAR(), LinearRegression())
         model.fit(x_lag_train, x_cur_train)
 
         # Identify the initial condition corresponding to the test batch
