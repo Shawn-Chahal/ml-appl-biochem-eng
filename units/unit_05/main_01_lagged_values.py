@@ -26,17 +26,17 @@ import os
 import numpy as np
 import pandas as pd
 
-# Number of lagged values to include
-p = 3
-
-# Select the time series feature of interest
-feature = "Biomass [g/L]"
-
 # Import dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_time_series.csv"))
 
 # Extract the unique batch IDs.
 batch_ids = np.unique(df.loc[:, "Batch ID"])
+
+# Select the time series feature of interest
+feature = "Biomass [g/L]"
+
+# Number of lagged values to include
+p = 3
 
 # We can store lagged values and current values from each batch in a list
 x_lag = []

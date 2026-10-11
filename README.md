@@ -64,4 +64,5 @@ Lecture slides are available on Brightspace. This repository contains the code e
 ### Unit 5: Time Series Forecasting
 
 1. [Lagged values](units/unit_05/main_01_lagged_values.py)
-
+2. [Autoregressive models](units/unit_05/main_02_autoregressive_models.py)
+3. 
