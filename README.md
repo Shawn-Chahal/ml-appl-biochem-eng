@@ -9,6 +9,7 @@ Engineering* at the University of Ottawa.
 2. [Fundamentals of Python](#unit-2-fundamentals-of-python)
 3. [Data Analysis and Visualization in Python](#unit-3-data-analysis-and-visualization-in-python)
 4. [Introduction to Machine Learning](#unit-4-introduction-to-machine-learning)
+5. [Time Series Forecasting](#unit-5-time-series-forecasting)
 
 ## Assignments
 

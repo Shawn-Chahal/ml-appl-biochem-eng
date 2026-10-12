@@ -32,6 +32,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import root_mean_squared_error
 from sklearn.pipeline import make_pipeline
 
 from units.unit_05.src.classes import StandardScalerAR
@@ -45,6 +46,7 @@ batch_ids = np.unique(df.loc[:, "Batch ID"])
 
 # Select the time series feature of interest
 feature = "Biomass [g/L]"
+units = feature.split(" [")[-1][:-1]
 
 # Import information describing the initial conditions of each batch
 df_ic = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_time_series_ic.csv"))
@@ -61,6 +63,7 @@ for p in range(1, 4):
     fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
     y_min = 0
     y_max = np.max(df.loc[:, feature])
+    rmse_forecasts = []
 
     # Leave-one-batch-out cross-validation
     # One batch is excluded from training and used as the test dataset
@@ -78,10 +81,12 @@ for p in range(1, 4):
         # Identify the initial condition corresponding to the test batch
         idx_ic = df_ic.index[np.argmax(df_ic.loc[:, "Batch ID"] == batch_id_test)]
         x_initial = df_ic.at[idx_ic, feature]
+        initial_glucose = df_ic.at[idx_ic, "Glucose [g/L]"]
+        initial_biomass = df_ic.at[idx_ic, "Biomass [g/L]"]
 
         # Determine which subplot corresponds to the test batch initial conditions
-        i_ax = np.argmax(ic_glucose == df_ic.at[idx_ic, "Glucose [g/L]"])
-        j_ax = np.argmax(ic_biomass == df_ic.at[idx_ic, "Biomass [g/L]"])
+        i_ax = np.argmax(ic_glucose == initial_glucose)
+        j_ax = np.argmax(ic_biomass == initial_biomass)
         ax = axes[i_ax, j_ax]
 
         # Extract the data for the test batch
@@ -117,9 +122,22 @@ for p in range(1, 4):
 
         x_forecast = np.array(x_forecast)
 
-        # Plot actual values and forecasts
+        # Calculate RMSE
+        rmse_forecast = root_mean_squared_error(x_test, x_forecast)
+        rmse_forecasts.append(rmse_forecast)
+
+        message = f"RMSE: {rmse_forecast:.2f} {units}\n"
+        message += f"Initial:\n"
+        message += f"* GLC: {initial_glucose:3.0f} g/L\n"
+        message += f"* BIO: {initial_biomass:3.1f} g/L\n"
+
+        # Plot test values and forecast
         ax.scatter(t_test, x_test, label="Test", s=10, color="tab:orange", edgecolors="black")
         ax.plot(t_test, x_forecast, label=f"AR({p})", color="black")
+
+        # Print RMSE
+        ax.text(x=0.02, y=0.96, s=message, va='top', ha='left', transform=ax.transAxes, fontname="monospace",
+                fontsize=7)
 
         y_max = max(y_max, np.max(x_forecast))
 
@@ -144,7 +162,11 @@ for p in range(1, 4):
                 axes[i, j].set_yticks([])
 
             if i == 0 and j == 0:
-                axes[i, j].legend(fontsize=8)
+                axes[i, j].legend(loc="upper right", fontsize=8)
 
     fig.savefig(os.path.join("figures", f"figure_02_p{p:02d}.png"))
     plt.close(fig)
+
+    rmse_mean = np.mean(rmse_forecasts)
+    rmse_sd = np.std(rmse_forecasts)
+    print(f"{p = :2d} | RMSE (Forecast): {rmse_mean:6.2f} +/- {rmse_sd:6.2f} {units}")
