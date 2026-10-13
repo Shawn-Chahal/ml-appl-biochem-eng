@@ -96,6 +96,8 @@ growth rate under different operating conditions.
 
 5. Delete any placeholder files that you are not using.
 
+6. Push the project to a new GitHub repository.
+
 ## Provided files
 
 [`dataset_cell_growth_4factor.csv`](provided_files/dataset_cell_growth_4factor.csv)

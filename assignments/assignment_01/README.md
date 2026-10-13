@@ -73,6 +73,8 @@ To enable bioprocess monitoring, you will create a Python class called `Bioproce
 5. Make sure you replaced any placeholder files from the repository template with the appropriate content and deleted
    any placeholder files that you are not using.
 
+6. Push the project to a new GitHub repository.
+
 ## Provided files
 
 [`main.py`](provided_files/main.py)
