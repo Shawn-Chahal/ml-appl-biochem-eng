@@ -30,7 +30,7 @@ from units.unit_05.src.functions import generate_x_lag_cur_ar
 rng = np.random.default_rng(0)
 
 # Number of simulations per forecast
-n_simulations = 200
+n_simulations = 1000
 
 # Import dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_time_series.csv"))
@@ -186,7 +186,7 @@ for p in range(1, 4):
             if i == 0 and j == 0:
                 axes[i, j].legend(loc="upper right", fontsize=7)
 
-    fig.savefig(os.path.join("figures", f"figure_04_p{p:02d}.png"))
+    fig.savefig(os.path.join("figures", f"figure_04_p{p:02d}_N{n_simulations:06d}.png"))
     plt.close(fig)
 
     rmse_mean = np.mean(rmse_forecasts)
