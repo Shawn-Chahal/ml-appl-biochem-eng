@@ -102,8 +102,7 @@ for p in range(1, 4):
         while len(x_forecast) < t_test.shape[0]:
             # We need to reverse the list and then take the first p values
             # This makes: x_lag[0] --> x_(t-1); x_lag[1] --> x_(t-2); etc.
-            x_lag = x_forecast[::-1].copy()
-            x_lag = x_lag[:p]
+            x_lag = x_forecast[::-1][:p].copy()
 
             # At the start of the simulation there may be fewer than p available lagged values.
             # If needed, repeat the most recent value until p lagged values are available.
