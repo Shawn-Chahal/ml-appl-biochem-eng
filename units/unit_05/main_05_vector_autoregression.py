@@ -67,7 +67,7 @@ ncols = ic_biomass.shape[0]
 # by the VAR model are constructed.
 print_var_arrays = False
 if print_var_arrays:
-    x_lag_print, x_cur_print, _ = generate_x_lag_cur_var(p=3, batch_ids=batch_ids, df=df, features=features)
+    x_lag_print, x_cur_print, _, _ = generate_x_lag_cur_var(p=3, batch_ids=batch_ids, df=df, features=features)
     for i in range(x_cur_print.shape[0]):
         print(x_cur_print[i], x_lag_print[i])
 
@@ -87,7 +87,8 @@ for p in range(1, 4):
         batch_ids_train = np.array([i for i in batch_ids if i != batch_id_test])
 
         # Generate the lagged value dataset used to train VAR(p)
-        x_lag_train, x_cur_train, _ = generate_x_lag_cur_var(p=p, batch_ids=batch_ids_train, df=df, features=features)
+        x_lag_train, x_cur_train, _, _ = generate_x_lag_cur_var(p=p, batch_ids=batch_ids_train, df=df,
+                                                                features=features)
 
         # Create and train the model
         model = make_pipeline(StandardScalerVAR(p=p), LinearRegression())

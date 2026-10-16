@@ -233,6 +233,7 @@ def generate_x_lag_cur_var(p, batch_ids, df, features, col_batch="Batch ID", col
     x_lag = []
     x_cur = []
     t_cur = []
+    b_cur = []
 
     # Process each batch independently.
     for batch_id in batch_ids:
@@ -240,11 +241,13 @@ def generate_x_lag_cur_var(p, batch_ids, df, features, col_batch="Batch ID", col
         mask = df.loc[:, col_batch] == batch_id
         x_batch = df.loc[mask, features].to_numpy()
         t_batch = df.loc[mask, col_time].to_numpy()
+        b_batch = df.loc[mask, col_batch].to_numpy()
 
         # Current observations x(t).
         # Each row contains the simultaneous values of all variables at a particular time point.
         current_values = x_batch[p:]
         current_times = t_batch[p:]
+        current_batches = b_batch[p:]
 
         # Build lagged state vectors:
         #
@@ -269,10 +272,12 @@ def generate_x_lag_cur_var(p, batch_ids, df, features, col_batch="Batch ID", col
         x_lag.append(lagged_values)
         x_cur.append(current_values)
         t_cur.append(current_times)
+        b_cur.append(current_batches)
 
     # Concatenate the independently generated batches into overall input and output arrays.
     x_lag = np.concatenate(x_lag, axis=0)
     x_cur = np.concatenate(x_cur, axis=0)
     t_cur = np.concatenate(t_cur, axis=0)
+    b_cur = np.concatenate(b_cur, axis=0)
 
-    return x_lag, x_cur, t_cur
+    return x_lag, x_cur, t_cur, b_cur

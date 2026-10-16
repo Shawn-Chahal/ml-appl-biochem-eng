@@ -69,3 +69,5 @@ Lecture slides are available on Brightspace. This repository contains the code e
 3. [White noise analysis](units/unit_05/main_03_white_noise_analysis.py)
 4. [Forecast uncertainty](units/unit_05/main_04_forecast_uncertainty.py)
 5. [Vector autoregression (VAR)](units/unit_05/main_05_vector_autoregression.py)
+6. [Non-linear vector autoregression (NVAR)](units/unit_05/main_06_nonlinear_var.py)
+
