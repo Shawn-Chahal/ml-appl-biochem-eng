@@ -178,7 +178,7 @@ class StandardScalerAR:
         self.fit(x, y)
         return self.transform(x)
 
-    def get_params(self):
+    def get_params(self, deep=True):
         """
         Return estimator parameters.
 
@@ -457,7 +457,7 @@ class StandardScalerVAR:
         self.fit(x, y)
         return self.transform(x)
 
-    def get_params(self):
+    def get_params(self, deep=True):
         """
         Return estimator parameters.
 
