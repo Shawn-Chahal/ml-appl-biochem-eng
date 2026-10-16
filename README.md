@@ -68,3 +68,4 @@ Lecture slides are available on Brightspace. This repository contains the code e
 2. [Autoregressive models (AR)](units/unit_05/main_02_autoregressive_models.py)
 3. [White noise analysis](units/unit_05/main_03_white_noise_analysis.py)
 4. [Forecast uncertainty](units/unit_05/main_04_forecast_uncertainty.py)
+5. [Vector autoregression (VAR)](units/unit_05/main_05_vector_autoregression.py)
