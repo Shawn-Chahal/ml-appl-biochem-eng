@@ -66,8 +66,8 @@ Lecture slides are available on Brightspace. This repository contains the code e
 
 1. [Lagged values](units/unit_05/main_01_lagged_values.py)
 2. [Autoregressive models (AR)](units/unit_05/main_02_autoregressive_models.py)
-3. [White noise analysis](units/unit_05/main_03_white_noise_analysis.py)
+3. [White noise analysis (AR)](units/unit_05/main_03_white_noise_analysis.py)
 4. [Forecast uncertainty](units/unit_05/main_04_forecast_uncertainty.py)
 5. [Vector autoregression (VAR)](units/unit_05/main_05_vector_autoregression.py)
 6. [Non-linear vector autoregression (NVAR)](units/unit_05/main_06_nonlinear_var.py)
-
+7. [White noise analysis (NVAR)](units/unit_05/main_07_white_noise_nvar.py)

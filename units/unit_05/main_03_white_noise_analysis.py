@@ -1,5 +1,5 @@
 # ============================================================================
-#   White Noise Analysis
+#   White Noise Analysis (AR)
 # ============================================================================
 #
 #   * Residual error (or noise) is the difference between the model
@@ -72,7 +72,7 @@ for p in range(1, 4):
     # Determine the unique time points in the dataset
     t_unique = np.unique(t_cur)
 
-    # We will store the residual mean and confidence intervals at each time point
+    # We will store the residual mean and prediction intervals at each time point
     noise_mean = []
     noise_pi_upper = []
     noise_pi_lower = []
@@ -84,7 +84,7 @@ for p in range(1, 4):
         n_mean = np.mean(x_cur_noise_t)
         n_sd = np.std(x_cur_noise_t)
 
-        # Calculate the confidence interval using the Student t distribution
+        # Calculate the prediction interval using Student's t distribution
         q = alpha / 2
         dof = x_cur_noise_t.shape[0] - 1
         pi_sd = stats.t.isf(q=q, df=dof)
@@ -103,7 +103,7 @@ for p in range(1, 4):
                 np.max(np.abs(noise_pi_lower)),
                 np.max(np.abs(x_cur_noise)))
 
-    fig, ax = plt.subplots(1, 1, figsize=((14.39 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
+    fig, ax = plt.subplots(1, 1, figsize=((14.39 / 2.54), (12.09 / 2.54)), dpi=300, layout="constrained")
 
     ax.scatter(t_cur, x_cur_noise, label="Noise", color="tab:orange", s=12, edgecolors="black", linewidth=0.5,
                alpha=0.7, zorder=3)
