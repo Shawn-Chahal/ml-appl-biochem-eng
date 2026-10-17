@@ -220,7 +220,7 @@ for model_type in model_types:
 
             # Plot the test values, forecast median, and prediction interval
             ax.scatter(t_test, x_test[:, idx_fp], label="Test", s=10, color="tab:orange", edgecolors="black", zorder=3)
-            ax.plot(t_test, x_forecast_median[:, idx_fp], label=f"VAR({p})", color="black", zorder=4)
+            ax.plot(t_test, x_forecast_median[:, idx_fp], label=f"NVAR({p})", color="black", zorder=4)
             ax.fill_between(t_test, x_forecast_pi_lower[:, idx_fp], x_forecast_pi_higher[:, idx_fp],
                             label=f"{prediction_interval:.0%} PI", color="tab:blue", edgecolors="none", alpha=0.3,
                             zorder=2)
