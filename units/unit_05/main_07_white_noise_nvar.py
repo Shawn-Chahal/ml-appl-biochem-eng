@@ -178,3 +178,11 @@ for model_type in model_types:
 
         fig.savefig(os.path.join("figures", f"figure_07_{model_type}_p{p:02d}.png"))
         plt.close(fig)
+
+        if model_type == "poly":
+            best_degree = model_gscv.best_params_["polynomialfeatures__degree"]
+            print(f"{p = } | Degree: {best_degree}")
+        elif model_type == "knn":
+            best_n_neighbors = model_gscv.best_params_["kneighborsregressor__n_neighbors"]
+            best_weight = model_gscv.best_params_["kneighborsregressor__weights"]
+            print(f"{p = } | k={best_n_neighbors}, {best_weight}")
