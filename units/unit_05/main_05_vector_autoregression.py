@@ -25,10 +25,13 @@ from sklearn.metrics import root_mean_squared_error
 from sklearn.pipeline import make_pipeline
 
 from units.unit_05.src.classes import StandardScalerVAR
-from units.unit_05.src.functions import generate_x_lag_cur_var
+from units.unit_05.src.functions import generate_x_lag_cur_var, progress_bar
 
 # Number of forecast simulations
 n_simulations = 1000
+
+# Max order to evaluate
+p_max = 3
 
 # Fraction of simulated forecasts used to calculate prediction intervals
 prediction_interval = 0.95
@@ -71,10 +74,14 @@ if print_var_arrays:
     for i in range(x_cur_print.shape[0]):
         print(x_cur_print[i], x_lag_print[i])
 
+n_iters = p_max * batch_ids.shape[0] * n_simulations
+c_iter = 0
+records = []
+
 # Evaluate VAR models with different numbers of lagged values
-for p in range(1, 4):
+for p in range(1, p_max + 1):
     # Create a figure containing one subplot for each set of experimental initial conditions.
-    fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
+    fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=300, layout="constrained")
 
     y_min = 0
     y_max = np.max(df.loc[:, feature_plot])
@@ -139,7 +146,10 @@ for p in range(1, 4):
 
                 # Sample residual errors from the training data.
                 # This assumes the residuals behave like white noise.
-                white_noise = rng.choice(x_cur_train_res, size=x_lag.shape[0])
+                white_noise = []
+                for j in range(x_cur_train_res.shape[1]):
+                    white_noise.append(rng.choice(x_cur_train_res[:, j]))
+                white_noise = np.array([white_noise])
 
                 # Predict the next process state and add white noise
                 x_cur = model.predict(x_lag) + white_noise
@@ -152,6 +162,9 @@ for p in range(1, 4):
             x_forecast = np.array(x_forecast)
 
             x_forecasts.append(x_forecast)
+
+            c_iter += 1
+            progress_bar(c_iter, n_iters)
 
         x_forecasts = np.array(x_forecasts)
 
@@ -213,4 +226,10 @@ for p in range(1, 4):
     # Calculate and report the forecast error
     rmse_mean = np.mean(rmse_forecasts)
     rmse_sd = np.std(rmse_forecasts)
-    print(f"{p = :2d} | RMSE (Forecast): {rmse_mean:6.2f} +/- {rmse_sd:6.2f} {units}")
+
+    record = (p, n_simulations, rmse_mean, rmse_sd)
+    records.append(record)
+
+cols_export = ["p", "N simulations", f"RMSE (mean) [{units}]", f"RMSE (SD) [{units}]"]
+df_export = pd.DataFrame.from_records(records, columns=cols_export)
+df_export.to_csv(os.path.join("tables", "table_05.csv"), index=False)

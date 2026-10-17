@@ -27,7 +27,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
 from units.unit_05.src.classes import StandardScalerVAR
-from units.unit_05.src.functions import generate_x_lag_cur_var
+from units.unit_05.src.functions import generate_x_lag_cur_var, progress_bar
 
 # Define training parameters
 n_simulations = 1000
@@ -80,11 +80,15 @@ ic_biomass = np.unique(df_ic.loc[:, "Biomass [g/L]"])
 nrows = ic_glucose.shape[0]
 ncols = ic_biomass.shape[0]
 
+n_iters = len(model_types) * p_max * batch_ids.shape[0] * n_simulations
+c_iter = 0
+records = []
+
 for model_type in model_types:
     # Evaluate NVAR models with different numbers of lagged values
     for p in range(1, p_max + 1):
         # Create a figure containing one subplot for each set of experimental initial conditions.
-        fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=200, layout="constrained")
+        fig, axes = plt.subplots(nrows, ncols, figsize=((29.21 / 2.54), (12.09 / 2.54)), dpi=300, layout="constrained")
 
         y_min = 0
         y_max = np.max(df.loc[:, feature_plot])
@@ -172,7 +176,10 @@ for model_type in model_types:
 
                     # Sample residual errors from the training data.
                     # This assumes the residuals behave like white noise.
-                    white_noise = rng.choice(x_cur_train_res, size=x_lag.shape[0])
+                    white_noise = []
+                    for j in range(x_cur_train_res.shape[1]):
+                        white_noise.append(rng.choice(x_cur_train_res[:, j]))
+                    white_noise = np.array([white_noise])
 
                     # Predict the next process state baseline
                     x_cur_baseline = model_gscv.predict(x_lag)
@@ -192,6 +199,9 @@ for model_type in model_types:
                 x_forecast = np.array(x_forecast)
 
                 x_forecasts.append(x_forecast)
+
+                c_iter += 1
+                progress_bar(c_iter, n_iters)
 
             x_forecasts = np.array(x_forecasts)
 
@@ -263,4 +273,10 @@ for model_type in model_types:
         # Calculate and report the forecast error
         rmse_mean = np.mean(rmse_forecasts)
         rmse_sd = np.std(rmse_forecasts)
-        print(f"{model_type:6s} | {p = :2d} | RMSE (Forecast): {rmse_mean:6.2f} +/- {rmse_sd:6.2f} {units}")
+
+        record = (model_type, p, n_simulations, rmse_mean, rmse_sd)
+        records.append(record)
+
+cols_export = ["Model", "p", "N simulations", f"RMSE (mean) [{units}]", f"RMSE (SD) [{units}]"]
+df_export = pd.DataFrame.from_records(records, columns=cols_export)
+df_export.to_csv(os.path.join("tables", "table_06.csv"), index=False)
