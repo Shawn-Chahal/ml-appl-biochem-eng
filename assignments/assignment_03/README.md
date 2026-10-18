@@ -29,8 +29,8 @@
 
 ## Task
 
-- Your task for this assignment is to determine the initial glucose concentration, initial glutamine concentration, and
-  initial VCD that will maximize the space-time profit of an mAb production process.
+- Your task for this assignment is to determine the initial glucose concentration, initial glutamine concentration,
+  initial VCD and harvest time that will maximize the space-time profit of an mAb production process.
 
 - In your GitHub repository, add a description in the "About" section. (10 - 20 words)
 
@@ -79,10 +79,10 @@
           of mAb production.
         - Describe the initial conditions and harvest time that maximizes the space-time profit of mAb production.
           Specifically, you should report your:
-            - recommended initial glucose concentration.
-            - recommended initial glutamine concentration.
-            - recommended initial viable cell density.
-            - recommended harvest time (i.e., when to stop the production).
+            - recommended initial glucose concentration [mM].
+            - recommended initial glutamine concentration [mM].
+            - recommended initial viable cell density [cells/mL].
+            - recommended harvest time [d] (i.e., when to stop the production).
             - estimated cell culture cost [$/L].
             - estimated cell culture value at harvest [$/L] with 95% prediction intervals.
             - estimated space-time profit [\$ / (L $\cdot$ d)] with 95% prediction intervals.
@@ -90,18 +90,15 @@
         - Provide evidence supporting your conclusions. Evidence may include exported CSV tables, PNG figures, or both.
         - Organize this section using Heading 3 subsections.
 
-
-- Additional Information:
-    - There is not a single correct model architecture.
-    - You are primarily being evaluated on your ability to justify your decisions rather than arriving at the maximum
-      possible space-time profit.
+- Reminders:
+    - You are primarily being evaluated on your ability to justify your decisions rather than arriving at the optimal
+      solution.
     - Figures and tables do not count towards the word count.
-    - Word limits should be viewed as strong suggestions, rather than hard limits.
-    - You can use this website to convert CSV to Markdown, if needed: https://convertcsv.com/csv-to-markdown.htm
     - You should present your repository like a portfolio project rather than an assignment for a course. I would
       encourage you not to make any references to the course (e.g., course code, course name, assignment number, student
       ID, etc.).
     - You can find a guide to the major Markdown syntax elements here: https://www.markdownguide.org/cheat-sheet/
+    - You can use this website to convert CSV to Markdown, if needed: https://convertcsv.com/csv-to-markdown.htm
 
 ## Setting up your assignment
 
@@ -110,8 +107,9 @@
 2. Add [`initial_conditions.csv`](provided_files/initial_conditions.csv) to the `datasets` directory in your local
    repository.
 
-3. Add 30 `batch_####.csv` of your choice from the [`provided_files`](provided_files) directory to the `datasets`
-   directory in your local repository.
+3. Add 30 `batch_####.csv` files of your choice from the [`provided_files`](provided_files) directory to the `datasets`
+   directory in your local repository. It will likely be easiest to download the entire course repository and then move
+   the files you want on your computer.
 
 4. When you open the project in PyCharm, make sure that you have the course environment selected in the bottom-right
    corner.
@@ -127,15 +125,15 @@
 [`initial_conditions.csv`](provided_files/initial_conditions.csv)
 
 - This file contains the initial conditions for simulated mAb production time series with the following columns:
-    - `Batch ID`: The identifier of the batch run.
+    - `Batch ID`: Batch run identifier.
     - `Glucose [mM]`: Initial glucose concentration in units of mM.
     - `Glutamine [mM]`: Initial glutamine concentration in units of mM.
-    - `VCD [cells/mL`: Initial viable cell density in units of cells/mL.
+    - `VCD [cells/mL]`: Initial viable cell density in units of cells/mL.
 
 [`batch_####.csv`]
 
-- There are 1029 batch run datasets spanning 7 initial glucose, 7 initial glutamine, 7 initial VCD, and 3 replicates of
-  each (7 $\times$ 7 $\times$ 7 $\times$ 3 = 1029).
+- There are 1029 batch run datasets spanning 7 initial glucose concentrations, 7 initial glutamine concentrations, 7
+  initial VCD concentrations, and 3 replicates of each (7 $\times$ 7 $\times$ 7 $\times$ 3 = 1029).
 - Each file contains the time series for a simulated mAb production with the following columns:
     - `Time [h]`: Time point of the measurement in units of h.
     - `Glucose [mM]`: Glucose concentration in units of mM.
@@ -148,13 +146,11 @@
 
 ## Expected Program Behavior
 
-Your `main.py` script will be run to test your code.
+- Your `main.py` script will be run to test your code in the course environment.
 
-There is no set expectation of what your code should print to terminal or export as tables or figures.
+- There is no set expectation of what your code should print to terminal or export as tables or figures.
 
-You are free to use the libraries found in the course environment to accomplish the required [tasks](#task).
-
-You are free to use code from the course repository in your project if needed.
+- You are free to use the libraries found in the course environment and code from the course repository as needed.
 
 ## Submission Requirements
 
