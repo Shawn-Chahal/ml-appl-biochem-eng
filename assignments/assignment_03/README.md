@@ -25,6 +25,7 @@
     - **Cell culture value [\$/L]** = 1000 $\times$ (mAb [mg/L])
     - **Profit [\$/L]** = (Cell culture value [\$/L]) - (Cell culture cost [\$/L])
     - **Space-time profit [\$ / (L $\cdot$ d)]** = (Profit [\$/L]) / ((Harvest time [d]) + (Downtime [d]))
+    - **Space-time yield [mg / (L $\cdot$ d)]** = (mAb [mg/L]) / ((Harvest time [d]) + (Downtime [d]))
 
 ## Task
 
