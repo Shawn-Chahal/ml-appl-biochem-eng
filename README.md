@@ -19,6 +19,9 @@ Engineering* at the University of Ottawa.
 2. [Assignment 2: Predicting Cell Growth Rates with Machine Learning](assignments/assignment_02/README.md)
     - Due: Monday, October 19 at 11:59 PM
 
+3. [Assignment 3: Optimizing Monoclonal Antibody Production](assignments/assignment_03/README.md)
+    - Due: Monday, November 2 at 11:59 PM
+
 ## Course Notes
 
 Lecture slides are available on Brightspace. This repository contains the code examples used throughout the course.
