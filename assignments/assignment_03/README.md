@@ -2,10 +2,10 @@
 
 ## Background
 
-- Monoclonal antibodies (mAbs) are antibodies produced from a uniquely cloned white blood cell and have been used to in
-  emerging cancer treatments by marking cancer cells for destruction by the immune system.
+- Monoclonal antibodies (mAbs) are antibodies produced from a uniquely cloned white blood cell and have been used in
+  emerging cancer treatments to mark cancer cells for destruction by the immune system.
 
-- Your goal is to maximize the space-time profit of an mAb production.
+- Your goal is to maximize the space-time profit of an mAb production process.
 
 - You have the resources to conduct 30 batch runs to collect data that you can use to solve the problem.
     - I.e., You can download 30 batch run datasets of your choice from the [`provided_files`](provided_files) directory.
@@ -20,12 +20,11 @@
 - The initial total cell density (TCD) is equal to the initial VCD.
 
 - The economics of the production are as follows:
-    - **(Cell culture cost [\$/L])** = 10 $\times$ (Initial Glucose [mM]) + 20 $\times$ (Initial Glutamine [mM] +
+    - **Cell culture cost [\$/L]** = 10 $\times$ (Initial Glucose [mM]) + 20 $\times$ (Initial Glutamine [mM]) +
       0.0005 $\times$ (Initial VCD [cells/mL])
-    - **(Cell culture value [\$/L])** = 1000 $\times$ (mAb [mg/L])
-    - **(Profit [\$/L])** = (Cell culture value [\$/L]) - (Cell culture cost [\$/L])
-    - **(Space-time [L $\cdot$ d])** = (Volume [L]) x ((Harvest time [d]) + (Downtime [d]))
-    - **(Space-time profit [\$/ (L $\cdot$ d)])** = (Profit [\$/L]) $\div$ ((Harvest time [d]) + (Downtime [d]))
+    - **Cell culture value [\$/L]** = 1000 $\times$ (mAb [mg/L])
+    - **Profit [\$/L]** = (Cell culture value [\$/L]) - (Cell culture cost [\$/L])
+    - **Space-time profit [\$/ (L $\cdot$ d)]** = (Profit [\$/L]) $\div$ ((Harvest time [d]) + (Downtime [d]))
 
 ## Task
 
