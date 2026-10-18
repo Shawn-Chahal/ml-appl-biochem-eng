@@ -29,8 +29,8 @@
 
 ## Task
 
-- Your task for this assignment is to determine the initial glucose concentration, glutamine concentration, and viable
-  cell density that will maximize the space-time profit of a monoclonal antibody production.
+- Your task for this assignment is to determine the initial glucose concentration, initial glutamine concentration, and
+  initial VCD that will maximize the space-time profit of an mAb production process.
 
 - In your GitHub repository, add a description in the "About" section. (10 - 20 words)
 
@@ -44,13 +44,10 @@
         - The project name should resemble your repository name, but it does not need to be identical.
     - **Highlights**
         - Heading 2
-        - 3 - 10 words per bullet point
-        - Include 5 bullet points in an unordered list.
+        - Include 3 - 5 bullet points in an unordered list.
         - Begin each bullet point with an action verb.
-            - E.g., https://capd.mit.edu/resources/resume-action-verbs/
-        - Focus on significant technical work, such as what you built, designed, implemented, optimized, tested, or
-          learned.
-        - Consider what you would want a potential employer to know about your Python skills after reading this section.
+            - E.g., Analyzed, Built, Designed, Developed, Evaluated, Extracted, Identified, Optimized, etc.
+        - Consider what skills you would want a potential employer to know about.
     - **Environment**
         - Heading 2
         - List the Python version and all libraries used in the project, including version numbers.
@@ -78,10 +75,10 @@
         - Justify your choice of model architecture, including the regression algorithm and hyperparameters.
         - Compare your selected model against at least one other reasonable alternative.
         - Discuss the advantages and limitations of your model.
-        - Explain how the initial conditions of the cell culture influence the production cost and yield of monoclonal
-          antibodies.
-        - Describe initial cell culture conditions that maximize the profit of a batch run on a space time basis.
-        - You should report your:
+        - Describe how the initial conditions of the cell culture influence the space-time profit and space-time yield
+          of mAb production.
+        - Describe the initial conditions and harvest time that maximizes the space-time profit of mAb production.
+          Specifically, you should report your:
             - recommended initial glucose concentration.
             - recommended initial glutamine concentration.
             - recommended initial viable cell density.
