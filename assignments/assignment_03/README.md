@@ -24,7 +24,7 @@
       0.0005 $\times$ (Initial VCD [cells/mL])
     - **Cell culture value [\$/L]** = 1000 $\times$ (mAb [mg/L])
     - **Profit [\$/L]** = (Cell culture value [\$/L]) - (Cell culture cost [\$/L])
-    - **Space-time profit [\$/ (L $\cdot$ d)]** = (Profit [\$/L]) $\div$ ((Harvest time [d]) + (Downtime [d]))
+    - **Space-time profit [\$ / (L $\cdot$ d)]** = (Profit [\$/L]) / ((Harvest time [d]) + (Downtime [d]))
 
 ## Task
 
@@ -85,10 +85,10 @@
             - recommended initial glutamine concentration.
             - recommended initial viable cell density.
             - recommended harvest time (i.e., when to stop the production).
-            - estimated cell culture cost.
-            - estimated monoclonal antibody yield (in mg/L) with 95% prediction intervals.
-            - estimated cell culture value at harvest with 95% prediction intervals.
-            - estimated space-time profit (in \$/ (L $\cdot$ d)) with 95% prediction intervals.
+            - estimated cell culture cost [$/L].
+            - estimated cell culture value at harvest [$/L] with 95% prediction intervals.
+            - estimated space-time profit [\$ / (L $\cdot$ d)] with 95% prediction intervals.
+            - estimated mAb space-time yield [mg / (L $\cdot$ d)] with 95% prediction intervals.
         - Provide evidence supporting your conclusions. Evidence may include exported CSV tables, PNG figures, or both.
         - Organize this section using Heading 3 subsections.
 
