@@ -106,6 +106,7 @@
           both.
         - Organize this section using Heading 3 subsections.
 
+
 - Hints:
     - A big challenge with this project is managing your computational resources effectively.
     - Start with a small set of hyperparameters and a lower number of cross-validation folds to test your code and see
@@ -118,6 +119,7 @@
       make changes to your figures.
     - Once your entire workflow is complete you may run your entire code again one last time to ensure that everything
       is consistent.
+
 
 - Reminders:
     - Only your `main.py` script will be run to test your code in the course environment.
