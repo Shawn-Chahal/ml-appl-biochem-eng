@@ -6,8 +6,8 @@
   most important factors influencing cell culture dynamics.
 
 
-- The growth rate and death rate of cells, and the production rate of biological products (e.g., proteins, compounds,
-  etc.) are particularly affected by these factors.
+- The growth rate and death rate of cells, and the production rate of recombinant proteins are particularly affected by
+  these factors.
 
 ## Task
 
@@ -36,7 +36,7 @@
         - What does your code do?
         - What problem does it solve?
         - Replace heading with your own project name.
-        - The project name should resemble your repository name, but it does not need to be identical.
+        - The project name should be derived from your repository name, but it does not need to be identical.
     - **Highlights**
         - Heading 2
         - Include 3 - 5 bullet points in an unordered list.
@@ -45,8 +45,7 @@
         - Consider what skills you would want a potential employer to know about.
     - **Environment**
         - Heading 2
-        - List the Python version and all libraries used in the project, including version numbers.
-        - Use an unordered list.
+        - Include Python and all libraries used in the project, with version numbers, in an unordered list.
         - List Python first, followed by the libraries in alphabetical order.
         - Only include libraries that were actually used in the project. Do not include packages that are installed in
           your environment but were not used.
@@ -57,7 +56,8 @@
         - Explain the purpose of each major stage of the workflow and why it exists.
         - Examples of major stages include (but are not limited to) data loading, preprocessing, feature engineering,
           model training, etc.
-        - Do not simply list the functions and classes that are called.
+        - If `main.py` executes code located elsewhere in your repository (e.g., `src/classes.py`), then that code
+          should also be described.
         - Organize this section using Heading 3 subsections.
         - For each subsection, describe:
             - What does this stage of the workflow do?
@@ -69,22 +69,26 @@
         - Report the optimal values that you found for: `hidden_layers`, `activation`, `learning_rate`, `batch_size`,
           and `weight_decay`.
             - To save on computation time, you may use train-test split instead of cross-validation at this stage.
-            - Justify the hyperparameter values you included in your hyperparameter search space (e.g., `param_grid`).
-            - Describe the total number of hyperparameter sets you searched and how you decided to distribute them
-              across the hyperparameters.
+            - Justify the number of `epochs` that you chose to use for training.
+            - Justify the hyperparameter values that you chose to include in your search space (e.g., `param_grid`).
+            - State the total number of hyperparameter sets you searched and explain how you decided to distribute them
+              across the various hyperparameters.
                 - E.g., If you chose 3 levels for `learning_rate`, but only 2 levels for `weight_decay`, explain why.
-        - Perform 4-fold cross-validation on this optimal neural network.
+            - Justify your decision in choosing this set of optimal hyperparameter values.
+        - Perform 4-fold cross-validation on the optimal neural network (i.e., the neural network with the optimal
+          hyperparameters you reported).
             - Report the mean and standard deviation of the RMSE and NRMSE for each target.
             - Make a figure with 4 subplots (i.e., one for each CV fold) in a 2 x 2 configuration that plots `epoch` on
-              the x-axis and `loss_train`, `loss_valid` on the y-axis, with clearly labeled axes and legends. This
+              the x-axis and `loss_train` and `loss_valid` on the y-axis, with clearly labeled axes and legends. This
               figure must show that the training completed within the number of epochs used in each fold. If not, then
               the number of epochs must be increased.
         - Using the optimal neural network as your baseline, you will examine the impact of each hyperparameter
-          individually. Use 3-fold cross-validation for this section.
+          individually. For each analysis in this section, you will change the value of one hyperparameter while keeping
+          the rest at the same value used in the optimal neural network. Use 3-fold cross-validation for this section.
             - Discuss the influence of `hidden_layers` on model error. You should compare 5 architectures: your optimal,
               2 less complex, and 2 more complex.
-            - Discuss the influence of `activation` on model error. You should compare: `sigmoid`, `tanh`, `relu`, and
-              `leakyrelu`.
+            - Discuss the influence of `activation` on model error. You should compare: `"sigmoid"`, `"tanh"`, `"relu"`,
+              and `"leakyrelu"`.
             - Discuss the influence of `learning_rate` on model error. You should compare 5 values: your optimal, 2
               lower, and 2 greater.
             - Discuss the influence of `batch_size` on model error. You should compare 5 values: your optimal, 2 lower,
@@ -93,10 +97,10 @@
               lower, and 2 greater. If your optimal was `weight_decay = 0.0` then you may compare it with 4 values that
               are higher.
         - Based on all the data you have collected on the influence of these hyperparameters on model error, discuss
-          what next steps you would take to improve the model if you have access to more computational power.
-        - Compare the performance of your optimized neural network to that of an optimized polynomial regression model
+          what next steps you would take to improve the model if you had access to more computational power.
+        - Compare the performance of your optimized neural network to that of an optimized polynomial regression model.
             - You do not need to do anything fancy here, you can recycle old code from the course or past assignments.
-            - Discuss the difference in model performance and training time. You don't need to provide exact values for
+            - Discuss the difference in model performance and training time. You do not need to provide exact values for
               training time, just describe the order of magnitude (e.g., seconds vs minutes vs hours, etc.).
         - Always provide evidence supporting your conclusions. Evidence may include exported CSV tables, PNG figures, or
           both.
@@ -108,6 +112,8 @@
     - You are primarily being evaluated on your ability to justify your decisions rather than arriving at the absolute
       optimal solution.
     - Word limits should be viewed as strong suggestions, rather than hard limits.
+    - Figures should be embedded in the README. They should not be a link to a file elsewhere in the repository.
+    - All figures should be in the `figures` directory.
     - You should present your repository like a portfolio project rather than an assignment for a course. I would
       encourage you not to make any references to the course (e.g., course code, course name, assignment number, student
       ID, etc.).
@@ -119,7 +125,7 @@
 1. Download the [repository template](https://github.com/Shawn-Chahal/chg4360c-repo-template) for the course.
 
 
-2. Add [`dataset_cell_growth_7factor.csv`](provided files/dataset_cell_growth_7factor.csv) to the `datasets` directory
+2. Add [`dataset_cell_growth_7factor.csv`](provided_files/dataset_cell_growth_7factor.csv) to the `datasets` directory
    in your local repository.
 
 
@@ -133,11 +139,11 @@
 5. Delete any placeholder files that you are not using.
 
 
-6. Push the project to a new GitHub repository.
+6. Push the project to a new GitHub repository. Keep the repositroy name short (15 - 30 characters or 2 - 4 words).
 
 ## Provided files
 
-[`dataset_cell_growth_7factor.csv`](provided files/dataset_cell_growth_7factor.csv)
+[`dataset_cell_growth_7factor.csv`](provided_files/dataset_cell_growth_7factor.csv)
 
 - This file contains simulated bioprocess data with the following columns:
     - `Specific Growth Rate [d^-1]`: The specific growth rate of cells in units of d^-1.
