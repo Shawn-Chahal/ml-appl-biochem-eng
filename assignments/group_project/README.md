@@ -106,8 +106,21 @@
           both.
         - Organize this section using Heading 3 subsections.
 
+- Hints:
+    - A big challenge with this project is managing your computational resources effectively.
+    - Start with a small set of hyperparameters and a lower number of cross-validation folds to test your code and see
+      that everything is working properly. You may even start by using a subset of the dataset.
+    - Once you see that your code runs without errors, use the entire dataset, add more hyperparameters, and use the
+      appropriate number of cross-validation folds for each section.
+    - Save results into tables so that you don't need to run the entire code again each time.
+    - For example, if you want to make a figure, you don't want to have to run the entire neural network hyperparameter
+      optimization each time. Store the values that you want to plot in a table. Then plot from the table each time you
+      make changes to your figures.
+    - Once your entire workflow is complete you may run your entire code again one last time to ensure that everything
+      is consistent.
 
 - Reminders:
+    - Only your `main.py` script will be run to test your code in the course environment.
     - You are free to use the libraries found in the course environment and code from the course repository as needed.
     - You are primarily being evaluated on your ability to justify your decisions rather than arriving at the absolute
       optimal solution.
@@ -158,18 +171,10 @@
     - `Ammonia [mM]`: Ammonia concentration in units of mM.
     - `Viable Cell Density [cells/mL]`: The concentration of living cells in units of cells/mL.
 
-## Expected Program Behavior
-
-- Your `main.py` script will be run to test your code in the course environment.
-
-
-- There is no set expectation of what your code should print to terminal or export as tables or figures unless specified
-  otherwise in the [Task](#task) section.
-
 ## Submission Requirements
 
 - Submit a link to your GitHub repository by email:
-    - To: TA that you submitted your group member names to (see Brightspace)
+    - To: TA (see Brightspace)
     - CC: All group members
     - Subject: CHG 4360C Group Project Submission
 
