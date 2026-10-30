@@ -77,3 +77,5 @@ Lecture slides are available on Brightspace. This repository contains the code e
 7. [White noise analysis (NVAR)](units/unit_05/main_07_white_noise_nvar.py)
 
 ### Unit 6: Deep Learning for Biochemical Engineering
+
+1. [Fully connected neural networks](units/unit_06/main_01_fully_connected_neural_networks.py)
