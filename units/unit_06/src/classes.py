@@ -97,7 +97,7 @@ class FullyConnectedNeuralNetwork:
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=self.valid_frac,
                                                               random_state=self.random_state)
 
-        # Step 2: Standardize inputs and targets
+        # Step 2: Standardize inputs and outputs separately
         self.scaler_x = StandardScaler()
         self.scaler_y = StandardScaler()
 
@@ -106,14 +106,12 @@ class FullyConnectedNeuralNetwork:
 
         x_train = self.scaler_x.transform(x_train)
         y_train = self.scaler_y.transform(y_train)
-
         x_valid = self.scaler_x.transform(x_valid)
         y_valid = self.scaler_y.transform(y_valid)
 
         # Step 3: Convert NumPy arrays to PyTorch tensors
         x_train = torch.tensor(x_train, dtype=torch.float32)
         y_train = torch.tensor(y_train, dtype=torch.float32)
-
         x_valid = torch.tensor(x_valid, dtype=torch.float32)
         y_valid = torch.tensor(y_valid, dtype=torch.float32)
 

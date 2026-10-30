@@ -23,6 +23,9 @@ Engineering* at the University of Ottawa.
 3. [Assignment 3: Optimizing Monoclonal Antibody Production](assignments/assignment_03/README.md)
     - Due: Monday, November 2 at 11:59 PM
 
+4. [Group Project: Designing and Optimizing a Deep Neural Network](assignments/group_project/README.md)
+    - Due: Monday, November 30 at 11:59 PM
+
 ## Course Notes
 
 Lecture slides are available on Brightspace. This repository contains the code examples used throughout the course.
