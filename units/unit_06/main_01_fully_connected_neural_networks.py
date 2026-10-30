@@ -26,6 +26,7 @@ from sklearn.metrics import root_mean_squared_error
 from sklearn.model_selection import train_test_split, ParameterGrid
 
 from units.unit_06.src.classes import FullyConnectedNeuralNetwork
+from units.unit_06.src.functions import progress_bar
 
 # Set random seeds for reproducibility
 random.seed(0)
@@ -57,11 +58,19 @@ param_grid = dict(
     learning_rate=[0.001, 0.01],
 )
 
+# Track iterations for progress bar
+c_iter = 0
+n_iters = len(ParameterGrid(param_grid))
+
+# Records to export
+columns = list(param_grid.keys()) + ["target", "NRMSE", "RMSE"]
+records = []
+
 # Train and evaluate every hyperparameter combination.
 # ParameterGrid enables GridSearchCV-type behaviour.
 for hyperparameters in ParameterGrid(param_grid):
 
-    # Create the neural network
+    # Initialize the model
     model = FullyConnectedNeuralNetwork(
         epochs=400,
         batch_size=1024,
@@ -79,13 +88,7 @@ for hyperparameters in ParameterGrid(param_grid):
     # Calculate the interquartile range (IQR)
     iqr = np.quantile(y_test, q=0.75, axis=0) - np.quantile(y_test, q=0.25, axis=0)
 
-    # Display the current hyperparameters
-    print(100 * "=")
-    for hp_name, hp_value in hyperparameters.items():
-        print(f"{hp_name:20s}: {hp_value}")
-
     # Calculate performance metrics for each target variable
-    print(80 * "-")
     for j, target in enumerate(targets):
         # Compute RMSE
         rmse = root_mean_squared_error(y_test[:, j], y_pred[:, j])
@@ -93,6 +96,11 @@ for hyperparameters in ParameterGrid(param_grid):
         # Compute NRMSE using the IQR for normalization
         nrmse = rmse / iqr[j]
 
-        print(f"Target: {target:50s} | NRMSE: {nrmse:10.6f} | RMSE:  {rmse:10.6f}")
+        record = tuple([hyperparameters[key] for key in columns[:len(hyperparameters)]] + [target, nrmse, rmse])
+        records.append(record)
 
-    print()
+    c_iter += 1
+    progress_bar(c_iter, n_iters)
+
+df_export = pd.DataFrame.from_records(records, columns=columns)
+df_export.to_csv(os.path.join("tables", "table_grid_search.csv"), index=False)
