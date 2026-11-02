@@ -1,3 +1,3 @@
-# Unit 6: Deep Learning for Biochemical Engineering
+# Unit 6: Introduction to Deep Learning
 
 ## Table of Contents

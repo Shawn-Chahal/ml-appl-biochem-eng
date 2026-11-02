@@ -10,7 +10,7 @@ Engineering* at the University of Ottawa.
 3. [Data Analysis and Visualization in Python](#unit-3-data-analysis-and-visualization-in-python)
 4. [Introduction to Machine Learning](#unit-4-introduction-to-machine-learning)
 5. [Time Series Forecasting](#unit-5-time-series-forecasting)
-6. [Deep Learning for Biochemical Engineering](#unit-6-deep-learning-for-biochemical-engineering)
+6. [Introduction to Deep Learning](#unit-6-deep-learning-for-biochemical-engineering)
 
 ## Assignments
 
@@ -79,6 +79,6 @@ Lecture slides are available on Brightspace. This repository contains the code e
 6. [Non-linear vector autoregression (NVAR)](units/unit_05/main_06_nonlinear_var.py)
 7. [White noise analysis (NVAR)](units/unit_05/main_07_white_noise_nvar.py)
 
-### Unit 6: Deep Learning for Biochemical Engineering
+### Unit 6: Introduction to Deep Learning
 
 1. [Fully connected neural networks](units/unit_06/main_01_fully_connected_neural_networks.py)
