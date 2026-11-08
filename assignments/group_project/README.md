@@ -111,6 +111,9 @@
     - A big challenge with this project is managing your computational resources effectively.
     - Start with a small set of hyperparameters and a lower number of cross-validation folds to test your code and see
       that everything is working properly. You may even start by using a subset of the dataset.
+    - Another approach to speeding up code development can be to temporarily lower the number of epochs to something
+      like 10. However, this will greatly diminish the performance of your model, so only do this to test if your code
+      works without error, then increase the number of epochs to a more reasonable value.
     - Once you see that your code runs without errors, use the entire dataset, add more hyperparameters, and use the
       appropriate number of cross-validation folds for each section.
     - Save results into tables so that you don't need to run the entire code again each time.
