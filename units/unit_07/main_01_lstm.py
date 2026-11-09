@@ -1,3 +1,25 @@
+# ============================================================================
+#   Long Short-Term Memory (LSTM) Networks
+# ============================================================================
+#
+#   * LSTM networks are a type of recurrent neural network (RNN) designed
+#     to learn temporal patterns in sequential data.
+#
+#   * Unlike fully connected neural networks, LSTM maintains an internal
+#     memory state that enables it to capture time-dependent process
+#     dynamics.
+#
+#   * This example trains an LSTM to model batch cell culture dynamics,
+#     then recursively forecasts future process states.
+#
+#   * Forecast uncertainty is estimated using Monte Carlo simulation.
+#     Residual errors from the training data are repeatedly sampled and
+#     added to model predictions to generate prediction intervals.
+#
+#   * Model performance is evaluated using RMSE on a held-out test batch.
+#
+# ============================================================================
+
 import gc
 import os
 import random
@@ -37,10 +59,10 @@ df_ic = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_time_series_ic
 # Extract the unique batch IDs
 batch_ids = np.unique(df.loc[:, "Batch ID"])
 
-# Define batch_id_test
+# Define the test batch
 batch_id_test = 13
 
-# Select all process variables to include in the NVAR model
+# Select all process variables to include in the LSTM model
 features = df.columns[2:]
 
 # Select the variable that will be plotted and evaluated
@@ -50,20 +72,19 @@ idx_fp = np.argmax(features == feature_plot)
 # Extract units for plotting and reporting
 units = feature_plot.split(" [")[-1][:-1]
 
-n_iters = n_simulations
-c_iter = 0
-
-# Create a figure containing one subplot for each set of experimental initial conditions.
+# Create a figure
 fig, ax = plt.subplots(1, 1, figsize=((14.4 / 2.54), (10.24 / 2.54)), dpi=300, layout="constrained")
 
-y_min = 0
-y_max = np.max(df.loc[:, feature_plot])
+# Variables for progress bar
+c_iter = 0
+n_iters = n_simulations
 
-# Prepare the dataset to train LSTM
+# Prepare sequence data for LSTM training
 x_data = df.loc[:, features].to_numpy()
 group_ids = df.loc[:, "Batch ID"].to_numpy()
 x_sequences, y_sequences, g_sequences = prepare_data(x_data, group_ids, seq_length)
 
+# Hold out one complete batch for testing
 mask_test = (g_sequences == batch_id_test)
 mask_train = ~mask_test
 
@@ -93,14 +114,15 @@ model = LSTMNeuralNetwork(
 model.fit(x_train, y_train, g_train)
 
 # Calculate residual errors on the training data.
-# These residuals will later be sampled during forecast simulations to estimate white noise.
 y_train_pred, _ = model.predict(x_train)
 y_train_res = y_train_pred - y_train
 
+# Calculate the range of values observed during training
 a_min = np.min(y_train)
 a_max = np.max(y_train)
 
-# Initial state containing all process variables
+# Initialize forecasting conditions.
+# Forecasting begins from experimentally known initial conditions.
 idx_ic = (df_ic.loc[:, "Batch ID"] == batch_id_test).idxmax()
 x_initial = df_ic.loc[idx_ic, features].to_numpy()
 initial_glucose = df_ic.at[idx_ic, "Glucose [g/L]"]
@@ -117,6 +139,7 @@ for _ in range(n_simulations):
     # Initialize the forecast using the known initial conditions.
     x_forecast = [x_initial]
     hidden_state = None
+
     # Generate forecasts recursively.
     while len(x_forecast) < t_exp_test.shape[0]:
 
@@ -158,6 +181,7 @@ x_forecast_pi_higher = np.quantile(x_forecasts, q=1 - alpha / 2, axis=0)
 # Calculate RMSE for the selected plotting variable
 rmse_forecast = root_mean_squared_error(x_exp_test[:, idx_fp], x_forecast_median[:, idx_fp])
 
+# Create information box
 message = f"{n_simulations} simulations\n"
 message += f"RMSE: {rmse_forecast:.2f} {units}\n"
 message += f"Initial:\n"
@@ -173,13 +197,15 @@ ax.fill_between(t_exp_test, x_forecast_pi_lower[:, idx_fp], x_forecast_pi_higher
 # Display forecast error and initial conditions
 ax.text(x=0.02, y=0.97, s=message, va='top', ha='left', transform=ax.transAxes, fontname="monospace", fontsize=12)
 
-# Track the maximum value needed for consistent subplot limits
-y_max = max(y_max, np.max(x_test[:, idx_fp]), np.max(x_forecast_pi_higher[:, idx_fp]))
+# Calculate the maximum value needed for consistent y-axis limits
+y_min = 0
+y_max = max(np.max(df.loc[:, feature_plot]), np.max(x_forecast_pi_higher[:, idx_fp]))
 
-# Apply consistent axis limits and formatting to all subplots
+# Apply consistent y-axis limits
 y_range = y_max - y_min
 y_buffer = 0.05 * y_range
 
+# Apply plot formatting
 ax.set_ylim(bottom=y_min - y_buffer, top=y_max + y_buffer)
 ax.set_xlabel("Time [h]", fontsize=12)
 ax.set_ylabel(feature_plot, fontsize=12)
