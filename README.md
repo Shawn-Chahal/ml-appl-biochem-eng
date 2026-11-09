@@ -10,7 +10,8 @@ Engineering* at the University of Ottawa.
 3. [Data Analysis and Visualization in Python](#unit-3-data-analysis-and-visualization-in-python)
 4. [Introduction to Machine Learning](#unit-4-introduction-to-machine-learning)
 5. [Time Series Forecasting](#unit-5-time-series-forecasting)
-6. [Introduction to Deep Learning](#unit-6-deep-learning-for-biochemical-engineering)
+6. [Introduction to Deep Learning](#unit-6-introduction-to-deep-learning)
+7. [Recurrent Neural Networks](#unit-7-recurrent-neural-networks)
 
 ## Assignments
 
@@ -82,3 +83,7 @@ Lecture slides are available on Brightspace. This repository contains the code e
 ### Unit 6: Introduction to Deep Learning
 
 1. [Fully connected neural networks](units/unit_06/main_01_fully_connected_neural_networks.py)
+
+### Unit 7: Recurrent Neural Networks
+
+1. [Long short-term memory](units/unit_07/main_01_lstm.py)
