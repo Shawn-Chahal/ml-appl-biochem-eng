@@ -7,6 +7,34 @@ from torch.utils.data import TensorDataset, DataLoader
 
 
 class LSTMNeuralNetwork:
+    """
+    High-level wrapper around a PyTorch LSTM network for multivariate
+    time series prediction.
+
+    Parameters
+    ----------
+    nodes_per_layer : int
+        Number of hidden units in each LSTM layer.
+    n_layers : int
+        Number of stacked LSTM layers.
+    learning_rate : float, optional
+        Learning rate used by the AdamW optimizer.
+    epochs : int, optional
+        Number of training epochs.
+    batch_size : int, optional
+        Mini-batch size used during training.
+    weight_decay : float, optional
+        Weight decay coefficient.
+    shuffle : bool, optional
+        Whether training samples should be shuffled each epoch.
+    valid_frac : float, optional
+        Fraction of groups reserved for validation.
+    random_state : int or None, optional
+        Random seed for reproducibility.
+    verbose : bool, optional
+        If True, training progress is displayed.
+
+    """
 
     def __init__(self, nodes_per_layer, n_layers, learning_rate=0.001, epochs=1000, batch_size=1024,
                  weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None, verbose=False):
@@ -33,6 +61,29 @@ class LSTMNeuralNetwork:
         self.seq_length = None
 
     def fit(self, x, y, group_ids):
+        """
+        Train the LSTM model.
+
+        Parameters
+        ----------
+        x : ndarray
+            Input sequences with shape
+            (n_sequences, sequence_length, n_features).
+
+        y : ndarray
+            Target sequences with shape
+            (n_sequences, sequence_length, n_features).
+
+        group_ids : ndarray
+            Group identifier assigned to each sequence with shape
+            (n_sequences,). E.g., Batch IDs.
+
+        Returns
+        -------
+        self : LSTMNeuralNetwork
+            Trained model instance.
+
+        """
 
         n_features = x.shape[2]
 
@@ -105,6 +156,35 @@ class LSTMNeuralNetwork:
         return self
 
     def predict(self, x, hidden_state_0=None):
+        """
+        Generate predictions using the trained LSTM model.
+
+        Parameters
+        ----------
+        x : ndarray
+            Input data.
+
+            Accepted shapes:
+
+            - (sequence_length, n_features)
+            - (n_sequences, sequence_length, n_features)
+
+        hidden_state_0 : tuple, optional
+            Initial hidden and cell states for the LSTM.
+
+            This is useful when making predictions sequentially
+            through a long time series.
+
+        Returns
+        -------
+        y_pred : ndarray
+            Predicted outputs on the original variable scale.
+
+        hidden_state_n : tuple
+            Final hidden and cell states produced by the LSTM.
+
+        """
+
         n_features = x.shape[-1]
 
         if len(x.shape) == 2:
@@ -142,6 +222,16 @@ class LSTMNeuralNetwork:
         return y_pred, hidden_state_n
 
     def build_model(self, n_features):
+        """
+        Construct the PyTorch LSTM model and optimizer.
+
+        Parameters
+        ----------
+        n_features : int
+            Number of input and output variables.
+
+        """
+
         # Create the model
         self.model = LSTMNeuralNetworkPyTorch(input_size=n_features, output_size=n_features,
                                               hidden_size=self.nodes_per_layer, num_layers=self.n_layers)
@@ -154,6 +244,21 @@ class LSTMNeuralNetwork:
                                            weight_decay=self.weight_decay)
 
     def train_iteration(self, dataloader_train):
+        """
+        Perform one training epoch.
+
+        Parameters
+        ----------
+        dataloader_train : DataLoader
+            Mini-batches of training data.
+
+        Returns
+        -------
+        float
+            Mean training loss across the entire epoch.
+
+        """
+
         loss_sum = 0
         n_samples = 0
 
@@ -168,7 +273,7 @@ class LSTMNeuralNetwork:
             # Calculate the loss of one batch
             loss_batch = self.loss_fn(y_batch_pred, y_batch_train)
 
-            # Compute gradients and update network weights based on loss from this batch
+            # Compute gradients and update neural network weights based on loss from this batch
             loss_batch.backward()
             self.optimizer.step()
             self.optimizer.zero_grad()
@@ -184,6 +289,21 @@ class LSTMNeuralNetwork:
         return loss_train
 
     def valid_iteration(self, dataloader_valid):
+        """
+        Evaluate model performance on the validation dataset.
+
+        Parameters
+        ----------
+        dataloader_valid : DataLoader
+            Mini-batches of validation data.
+
+        Returns
+        -------
+        float
+            Mean validation loss across the entire epoch.
+
+        """
+
         loss_sum = 0
         n_samples = 0
 
@@ -212,6 +332,25 @@ class LSTMNeuralNetwork:
 
 
 class LSTMNeuralNetworkPyTorch(nn.Module):
+    """
+    PyTorch implementation of LSTM.
+
+    Parameters
+    ----------
+    input_size : int
+        Number of input features.
+
+    output_size : int
+        Number of output features.
+
+    hidden_size : int
+        Number of units in each LSTM layer.
+
+    num_layers : int
+        Number of stacked LSTM layers.
+
+    """
+
     def __init__(self, input_size, output_size, hidden_size, num_layers):
         super().__init__()
         self.lstm = nn.LSTM(
@@ -223,10 +362,33 @@ class LSTMNeuralNetworkPyTorch(nn.Module):
         self.linear = nn.Linear(hidden_size, output_size)
 
     def forward(self, x, hidden_state=None):
+        """
+        Execute a forward pass through the network.
+
+        Parameters
+        ----------
+        x : torch.Tensor
+            Input sequence tensor with shape
+            (batch_size, sequence_length, input_size)
+
+        hidden_state : tuple, optional
+            Initial hidden state and cell state.
+
+        Returns
+        -------
+        x : torch.Tensor
+            Predicted outputs for every time step.
+
+        (h_n, c_n) : tuple
+            Final hidden state and cell state.
+
+        """
+
         if hidden_state is None:
             x, (h_n, c_n) = self.lstm(x)
         else:
             x, (h_n, c_n) = self.lstm(x, hidden_state)
 
         x = self.linear(x)
+
         return x, (h_n, c_n)

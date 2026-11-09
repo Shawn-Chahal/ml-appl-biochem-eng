@@ -38,12 +38,12 @@ def progress_bar(c_iter, n_iters, n_updates=1000, length_bar=20):
 
 def prepare_data(x, group_ids, seq_length):
     """
-    Convert time-series data into input-output sequences for LSTM models.
+    Convert time series data into input-output sequences for LSTM models.
 
     Parameters
     ----------
     x : numpy.ndarray
-        Time-series observations. Rows correspond to time points and
+        Time series observations. Rows correspond to time points and
         columns correspond to features or measured variables.
     group_ids : numpy.ndarray
         Identifier for each sample indicating which experimental run,
