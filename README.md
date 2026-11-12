@@ -12,6 +12,7 @@ Engineering* at the University of Ottawa.
 5. [Time Series Forecasting](#unit-5-time-series-forecasting)
 6. [Introduction to Deep Learning](#unit-6-introduction-to-deep-learning)
 7. [Recurrent Neural Networks](#unit-7-recurrent-neural-networks)
+8. [Hybrid Models](#unit-8-hybrid-models)
 
 ## Assignments
 
@@ -87,3 +88,7 @@ Lecture slides are available on Brightspace. This repository contains the code e
 ### Unit 7: Recurrent Neural Networks
 
 1. [Long short-term memory](units/unit_07/main_01_lstm.py)
+
+### Unit 8: Hybrid Models
+
+1. [Hybrid Monod equation model](units/unit_08/main_01_hybrid_monod.py)
