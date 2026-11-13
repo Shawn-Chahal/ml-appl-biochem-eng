@@ -91,4 +91,6 @@ Lecture slides are available on Brightspace. This repository contains the code e
 
 ### Unit 8: Hybrid Models
 
-1. [Hybrid Monod equation model](units/unit_08/main_01_hybrid_monod.py)
+1. [Mechanistic models (Monod equation)](units/unit_08/main_01_monod_mechanistic.py)
+2. [Data-driven models (Monod equation)](units/unit_08/main_02_monod_data_driven.py)
+3. [Hybrid models (Monod equation)](units/unit_08/main_03_monod_hybrid.py)
