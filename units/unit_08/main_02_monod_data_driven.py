@@ -33,7 +33,7 @@ tts_output = train_test_split(x, y, s, ph, temp, test_size=0.2, random_state=0)
 
 x_train, x_test, y_train, y_test, s_train, s_test, ph_train, ph_test, temp_train, temp_test = tts_output
 
-model = MonodDataDrivenModel(epochs=100, random_state=0, verbose=True)
+model = MonodDataDrivenModel(epochs=200, random_state=0, verbose=True)
 model.fit(x_train, y_train)
 y_pred = model.predict(x_test)
 rmse_test_overall = root_mean_squared_error(y_test, y_pred)

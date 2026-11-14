@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+import numpy as np
 import torch
 from scipy.optimize import curve_fit
 from sklearn.model_selection import train_test_split
@@ -282,11 +283,12 @@ class MonodDataDrivenModel:
 
 class MonodHybridModel:
 
-    def __init__(self, hidden_layers=(8, 8, 8, 8), activation="relu", learning_rate=0.001, epochs=1000,
-                 batch_size=1024,
-                 weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None, verbose=False):
+    def __init__(self, hidden_layers_1=(8, 8, 8, 8), hidden_layers_2=(32, 32), activation="relu", learning_rate=0.001,
+                 epochs=200, batch_size=1024, weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None,
+                 verbose=False):
 
-        self.hidden_layers = hidden_layers
+        self.hidden_layers_1 = hidden_layers_1
+        self.hidden_layers_2 = hidden_layers_2
         self.activation = activation
         self.learning_rate = learning_rate
         self.epochs = epochs
@@ -301,6 +303,7 @@ class MonodHybridModel:
         self.model = None
         self.loss_fn = None
         self.optimizer = None
+        self.pt_scaler = None
 
     def fit(self, x, y):
         """
@@ -320,12 +323,23 @@ class MonodHybridModel:
             Fitted estimator.
         """
 
+        # Create copies to avoid in-place modification
+        x = np.copy(x)
+        y = np.copy(y)
+
         n_features = x.shape[1]
         n_targets = y.shape[1]
 
         # Step 1: Split data into training and validation sets
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=self.valid_frac,
                                                               random_state=self.random_state)
+
+        # Step 2: Standardize pH and temperature only.
+        self.pt_scaler = StandardScaler()
+        self.pt_scaler.fit(x_train[:, 1:])
+
+        x_train[:, 1:] = self.pt_scaler.transform(x_train[:, 1:])
+        x_valid[:, 1:] = self.pt_scaler.transform(x_valid[:, 1:])
 
         # Step 3: Convert NumPy arrays to PyTorch tensors
         x_train = torch.tensor(x_train, dtype=torch.float32)
@@ -377,6 +391,11 @@ class MonodHybridModel:
             Predicted target values in the original target scale.
         """
 
+        # Create copies to avoid in-place modification
+        x = np.copy(x)
+
+        x[:, 1:] = self.pt_scaler.transform(x[:, 1:])
+
         # Convert the NumPy array to a PyTorch tensor
         x = torch.tensor(x, dtype=torch.float32)
 
@@ -406,7 +425,8 @@ class MonodHybridModel:
         """
 
         # Create the model
-        self.model = MonodHybridModelPyTorch(hidden_layers=self.hidden_layers, activation=self.activation)
+        self.model = MonodHybridModelPyTorch(hidden_layers_1=self.hidden_layers_1, hidden_layers_2=self.hidden_layers_2,
+                                             activation=self.activation)
 
         # Define the loss function
         self.loss_fn = nn.MSELoss()
@@ -493,15 +513,13 @@ class MonodHybridModel:
 
 class MonodHybridModelPyTorch(nn.Module):
 
-    def __init__(self, hidden_layers, activation, eps=(10 ** (-6))):
+    def __init__(self, hidden_layers_1, hidden_layers_2, activation, eps=(10 ** (-6))):
         super().__init__()
 
-        self.hidden_layers = hidden_layers
+        self.hidden_layers_1 = hidden_layers_1
+        self.hidden_layers_2 = hidden_layers_2
         self.activation = activation
         self.eps = eps
-
-        beta=5
-        hidden_layers_2 = (4,4)
 
         # Define the activation function
         valid_activations = {"sigmoid": nn.Sigmoid, "tanh": nn.Tanh, "relu": nn.ReLU, "leakyrelu": nn.LeakyReLU}
@@ -511,7 +529,7 @@ class MonodHybridModelPyTorch(nn.Module):
         n_nodes_in = 2  # pH, T
 
         # Add hidden layers with activation function
-        for n_nodes_out in self.hidden_layers:
+        for n_nodes_out in self.hidden_layers_1:
             base_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
             base_stack.append(nn_Activation())
 
@@ -519,23 +537,23 @@ class MonodHybridModelPyTorch(nn.Module):
 
         # Output layer uses a linear activation because this model is designed for regression
 
-        n_nodes_in = self.hidden_layers[-1]
+        n_nodes_in = self.hidden_layers_1[-1]
         mu_max_stack = []
         for n_nodes_out in hidden_layers_2:
             mu_max_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
             mu_max_stack.append(nn_Activation())
             n_nodes_in = n_nodes_out
         mu_max_stack.append(nn.Linear(n_nodes_in, 1))
-        mu_max_stack.append(nn.Softplus(beta=beta))
+        mu_max_stack.append(nn.Softplus())
 
-        n_nodes_in = self.hidden_layers[-1]
+        n_nodes_in = self.hidden_layers_1[-1]
         k_s_stack = []
         for n_nodes_out in hidden_layers_2:
             k_s_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
             k_s_stack.append(nn_Activation())
             n_nodes_in = n_nodes_out
         k_s_stack.append(nn.Linear(n_nodes_in, 1))
-        k_s_stack.append(nn.Softplus(beta=beta))
+        k_s_stack.append(nn.Softplus())
 
         self.layers_base = nn.Sequential(*base_stack)
         self.layers_mu_max = nn.Sequential(*mu_max_stack)
