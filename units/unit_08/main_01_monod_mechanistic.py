@@ -106,7 +106,7 @@ for ph_val in u_ph_test:
 
         ax.set_xlabel("Glucose [mM]", fontsize=12)
         ax.set_ylabel(r"Specific Growth Rate [$d^{-1}$]", fontsize=12)
-        ax.set_xlim(0, np.max(x))
+        ax.set_xlim(0, np.max(s))
         ax.set_ylim(0, 1.01 * np.max(y))
         ax.tick_params(axis="both", which="major", labelsize=12)
         ax.legend(loc="upper left", fontsize=9)
