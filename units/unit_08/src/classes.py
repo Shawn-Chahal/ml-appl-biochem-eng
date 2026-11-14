@@ -15,15 +15,47 @@ class MonodMechanisticModel:
         self.monod_params = None
 
     def fit(self, x, y):
-        popt, _ = curve_fit(self.monod_equation, x, y)
+        # x = [s, ph, temp]
+
+        eps = 10 ** (-6)
+        x_cf = self.process_x(x)
+        y_cf = self.process_y(y)
+
+        k_s_opt_0 = 10
+        mu_opt_0 = 1
+        ph_opt = 7.4
+        ph_bandwidth = 0.1 * ph_opt
+        temp_opt = 37
+        temp_bandwidth = 0.1 * temp_opt
+        p0 = [k_s_opt_0, mu_opt_0, ph_opt, ph_bandwidth, temp_opt, temp_bandwidth]
+        bounds = (eps, np.inf)
+        popt, _ = curve_fit(self.monod_equation, x_cf, y_cf, p0=p0, bounds=bounds)
         self.monod_params = popt
+
         return self
 
     def predict(self, x):
-        y_pred = self.monod_equation(x, *self.monod_params)
+        x_cf = self.process_x(x)
+        y_pred = self.monod_equation(x_cf, *self.monod_params)
+        y_pred = np.expand_dims(y_pred, axis=1)
+
         return y_pred
 
-    def monod_equation(self, s, mu_max, k_s):
+    def monod_equation(self, x, k_s_opt, mu_opt, ph_opt, ph_bandwidth, temp_opt, temp_bandwidth):
+        s, ph, temp = x
+
+        a_ph = ((ph - ph_opt) / ph_bandwidth) ** 2
+        a_temp = ((temp - temp_opt) / temp_bandwidth) ** 2
+
+        # a_env=0 at optimal pH and T and goes to infinity when infinitely far from optimal
+        a_env = a_ph + a_temp
+
+        # np.exp(-a_env)=1 at optimal pH and T and goes to 0 when infinitely far from optimal
+        mu_max = mu_opt * np.exp(-a_env)
+
+        # np.exp(a_env)=1 at optimal pH and T and goes to infinity when infinitely far from optimal
+        k_s = k_s_opt * np.exp(a_env)
+
         mu = mu_max * (s / (k_s + s))
         return mu
 
@@ -33,10 +65,20 @@ class MonodMechanisticModel:
     def get_k_s(self):
         return self.monod_params[1]
 
+    def process_x(self, x):
+        s = x[:, 0]
+        ph = x[:, 1]
+        temp = x[:, 2]
+
+        return s, ph, temp
+
+    def process_y(self, y):
+        return y[:, 0]
+
 
 class MonodDataDrivenModel:
 
-    def __init__(self, hidden_layers=(8, 8, 8, 8), activation="relu", learning_rate=0.001, epochs=1000, batch_size=1024,
+    def __init__(self, hidden_layers=(16, 16, 16), activation="relu", learning_rate=0.001, epochs=200, batch_size=1024,
                  weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None, verbose=False):
 
         self.hidden_layers = hidden_layers
@@ -283,12 +325,10 @@ class MonodDataDrivenModel:
 
 class MonodHybridModel:
 
-    def __init__(self, hidden_layers_1=(8, 8, 8, 8), hidden_layers_2=(32, 32), activation="relu", learning_rate=0.001,
-                 epochs=200, batch_size=1024, weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None,
-                 verbose=False):
+    def __init__(self, hidden_layers=(16, 16, 16), activation="relu", learning_rate=0.001, epochs=200, batch_size=1024,
+                 weight_decay=0.0, shuffle=True, valid_frac=0.1, random_state=None, verbose=False):
 
-        self.hidden_layers_1 = hidden_layers_1
-        self.hidden_layers_2 = hidden_layers_2
+        self.hidden_layers = hidden_layers
         self.activation = activation
         self.learning_rate = learning_rate
         self.epochs = epochs
@@ -303,7 +343,7 @@ class MonodHybridModel:
         self.model = None
         self.loss_fn = None
         self.optimizer = None
-        self.pt_scaler = None
+        self.scaler_pt = None
 
     def fit(self, x, y):
         """
@@ -335,11 +375,11 @@ class MonodHybridModel:
                                                               random_state=self.random_state)
 
         # Step 2: Standardize pH and temperature only.
-        self.pt_scaler = StandardScaler()
-        self.pt_scaler.fit(x_train[:, 1:])
+        self.scaler_pt = StandardScaler()
+        self.scaler_pt.fit(x_train[:, 1:])
 
-        x_train[:, 1:] = self.pt_scaler.transform(x_train[:, 1:])
-        x_valid[:, 1:] = self.pt_scaler.transform(x_valid[:, 1:])
+        x_train[:, 1:] = self.scaler_pt.transform(x_train[:, 1:])
+        x_valid[:, 1:] = self.scaler_pt.transform(x_valid[:, 1:])
 
         # Step 3: Convert NumPy arrays to PyTorch tensors
         x_train = torch.tensor(x_train, dtype=torch.float32)
@@ -394,7 +434,7 @@ class MonodHybridModel:
         # Create copies to avoid in-place modification
         x = np.copy(x)
 
-        x[:, 1:] = self.pt_scaler.transform(x[:, 1:])
+        x[:, 1:] = self.scaler_pt.transform(x[:, 1:])
 
         # Convert the NumPy array to a PyTorch tensor
         x = torch.tensor(x, dtype=torch.float32)
@@ -425,8 +465,7 @@ class MonodHybridModel:
         """
 
         # Create the model
-        self.model = MonodHybridModelPyTorch(hidden_layers_1=self.hidden_layers_1, hidden_layers_2=self.hidden_layers_2,
-                                             activation=self.activation)
+        self.model = MonodHybridModelPyTorch(hidden_layers=self.hidden_layers, activation=self.activation)
 
         # Define the loss function
         self.loss_fn = nn.MSELoss()
@@ -513,11 +552,10 @@ class MonodHybridModel:
 
 class MonodHybridModelPyTorch(nn.Module):
 
-    def __init__(self, hidden_layers_1, hidden_layers_2, activation, eps=(10 ** (-6))):
+    def __init__(self, hidden_layers, activation, eps=(10 ** (-6))):
         super().__init__()
 
-        self.hidden_layers_1 = hidden_layers_1
-        self.hidden_layers_2 = hidden_layers_2
+        self.hidden_layers = hidden_layers
         self.activation = activation
         self.eps = eps
 
@@ -529,31 +567,21 @@ class MonodHybridModelPyTorch(nn.Module):
         n_nodes_in = 2  # pH, T
 
         # Add hidden layers with activation function
-        for n_nodes_out in self.hidden_layers_1:
+        for n_nodes_out in self.hidden_layers:
             base_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
             base_stack.append(nn_Activation())
 
             n_nodes_in = n_nodes_out
 
-        # Output layer uses a linear activation because this model is designed for regression
+        mu_max_stack = [
+            nn.Linear(n_nodes_in, 1),
+            nn.Softplus()
+        ]
 
-        n_nodes_in = self.hidden_layers_1[-1]
-        mu_max_stack = []
-        for n_nodes_out in hidden_layers_2:
-            mu_max_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
-            mu_max_stack.append(nn_Activation())
-            n_nodes_in = n_nodes_out
-        mu_max_stack.append(nn.Linear(n_nodes_in, 1))
-        mu_max_stack.append(nn.Softplus())
-
-        n_nodes_in = self.hidden_layers_1[-1]
-        k_s_stack = []
-        for n_nodes_out in hidden_layers_2:
-            k_s_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
-            k_s_stack.append(nn_Activation())
-            n_nodes_in = n_nodes_out
-        k_s_stack.append(nn.Linear(n_nodes_in, 1))
-        k_s_stack.append(nn.Softplus())
+        k_s_stack = [
+            nn.Linear(n_nodes_in, 1),
+            nn.Softplus()
+        ]
 
         self.layers_base = nn.Sequential(*base_stack)
         self.layers_mu_max = nn.Sequential(*mu_max_stack)
@@ -567,8 +595,8 @@ class MonodHybridModelPyTorch(nn.Module):
 
         base = self.layers_base(pt)
         mu_max = self.layers_mu_max(base)
-        k_s = self.layers_k_s(base)
+        k_s = self.layers_k_s(base) + self.eps
 
-        mu = mu_max * (s / (k_s + s + self.eps))
+        mu = mu_max * (s / (k_s + s))
 
         return mu

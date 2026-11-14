@@ -33,10 +33,12 @@ tts_output = train_test_split(x, y, s, ph, temp, test_size=0.2, random_state=0)
 
 x_train, x_test, y_train, y_test, s_train, s_test, ph_train, ph_test, temp_train, temp_test = tts_output
 
-model = MonodHybridModel(epochs=200, random_state=0, verbose=True)
+model = MonodHybridModel(random_state=0, verbose=True)
 model.fit(x_train, y_train)
 y_pred = model.predict(x_test)
 rmse_test_overall = root_mean_squared_error(y_test, y_pred)
+
+print(f"Hybrid RMSE: {rmse_test_overall:.3f}")
 
 u_ph_test = np.unique(ph_test)
 u_temp_test = np.unique(temp_test)
