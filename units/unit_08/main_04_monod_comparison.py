@@ -1,3 +1,20 @@
+# ============================================================================
+#   Mechanistic, Data-Driven, and Hybrid Model Comparison
+# ============================================================================
+#
+#   * This example compares three distinct approaches for modelling
+#     cell growth as a function of substrate concentration,
+#     pH, and temperature.
+#
+#   * All models are trained using the same training dataset and
+#     evaluated on the same held-out test dataset.
+#
+#   * The resulting figure provides a side-by-side comparison of
+#     mechanistic, data-driven, and hybrid modelling approaches
+#     for specific growth rate prediction.
+#
+# ============================================================================
+
 import os
 import random
 
@@ -15,40 +32,53 @@ from units.unit_08.src.classes import MonodMechanisticModel, MonodDataDrivenMode
 plt.rcParams["mathtext.default"] = "regular"
 
 # Set random seeds for reproducibility
-random_state = 0
 random.seed(0)
 np.random.seed(0)
 torch.manual_seed(0)
 
+# Load the dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_cell_growth_hybrid_monod.csv"))
 
+# Extract individual variables from the dataset.
 ph = df.loc[:, "pH"].to_numpy()
 temp = df.loc[:, "Temperature [C]"].to_numpy()
 s = df.loc[:, "Glucose [mM]"].to_numpy()
 mu = df.loc[:, "Specific Growth Rate [d^-1]"].to_numpy()
 
+# Construct the feature matrix:
+#   Column 0 -> substrate concentration
+#   Column 1 -> pH
+#   Column 2 -> temperature
 x = np.stack((s, ph, temp), axis=1)
+
+# Convert the target variable into a column vector.
 y = np.expand_dims(mu, axis=1)
 
-tts_output = train_test_split(x, y, s, ph, temp, test_size=0.2, random_state=random_state)
-
+# Split data into training and testing subsets.
+# Additional arrays are split simultaneously so that substrate, pH, and temperature values
+# remain aligned with the corresponding feature and target samples.
+tts_output = train_test_split(x, y, s, ph, temp, test_size=0.2, random_state=0)
 x_train, x_test, y_train, y_test, s_train, s_test, ph_train, ph_test, temp_train, temp_test = tts_output
 
+# Make a dictionary to hold the models.
 models = {
     "Mechanistic": MonodMechanisticModel(),
-    "Data-Driven": MonodDataDrivenModel(random_state=random_state),
-    "Hybrid": MonodHybridModel(random_state=random_state)
+    "Data-Driven": MonodDataDrivenModel(random_state=0),
+    "Hybrid": MonodHybridModel(random_state=0)
 }
 
+# Train the models and calculate the overall RMSE on the test set for each.
 for model_name, model in models.items():
     model.fit(x_train, y_train)
     y_pred = model.predict(x_test)
     rmse_test_overall = root_mean_squared_error(y_test, y_pred)
     print(f"RMSE {model_name:12s}: {rmse_test_overall:.3f} d^-1")
 
+# Select a few pH and temperature values to plot
 u_ph_test = np.unique(ph_test)[2:-1:3]
 u_temp_test = np.unique(temp_test)[3:-1:2]
 
+# Define various plotting parameters
 nrows = u_ph_test.shape[0]
 ncols = u_temp_test.shape[0]
 figsize = (29.21 / 2.54, 12.09 / 2.54)
@@ -59,6 +89,7 @@ fontsize_text = 7.5
 colors = ["tab:blue", "tab:red", "black"]
 linestyles = ["--", ":", "-"]
 
+# Generate a separate sub-plot for every observed pH-temperature combination.
 fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, dpi=300, layout="constrained")
 
 for i in range(nrows):
@@ -66,33 +97,45 @@ for i in range(nrows):
         ph_val = u_ph_test[i]
         temp_val = u_temp_test[j]
 
+        # Create a dense substrate grid for visualizing the fitted Monod growth curve.
         s_array = np.linspace(0, np.max(s), 1000)
+
+        # Hold pH and temperature constant while varying substrate concentration.
         ph_array = ph_val * np.ones_like(s_array)
         temp_array = temp_val * np.ones_like(s_array)
-        x_array = np.stack((s_array, ph_array, temp_array), axis=1)
 
-        x_plot = s_array
+        # Construct model inputs for model visualization.
+        x_input = np.stack((s_array, ph_array, temp_array), axis=1)
 
+        # Select test samples corresponding to the current pH and temperature combination.
         mask_test_iter = (ph_test == ph_val) * (temp_test == temp_val)
 
+        # Some pH-temperature combinations may not contain any samples after the train-test split.
+        # In which case, skip this iteration of the for loop.
         if np.sum(mask_test_iter) == 0:
             print(f"Skipping pH: {ph_val}, T: {temp_val} C")
             continue
 
+        # Extract the matching experimental observations.
         s_test_iter = s_test[mask_test_iter]
         x_test_iter = x_test[mask_test_iter]
         y_test_iter = y_test[mask_test_iter]
 
         message = f"pH: {ph_val} | T: {temp_val:.0f} C"
 
+        # Plot the test samples
         axes[i, j].scatter(s_test_iter, y_test_iter, label="Test samples", s=16, c="tab:orange", marker="D",
                            edgecolors="none", alpha=0.5, zorder=2)
 
+        # Plot each model type
+        x_plot = s_array
         for k, (model_name, model) in enumerate(models.items()):
-            y_plot = model.predict(x_array)[:, 0]
+            # Evaluate the fitted Monod equation.
+            y_plot = model.predict(x_input)[:, 0]
             axes[i, j].plot(x_plot, y_plot, color=colors[k], label=f"Model ({model_name})", linestyle=linestyles[k],
                             linewidth=1.5, zorder=3)
 
+            # Compute predictions and RMSE for the current operating condition.
             y_pred_iter = model.predict(x_test_iter)
             rmse_test_iter = root_mean_squared_error(y_test_iter, y_pred_iter)
             message += "\n" + f"RMSE({model_name[0]}): {rmse_test_iter:.3f} " + r"$d^{-1}$"
