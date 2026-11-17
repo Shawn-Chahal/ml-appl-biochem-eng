@@ -800,7 +800,7 @@ class MonodHybridModelPyTorch(nn.Module):
 
         self.hidden_layers = hidden_layers
         self.activation = activation
-        self.eps = eps
+        self.eps = torch.tensor(eps, dtype=torch.float32)
 
         # Define the activation function
         valid_activations = {"sigmoid": nn.Sigmoid, "tanh": nn.Tanh, "relu": nn.ReLU, "leakyrelu": nn.LeakyReLU}
@@ -809,36 +809,23 @@ class MonodHybridModelPyTorch(nn.Module):
         # Only pH and temperature are supplied to the neural network.
         # Substrate concentration is handled separately by the mechanistic
         # Monod equation.
-        n_nodes_in = 2
+        n_nodes_in = 2  # (ph, temp)
 
-        base_stack = []
+        seq_stack = []
         # Add hidden layers with activation function
         for n_nodes_out in self.hidden_layers:
-            base_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
-            base_stack.append(nn_Activation())
+            seq_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
+            seq_stack.append(nn_Activation())
 
             n_nodes_in = n_nodes_out
 
-        # Predict the environment-dependent maximum growth rate.
-        # Softplus ensures non-negative outputs.
-        mu_max_stack = [
-            nn.Linear(n_nodes_in, 1),
-            nn.Softplus()
-        ]
+        # Predict the Monod equation parameters. Softplus ensures non-negative outputs.
+        n_nodes_out = 2  # (mu_max, k_s)
+        seq_stack.append(nn.Linear(n_nodes_in, n_nodes_out))
+        seq_stack.append(nn.Softplus())
 
-        # Predict the environment-dependent half-saturation constant.
-        # Softplus ensures non-negative outputs.
-        k_s_stack = [
-            nn.Linear(n_nodes_in, 1),
-            nn.Softplus()
-        ]
-
-        # Shared environmental representation.
-        self.layers_base = nn.Sequential(*base_stack)
-
-        # Monod parameter prediction heads.
-        self.layers_mu_max = nn.Sequential(*mu_max_stack)
-        self.layers_k_s = nn.Sequential(*k_s_stack)
+        # Neural Network
+        self.neural_network = nn.Sequential(*seq_stack)
 
     def forward(self, x):
         """
@@ -859,19 +846,19 @@ class MonodHybridModelPyTorch(nn.Module):
             Predicted specific growth rates.
         """
 
-        s = x[:, :1]
-        pt = x[:, 1:]
+        s = x[:, :1]  # (s, )
+        pt = x[:, 1:]  # (pH, temp)
 
-        # Generate a latent representation of the environmental state (e.g., final hidden layer output)
-        base = self.layers_base(pt)
+        # predict the Monod parameters (mu_max, k_s)
+        mk = self.neural_network(pt)
 
-        # Predict mu_max.
-        mu_max = self.layers_mu_max(base)
+        # Extract mu_max
+        mu_max = mk[:, :1]
 
-        # Predict k_s. Add self.eps as a small positive constant to improve numerical stability.
-        k_s = self.layers_k_s(base) + self.eps
+        # Extract k_s and add self.eps as a small positive constant to improve numerical stability.
+        k_s = mk[:, 1:] + self.eps
 
-        # Monod equation.
+        # Monod equation
         mu = mu_max * (s / (k_s + s))
 
         return mu
