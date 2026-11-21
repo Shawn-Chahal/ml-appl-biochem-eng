@@ -13,6 +13,7 @@ Engineering* at the University of Ottawa.
 6. [Introduction to Deep Learning](#unit-6-introduction-to-deep-learning)
 7. [Recurrent Neural Networks](#unit-7-recurrent-neural-networks)
 8. [Hybrid Models](#unit-8-hybrid-models)
+9. [Classification](#unit-9-classification)
 
 ## Assignments
 
@@ -95,3 +96,6 @@ Lecture slides are available on Brightspace. This repository contains the code e
 2. [Data-driven models](units/unit_08/main_02_monod_data_driven.py)
 3. [Hybrid models](units/unit_08/main_03_monod_hybrid.py)
 4. [Comparison of model types](units/unit_08/main_04_monod_comparison.py)
+
+### Unit 9: Classification
+
