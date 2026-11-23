@@ -44,6 +44,6 @@ print()
 plot_confusion_matrix(
     y_true=y_test,
     y_pred=model.predict(x_test),
-    title=f"Mycoplasma contamination using:\n{best_classifier} {model.best_params_}\nAccuracy: {acc:.1%} | MCC: {mcc:.3f}",
+    title=f"Identifying mycoplasma contamination using:\n{best_classifier} {model.best_params_}\nAccuracy: {acc:.1%} | MCC: {mcc:.3f}",
     filepath=os.path.join("figures", f"figure_01.png")
 )
