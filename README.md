@@ -99,3 +99,4 @@ Lecture slides are available on Brightspace. This repository contains the code e
 
 ### Unit 9: Classification
 
+1. [Binary classification](units/unit_09/main_01_binary_classification.py)

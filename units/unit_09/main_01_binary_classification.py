@@ -1,12 +1,10 @@
 import os
 
 import pandas as pd
+from sklearn.metrics import accuracy_score, matthews_corrcoef
 from sklearn.model_selection import train_test_split
 
-from units.unit_09.src.functions import generate_model_dictionary
-
-metrics = ["accuracy", "matthews_corrcoef"]
-gscv_folds = 4
+from units.unit_09.src.functions import generate_model_dictionary, plot_confusion_matrix
 
 df = pd.read_csv(os.path.join("datasets", "dataset_contamination.csv"))
 
@@ -18,24 +16,34 @@ y = df.loc[:, target].to_numpy()
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, stratify=y, random_state=0)
 
-for metric in metrics:
-    print(100 * "=")
+model_dict = generate_model_dictionary()
 
-    model_dict = generate_model_dictionary(metric, gscv_folds)
+best_classifier = None
+best_score = None
+for classifier in model_dict.keys():
+    model = model_dict[classifier]
+    model.fit(x_train, y_train)
+    score = model.best_score_
 
-    best_classifier = None
-    best_score = None
-    for classifier in model_dict.keys():
-        model = model_dict[classifier]
-        model.fit(x_train, y_train)
-        score = model.best_score_
+    print(f"{classifier:25s} | Accuracy (Valid): {score:6.1%} | {model.best_params_}")
+    if (best_score is None) or (score > best_score):
+        best_classifier = classifier
+        best_score = score
 
-        print(f"{classifier:25s} | {metric:20s} (Valid) | {score:6.3f}")
-        if (best_score is None) or (score > best_score):
-            best_classifier = classifier
-            best_score = score
+model = model_dict[best_classifier]
+y_pred = model.predict(x_test)
 
-    model = model_dict[best_classifier]
-    test_score = model.score(x_test, y_test)
-    print(f"\nBest model:\n{best_classifier:25s} | {metric:20s}  (Test) | {test_score:6.3f}\n")
-    # TODO: Plot Confusion matrix for best classifier predictions
+acc = accuracy_score(y_test, y_pred)
+mcc = matthews_corrcoef(y_test, y_pred)
+
+print()
+print("Best model:")
+print(f"{best_classifier:25s} | Accuracy  (Test): {acc:.1%} | MCC (Test): {mcc:.3f} | {model.best_params_}")
+print()
+
+plot_confusion_matrix(
+    y_true=y_test,
+    y_pred=model.predict(x_test),
+    title=f"Mycoplasma contamination using:\n{best_classifier} {model.best_params_}\nAccuracy: {acc:.1%} | MCC: {mcc:.3f}",
+    filepath=os.path.join("figures", f"figure_01.png")
+)
