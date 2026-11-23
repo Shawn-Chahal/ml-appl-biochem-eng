@@ -1,11 +1,19 @@
 import os
+import random
 
+import numpy as np
 import pandas as pd
+import torch
 from sklearn.metrics import accuracy_score, matthews_corrcoef
 from sklearn.model_selection import train_test_split
 
 from units.unit_09.src.classes import FCNNClassifier
 from units.unit_09.src.functions import plot_confusion_matrix
+
+# Set random seeds for reproducibility
+random.seed(0)
+np.random.seed(0)
+torch.manual_seed(0)
 
 df = pd.read_csv(os.path.join("datasets", "dataset_wine.csv"))
 
