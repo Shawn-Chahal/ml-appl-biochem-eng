@@ -100,3 +100,6 @@ Lecture slides are available on Brightspace. This repository contains the code e
 ### Unit 9: Classification
 
 1. [Binary classification](units/unit_09/main_01_binary_classification.py)
+2. [Multiclass classification](units/unit_09/main_02_multiclass_classification.py)
+3. [Neural network classification](units/unit_09/main_03_neural_network_classification.py)
+
