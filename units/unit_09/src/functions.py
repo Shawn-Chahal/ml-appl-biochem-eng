@@ -9,7 +9,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 
 def generate_model_dictionary(cv=4, scoring="accuracy"):
@@ -58,24 +58,14 @@ def generate_model_dictionary(cv=4, scoring="accuracy"):
             cv=cv
         ),
         "Decision Tree": GridSearchCV(
-            estimator=Pipeline([
-                ('scaler', StandardScaler()),
-                ('clf', DecisionTreeClassifier(random_state=0))
-            ]),
-            param_grid=dict(
-                clf__max_depth=[i for i in range(1, 11)] + [None]
-            ),
+            estimator=DecisionTreeClassifier(random_state=0),
+            param_grid=dict(max_depth=[i for i in range(1, 11)] + [None]),
             scoring=scoring,
             cv=cv
         ),
         "Random Forest": GridSearchCV(
-            estimator=Pipeline([
-                ('scaler', StandardScaler()),
-                ('clf', RandomForestClassifier(random_state=0))
-            ]),
-            param_grid=dict(
-                clf__n_estimators=[2 ** i for i in range(1, 10)]
-            ),
+            estimator=RandomForestClassifier(random_state=0),
+            param_grid=dict(n_estimators=[2 ** i for i in range(1, 10)]),
             scoring=scoring,
             cv=cv
         ),
@@ -234,6 +224,23 @@ def plot_confusion_matrix(y_true, y_pred, title, filepath):
     ax.spines['right'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
     ax.spines['left'].set_visible(False)
+
+    fig.savefig(filepath)
+    plt.close(fig)
+
+
+def plot_decision_tree(decision_tree, feature_names, class_names, fontsize, filepath):
+    fig, ax = plt.subplots(1, 1, figsize=(14.39 / 2.54, 12.09 / 2.54), dpi=300, layout="constrained")
+
+    plot_tree(
+        decision_tree=decision_tree,
+        feature_names=feature_names,
+        class_names=class_names,
+        filled=True,
+        rounded=True,
+        ax=ax,
+        fontsize=fontsize,
+    )
 
     fig.savefig(filepath)
     plt.close(fig)

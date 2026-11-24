@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, matthews_corrcoef
 from sklearn.model_selection import train_test_split
 
-from units.unit_09.src.functions import generate_model_dictionary, plot_confusion_matrix
+from units.unit_09.src.functions import generate_model_dictionary, plot_confusion_matrix, plot_decision_tree
 
 df = pd.read_csv(os.path.join("datasets", "dataset_wine.csv"))
 
@@ -45,5 +45,13 @@ plot_confusion_matrix(
     y_true=y_test,
     y_pred=model.predict(x_test),
     title=f"Wine identification using:\n{best_classifier} {model.best_params_}\nAccuracy: {acc:.1%} | MCC: {mcc:.3f}",
-    filepath=os.path.join("figures", f"figure_02.png")
+    filepath=os.path.join("figures", f"figure_02_confusion_matrix.png")
+)
+
+plot_decision_tree(
+    decision_tree=model_dict["Decision Tree"].best_estimator_,
+    feature_names=features,
+    class_names=model_dict["Decision Tree"].best_estimator_.classes_,
+    fontsize=5,
+    filepath=os.path.join("figures", "figure_02_decision_tree.png")
 )
