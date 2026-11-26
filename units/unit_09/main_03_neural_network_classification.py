@@ -29,7 +29,8 @@ model = FCNNClassifier(hidden_layers=(4,), random_state=0)
 model.fit(x_train, y_train)
 
 y_pred = model.predict(x_test)
-y_pred_proba, classes_proba = model.predict_proba(x_test)
+y_pred_proba = model.predict_proba(x_test)
+class_names = model.get_class_names()
 
 acc = accuracy_score(y_test, y_pred)
 mcc = matthews_corrcoef(y_test, y_pred)
@@ -43,7 +44,7 @@ plot_confusion_matrix(
     filepath=os.path.join("figures", f"figure_03.png")
 )
 
-columns = ["y_test", "y_pred"] + list(classes_proba)
+columns = ["y_test", "y_pred"] + list(class_names)
 
 records = []
 for i in range(y_test.shape[0]):

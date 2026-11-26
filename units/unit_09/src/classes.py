@@ -13,9 +13,9 @@ class FCNNClassifier:
     Fully connected neural network for binary and multiclass classification.
 
     This class provides a lightweight wrapper around a PyTorch model and
-    follows a workflow similar to scikit-learn estimators:
+    follows an API similar to scikit-learn estimators:
 
-        model = FullyConnectedNeuralNetwork(...)
+        model = FCNNClassifier(...)
         model.fit(x_train, y_train)
         y_pred = model.predict(x_test)
 
@@ -37,7 +37,7 @@ class FCNNClassifier:
         Mini-batch size used during training.
 
     weight_decay : float, default=0.0
-        L2 regularization coefficient used by AdamW.
+        Weight decay coefficient used by AdamW.
 
     shuffle : bool, default=True
         Whether to shuffle the training data before each epoch.
@@ -49,7 +49,7 @@ class FCNNClassifier:
         Random seed used in the train-validation split.
 
     verbose : bool, default=False
-        If True, displays training and validation losses each epoch.
+        If True, prints training and validation losses.
     """
 
     def __init__(self, hidden_layers=(64,), activation="relu", learning_rate=0.001, epochs=1000, batch_size=1024,
@@ -87,7 +87,7 @@ class FCNNClassifier:
 
         Returns
         -------
-        FullyConnectedNeuralNetwork
+        FCNNClassifier
             Fitted estimator.
         """
 
@@ -105,7 +105,7 @@ class FCNNClassifier:
         x_train = self.scaler.transform(x_train)
         x_valid = self.scaler.transform(x_valid)
 
-        # Step 3: Binarize output labels
+        # Step 3: Encode output labels
         self.le = LabelEncoder()
         self.le.fit(y_train)
 
@@ -159,7 +159,7 @@ class FCNNClassifier:
         Returns
         -------
         ndarray of shape (n_samples,)
-            Predicted target labels in the original target scale.
+            Predicted target class in the original target labels.
         """
 
         # Standardize the raw input data
@@ -195,8 +195,8 @@ class FCNNClassifier:
 
         Returns
         -------
-        ndarray of shape (n_samples, n_classes)
-            Predicted target labels in the original target labels.
+        y_proba : ndarray of shape (n_samples, n_classes)
+            Predicted probability for each class.
         """
 
         # Standardize the raw input data
@@ -208,7 +208,7 @@ class FCNNClassifier:
         # Switch the model to evaluation mode
         self.model.eval()
 
-        # Define the softmax function to calculate softmax across columns.
+        # Define the softmax function to calculate softmax across columns (i.e., dim=1).
         softmax = nn.Softmax(dim=1)
 
         # Disable gradient tracking during prediction
@@ -219,8 +219,21 @@ class FCNNClassifier:
         # Convert the PyTorch tensor to a NumPy array
         y_proba = y_proba.numpy(force=True)
 
-        # Convert the encoded predictions back to the original target labels
-        return y_proba, self.le.classes_
+        return y_proba
+
+    def get_class_names(self):
+        """
+        Output the class names in the same order they would appear in y_proba.
+
+        Returns
+        -------
+        class_names : ndarray of shape (n_classes,)
+            The class names for each index. E.g., y_proba[i, j]
+            contains the probability that the i-th sample belongs
+            to class_names[j].
+        """
+
+        return self.le.classes_
 
     def build_model(self, n_features, n_targets):
         """
@@ -249,7 +262,7 @@ class FCNNClassifier:
 
             n_nodes_in = n_nodes_out
 
-        # Output layer uses a linear activation, we will apply softmax in the predict method
+        # Output layer uses a linear activation, we will apply softmax in the predict_proba method
         seq_stack.append(nn.Linear(n_nodes_in, n_targets))
 
         # Create the model
