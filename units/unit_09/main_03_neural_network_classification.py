@@ -1,3 +1,20 @@
+# ============================================================================
+#   Classification using a fully connected neural network (FCNN)
+# ============================================================================
+#
+#   * This example applies a fully connected neural network (FCNN)
+#     to identify wine varieties from physicochemical measurements.
+#
+#   * Model performance is evaluated using accuracy and the
+#     Matthews correlation coefficient (MCC), and a confusion
+#     matrix is generated to visualize classification results.
+#
+#   * Predicted class probabilities are exported to a table,
+#     illustrating the confidence of the neural network in each
+#     classification decision.
+#
+# ============================================================================
+
 import os
 import random
 
@@ -15,23 +32,32 @@ random.seed(0)
 np.random.seed(0)
 torch.manual_seed(0)
 
+# Load the dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_wine.csv"))
 
+# Extract features and target
 features = df.columns[1:]
 target = df.columns[0]
 
+# Convert DataFrame slices to numpy arrays
 x = df.loc[:, features].to_numpy()
 y = df.loc[:, target].to_numpy()
 
+# Split the data into training and test sets
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, stratify=y, random_state=1)
 
+# Instantiate and fit the model
 model = FCNNClassifier(hidden_layers=(4,), random_state=0)
 model.fit(x_train, y_train)
 
+# Predict using the model
 y_pred = model.predict(x_test)
+
+# Predict probabilities using the model
 y_pred_proba = model.predict_proba(x_test)
 class_names = model.get_class_names()
 
+# Evaluate the model
 acc = accuracy_score(y_test, y_pred)
 mcc = matthews_corrcoef(y_test, y_pred)
 

@@ -1,3 +1,21 @@
+# ============================================================================
+#   Multiclass Classification
+# ============================================================================
+#
+#   * This script evaluates several machine learning classifiers
+#     for identifying wine varieties from their physicochemical
+#     properties.
+#
+#   * The classification task involves three wine classes and
+#     therefore requires multiclass classification rather than
+#     binary classification.
+#
+#   * Candidate models include logistic regression, support vector
+#     machines, k-nearest neighbors, Gaussian naive Bayes,
+#     decision trees, and random forests.
+#
+# ============================================================================
+
 import os
 
 import pandas as pd
@@ -6,18 +24,24 @@ from sklearn.model_selection import train_test_split
 
 from units.unit_09.src.functions import generate_model_dictionary, plot_confusion_matrix, plot_decision_tree
 
+# Load the dataset
 df = pd.read_csv(os.path.join("datasets", "dataset_wine.csv"))
 
+# Extract features and target
 features = df.columns[1:]
 target = df.columns[0]
 
+# Convert DataFrame slices to numpy arrays
 x = df.loc[:, features].to_numpy()
 y = df.loc[:, target].to_numpy()
 
+# Split the data into training and test sets
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, stratify=y, random_state=1)
 
+# Generate the dictionary of classifier models
 model_dict = generate_model_dictionary()
 
+# Train each GridSearchCV model and keep track of the best classifier
 best_classifier = None
 best_score = None
 for classifier in model_dict.keys():
@@ -30,9 +54,9 @@ for classifier in model_dict.keys():
         best_classifier = classifier
         best_score = score
 
+# Test the model with the best GridSearchCV score
 model = model_dict[best_classifier]
 y_pred = model.predict(x_test)
-
 acc = accuracy_score(y_test, y_pred)
 mcc = matthews_corrcoef(y_test, y_pred)
 
